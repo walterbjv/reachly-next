@@ -10,6 +10,8 @@ const PLATAFORMA = [
 const EMPRESA = [
   { href: '/sobre-nosotros', label: 'Sobre nosotros' },
   { href: '/blog', label: 'Blog' },
+  { href: '/prensa', label: 'Prensa' },
+  { href: '/careers', label: 'Careers' },
   { href: '/contacto', label: 'Contacto' },
 ]
 
@@ -17,6 +19,7 @@ const LEGAL = [
   { href: '/terminos', label: 'Términos de uso' },
   { href: '/privacidad', label: 'Privacidad' },
   { href: '/cookies', label: 'Cookies' },
+  { href: '/gdpr', label: 'GDPR' },
 ]
 
 export function Footer() {

@@ -14,6 +14,7 @@ const NAV_LINKS = [
   { href: '/', label: 'Explorar' },
   { href: '/campanas', label: 'Campañas' },
   { href: '/tendencias', label: 'Tendencias' },
+  { href: '/comparador', label: 'Comparador' },
   { href: '/mensajes', label: 'Mensajes' },
   { href: '/favoritos', label: 'Guardados' },
 ]
@@ -113,7 +114,7 @@ export function Nav() {
         )}
       >
         {/* Brand */}
-        <Link href="/" className="flex flex-col leading-none text-white hover:opacity-90 transition-opacity">
+        <Link href="/landing" className="flex flex-col leading-none text-white hover:opacity-90 transition-opacity">
           <span className="text-xl font-bold tracking-tight">Reachly</span>
           <span className="text-[10px] font-normal text-[#B89EF0] uppercase tracking-widest">influencer platform</span>
         </Link>
