@@ -29,7 +29,7 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/7 mb-7">
           {/* Brand col */}
           <div>
-            <img src="/logo-reachly.svg" alt="Reachly" className="h-6 w-auto brightness-0 invert mb-2" />
+            <img src="/logo-reachly-white.svg" alt="Reachly" className="h-6 w-auto mb-2" />
             <p className="text-sm text-white/35 leading-relaxed max-w-[260px] mb-5">
               La plataforma que conecta marcas con los mejores creadores de contenido de LATAM.
             </p>

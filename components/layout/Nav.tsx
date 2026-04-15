@@ -115,7 +115,7 @@ export function Nav() {
       >
         {/* Brand */}
         <Link href="/landing" className="hover:opacity-90 transition-opacity">
-          <img src="/logo-reachly.svg" alt="Reachly" className="h-7 w-auto brightness-0 invert" />
+          <img src="/logo-reachly-white.svg" alt="Reachly" className="h-7 w-auto" />
         </Link>
 
         {/* Desktop links */}
