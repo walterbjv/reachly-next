@@ -3,13 +3,13 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
-import { Edit2, Camera, Plus, X, ExternalLink, Instagram, Youtube, Twitter, Save, Loader2 } from 'lucide-react'
+import { Edit2, Camera, Plus, X, ExternalLink, Save, Loader2 } from 'lucide-react'
 
 const REDES_CONFIG = [
-  { id: 'instagram', label: 'Instagram', prefix: '@', icon: <Instagram className="w-4 h-4" />, color: 'text-pink-500' },
+  { id: 'instagram', label: 'Instagram', prefix: '@', icon: <span className="text-xs font-black">IG</span>, color: 'text-pink-500' },
   { id: 'tiktok', label: 'TikTok', prefix: '@', icon: <span className="text-xs font-black">TK</span>, color: 'text-foreground' },
-  { id: 'youtube', label: 'YouTube', prefix: '', icon: <Youtube className="w-4 h-4" />, color: 'text-red-500' },
-  { id: 'twitter', label: 'Twitter/X', prefix: '@', icon: <Twitter className="w-4 h-4" />, color: 'text-sky-500' },
+  { id: 'youtube', label: 'YouTube', prefix: '', icon: <span className="text-xs font-black">YT</span>, color: 'text-red-500' },
+  { id: 'twitter', label: 'Twitter/X', prefix: '@', icon: <span className="text-xs font-black">X</span>, color: 'text-sky-500' },
   { id: 'linkedin', label: 'LinkedIn', prefix: '', icon: <span className="text-xs font-black">in</span>, color: 'text-blue-600' },
 ]
 
