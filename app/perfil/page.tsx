@@ -51,18 +51,26 @@ export default function PerfilPage() {
   const [redes, setRedes] = useState<Record<string, string>>({})
   const [categorias, setCategorias] = useState<string[]>([])
   const [newPost, setNewPost] = useState({ url: '', caption: '', platform: 'instagram' })
+  const [followStats, setFollowStats] = useState({ followers: 0, following: 0 })
 
   useEffect(() => {
     async function load() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { router.push('/login'); return }
-      const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single()
-      if (data) {
-        setProfile(data as Profile)
-        setForm({ nombre: data.nombre ?? '', bio: data.bio ?? '', ubicacion: data.ubicacion ?? '' })
-        setRedes(data.redes ?? {})
-        setCategorias(data.categorias ?? [])
+
+      const [profileRes, followersRes, followingRes] = await Promise.all([
+        supabase.from('profiles').select('*').eq('id', user.id).single(),
+        supabase.from('follows').select('id', { count: 'exact', head: true }).eq('following_id', user.id),
+        supabase.from('follows').select('id', { count: 'exact', head: true }).eq('follower_id', user.id),
+      ])
+
+      if (profileRes.data) {
+        setProfile(profileRes.data as Profile)
+        setForm({ nombre: profileRes.data.nombre ?? '', bio: profileRes.data.bio ?? '', ubicacion: profileRes.data.ubicacion ?? '' })
+        setRedes(profileRes.data.redes ?? {})
+        setCategorias(profileRes.data.categorias ?? [])
       }
+      setFollowStats({ followers: followersRes.count ?? 0, following: followingRes.count ?? 0 })
       setLoading(false)
     }
     load()
@@ -221,10 +229,10 @@ export default function PerfilPage() {
         {/* Stats bar */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
           {[
+            { label: 'Seguidores', value: followStats.followers.toString(), icon: <User className="w-4 h-4" /> },
+            { label: 'Siguiendo', value: followStats.following.toString(), icon: <span className="text-sm font-black">+</span> },
             { label: 'Posts', value: portfolioCount.toString(), icon: <Grid3x3 className="w-4 h-4" /> },
-            { label: 'Redes', value: redesFilled.length.toString(), icon: <span className="text-sm font-black">@</span> },
-            { label: 'Categorías', value: (profile.categorias ?? []).length.toString(), icon: <span className="text-sm">#</span> },
-            { label: 'Tipo', value: profile.tipo === 'influencer' ? 'Influencer' : 'Marca', icon: <User className="w-4 h-4" /> },
+            { label: 'Tipo', value: profile.tipo === 'influencer' ? 'Influencer' : 'Marca', icon: <span className="text-sm">#</span> },
           ].map(s => (
             <div key={s.label} className="bg-card border border-border rounded-xl p-4 flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-[#F0E8FF] dark:bg-[#2A1F45] flex items-center justify-center text-[#4A1FA8] dark:text-[#B89EF0] flex-shrink-0">
