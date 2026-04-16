@@ -19,48 +19,10 @@ function getEstado(id: number, engagement: number): Influencer['estado'] {
   return 'disponible'
 }
 
-export async function fetchInfluencers(): Promise<Influencer[]> {
-  const { data, error } = await supabase
-    .from('influencers')
-    .select('id, full_name, bio, location, followers_count, engagement_rate, avatar_url, profile_id, profiles(categorias, redes)')
-    .order('followers_count', { ascending: false })
-
-  if (error || !data || data.length === 0) return []
-
-  return data.map((row: any) => {
-    const cats: string[] = row.profiles?.categorias ?? []
-    const categoria = cats[0] ?? 'Lifestyle'
-    const engagement = parseFloat((row.engagement_rate ?? 0).toFixed(1))
-    return {
-      id: row.id,
-      nombre: row.full_name ?? 'Sin nombre',
-      categoria,
-      seguidores: row.followers_count ?? 0,
-      engagement,
-      iniciales: getIniciales(row.full_name ?? ''),
-      estado: getEstado(row.id, engagement),
-      bio: row.bio ?? undefined,
-      ubicacion: row.location ?? undefined,
-      avatar_url: row.avatar_url ?? undefined,
-      profile_id: row.profile_id,
-    }
-  })
-}
-
-export async function fetchInfluencer(id: number): Promise<Influencer | null> {
-  const { data, error } = await supabase
-    .from('influencers')
-    .select('id, full_name, bio, location, followers_count, engagement_rate, avatar_url, profile_id, profiles(categorias, redes)')
-    .eq('id', id)
-    .single()
-
-  if (error || !data) return null
-
-  const row = data as any
-  const cats: string[] = row.profiles?.categorias ?? []
+function mapInfluencer(row: any, profile?: any): Influencer {
+  const cats: string[] = profile?.categorias ?? []
   const categoria = cats[0] ?? 'Lifestyle'
   const engagement = parseFloat((row.engagement_rate ?? 0).toFixed(1))
-
   return {
     id: row.id,
     nombre: row.full_name ?? 'Sin nombre',
@@ -73,8 +35,46 @@ export async function fetchInfluencer(id: number): Promise<Influencer | null> {
     ubicacion: row.location ?? undefined,
     avatar_url: row.avatar_url ?? undefined,
     profile_id: row.profile_id,
-    redes: row.profiles?.redes ?? undefined,
+    redes: profile?.redes ?? undefined,
   }
+}
+
+export async function fetchInfluencers(): Promise<Influencer[]> {
+  const { data, error } = await supabase
+    .from('influencers')
+    .select('id, full_name, bio, location, followers_count, engagement_rate, avatar_url, profile_id')
+    .order('followers_count', { ascending: false })
+
+  if (error || !data || data.length === 0) return []
+
+  // Fetch profiles separately to avoid FK join issues
+  const profileIds = data.map((r: any) => r.profile_id).filter(Boolean)
+  const { data: profiles } = await supabase
+    .from('profiles')
+    .select('id, categorias, redes')
+    .in('id', profileIds)
+
+  const profileMap = new Map((profiles ?? []).map((p: any) => [p.id, p]))
+
+  return data.map((row: any) => mapInfluencer(row, profileMap.get(row.profile_id)))
+}
+
+export async function fetchInfluencer(id: number): Promise<Influencer | null> {
+  const { data, error } = await supabase
+    .from('influencers')
+    .select('id, full_name, bio, location, followers_count, engagement_rate, avatar_url, profile_id')
+    .eq('id', id)
+    .single()
+
+  if (error || !data) return null
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('id, categorias, redes')
+    .eq('id', (data as any).profile_id)
+    .single()
+
+  return mapInfluencer(data, profile)
 }
 
 export async function fetchCampanas(): Promise<Campana[]> {
