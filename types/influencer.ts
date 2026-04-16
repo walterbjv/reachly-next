@@ -10,6 +10,8 @@ export interface Influencer {
   estado: InfluencerStatus
   bio?: string
   ubicacion?: string
+  avatar_url?: string
+  profile_id?: string
   redes?: {
     instagram?: string
     tiktok?: string
