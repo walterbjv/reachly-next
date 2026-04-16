@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { fetchInfluencers } from '@/lib/api'
 import { InfluencerCard } from '@/components/influencer/InfluencerCard'
+import { createSupabaseServer } from '@/lib/supabase-server'
 
 export const metadata: Metadata = { title: 'Dashboard — Marca' }
 
@@ -19,6 +20,16 @@ const campanasPipeline = [
 ]
 
 export default async function DashboardMarcaPage() {
+  const supabase = await createSupabaseServer()
+  const { data: { user } } = await supabase.auth.getUser()
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('nombre, ubicacion')
+    .eq('id', user!.id)
+    .single()
+
+  const nombre = profile?.nombre ?? user?.user_metadata?.nombre ?? 'tu marca'
+
   const influencers = await fetchInfluencers()
   const matches = influencers.filter(i => i.estado === 'disponible').slice(0, 4)
 
@@ -27,8 +38,8 @@ export default async function DashboardMarcaPage() {
       {/* Welcome */}
       <div className="bg-gradient-to-br from-[#4A1FA8] to-[#2E1270] rounded-2xl p-7 mb-7 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-white text-2xl font-bold mb-1">Hola, Nike Chile</h1>
-          <p className="text-white/60 text-sm">Tenés 3 campañas activas y 12 nuevos matches esta semana.</p>
+          <h1 className="text-white text-2xl font-bold mb-1">Hola, {nombre}</h1>
+          <p className="text-white/60 text-sm">{profile?.ubicacion ? `${profile.ubicacion} · ` : ''}Encontrá los mejores influencers para tus campañas.</p>
         </div>
         <div className="flex gap-3">
           <Link href="/campanas" className="bg-white/15 text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-white/25 transition-colors">

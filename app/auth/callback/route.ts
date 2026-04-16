@@ -26,9 +26,11 @@ export async function GET(request: NextRequest) {
       }
     )
 
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (!error) {
-      return NextResponse.redirect(`${origin}${next}`)
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+    if (!error && data.session) {
+      const tipo = data.session.user.user_metadata?.tipo ?? 'influencer'
+      const dashboard = tipo === 'marca' ? '/dashboard/marca' : '/dashboard/influencer'
+      return NextResponse.redirect(`${origin}${dashboard}`)
     }
   }
 

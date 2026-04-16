@@ -40,15 +40,16 @@ export default function LoginPage() {
     }
 
     const meta = data.user.user_metadata
+    const tipo = meta.tipo ?? 'influencer'
     setUser({
       nombre: meta.nombre ?? form.email.split('@')[0],
       email: form.email,
-      tipo: meta.tipo ?? 'influencer',
+      tipo,
       bio: meta.bio,
       ubicacion: meta.ubicacion,
       redes: meta.redes,
     })
-    router.push('/')
+    router.push(tipo === 'marca' ? '/dashboard/marca' : '/dashboard/influencer')
   }
 
   return (

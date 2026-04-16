@@ -35,16 +35,24 @@ export default function OnboardingPage() {
   }
 
   async function finish() {
-    await supabase.auth.updateUser({
-      data: {
+    const { data: { user: authUser } } = await supabase.auth.getUser()
+
+    await Promise.all([
+      supabase.auth.updateUser({
+        data: { nombre, bio, ubicacion, redes, categorias: selectedCats, objetivos: selectedObjs },
+      }),
+      supabase.from('profiles').upsert({
+        id: authUser!.id,
         nombre,
         bio,
         ubicacion,
         redes,
         categorias: selectedCats,
         objetivos: selectedObjs,
-      },
-    })
+        updated_at: new Date().toISOString(),
+      }),
+    ])
+
     setUser({ nombre, bio, ubicacion, tipo: user?.tipo ?? 'influencer', redes })
     completeOnboarding()
     setStep(4)

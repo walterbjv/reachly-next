@@ -49,6 +49,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
+  // Redirigir al dashboard correcto según el rol
+  if (pathname === '/') {
+    const tipo = session.user.user_metadata?.tipo ?? 'influencer'
+    const dashboard = tipo === 'marca' ? '/dashboard/marca' : '/dashboard/influencer'
+    return NextResponse.redirect(new URL(dashboard, request.url))
+  }
+
   return response
 }
 
