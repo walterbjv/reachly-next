@@ -103,7 +103,6 @@ export default function PerfilPage() {
       supabase.auth.updateUser({ data: { nombre: form.nombre } }),
     ]
 
-    // Sincronizar tabla influencers si corresponde
     if (profile.tipo === 'influencer') {
       ops.push(
         supabase.from('influencers').upsert({
@@ -111,6 +110,17 @@ export default function PerfilPage() {
           full_name: form.nombre,
           bio: form.bio,
           location: form.ubicacion,
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'profile_id' })
+      )
+    }
+
+    if (profile.tipo === 'marca') {
+      ops.push(
+        supabase.from('brands').upsert({
+          profile_id: profile.id,
+          company_name: form.nombre,
+          description: form.bio,
           updated_at: new Date().toISOString(),
         }, { onConflict: 'profile_id' })
       )

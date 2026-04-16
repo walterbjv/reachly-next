@@ -56,7 +56,6 @@ export default function OnboardingPage() {
       }),
     ]
 
-    // Si es influencer, crear/actualizar registro en la tabla influencers
     if (tipo === 'influencer') {
       ops.push(
         supabase.from('influencers').upsert({
@@ -66,6 +65,17 @@ export default function OnboardingPage() {
           location: ubicacion,
           followers_count: 0,
           engagement_rate: 0,
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'profile_id' })
+      )
+    }
+
+    if (tipo === 'marca') {
+      ops.push(
+        supabase.from('brands').upsert({
+          profile_id: authUser.id,
+          company_name: nombre,
+          description: bio,
           updated_at: new Date().toISOString(),
         }, { onConflict: 'profile_id' })
       )
