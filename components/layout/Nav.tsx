@@ -3,12 +3,14 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useThemeStore } from '@/store/useThemeStore'
+import { useUserStore } from '@/store/useUserStore'
 import { fetchInfluencers, fetchCampanas } from '@/lib/api'
 import type { Influencer } from '@/types/influencer'
 import type { Campana } from '@/types/campana'
 import { InfluencerAvatar } from '@/components/ui/InfluencerAvatar'
 import { cn } from '@/lib/utils'
-import { Search, Moon, Sun, Menu, X } from 'lucide-react'
+import { Search, Moon, Sun, Menu, X, LogOut, User, LayoutDashboard } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
 
 const NAV_LINKS = [
   { href: '/', label: 'Explorar' },
@@ -27,10 +29,18 @@ const LANDING_NAV_LINKS = [
   { href: '#faq', label: 'FAQ' },
 ]
 
+interface AuthUser {
+  nombre: string
+  iniciales: string
+  avatar_url?: string | null
+  tipo: 'influencer' | 'marca'
+}
+
 export function Nav() {
   const pathname = usePathname()
   const router = useRouter()
   const { isDark, toggle } = useThemeStore()
+  const { clearUser } = useUserStore()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
@@ -42,12 +52,46 @@ export function Nav() {
   const [allInfluencers, setAllInfluencers] = useState<Influencer[]>([])
   const [allCampanas, setAllCampanas] = useState<Campana[]>([])
   const [activeIdx, setActiveIdx] = useState(-1)
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const userMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
+  }, [])
+
+  // Load auth user
+  useEffect(() => {
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (!data.user) return
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('nombre, avatar_url, tipo')
+        .eq('id', data.user.id)
+        .single()
+      const nombre = profile?.nombre ?? data.user.user_metadata?.nombre ?? 'Usuario'
+      const iniciales = nombre.split(' ').slice(0, 2).map((p: string) => p[0]).join('').toUpperCase() || '?'
+      setAuthUser({
+        nombre,
+        iniciales,
+        avatar_url: profile?.avatar_url,
+        tipo: profile?.tipo ?? data.user.user_metadata?.tipo ?? 'influencer',
+      })
+    })
+  }, [pathname])
+
+  // Close user menu on outside click
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
   // Preload data when search opens
@@ -112,6 +156,13 @@ export function Nav() {
     router.push(r.type === 'influencer' ? `/influencer/${r.id}` : `/campanas/${r.id}`)
   }
 
+  async function handleLogout() {
+    setUserMenuOpen(false)
+    await supabase.auth.signOut()
+    clearUser()
+    router.push('/landing')
+  }
+
   const isLanding = pathname === '/landing'
   const activeLinks = isLanding ? LANDING_NAV_LINKS : NAV_LINKS
 
@@ -125,13 +176,12 @@ export function Nav() {
         )}
       >
         {/* Brand */}
-        <Link href="/landing" className="hover:opacity-90 transition-opacity flex-shrink-0">
+        <Link href={authUser ? '/' : '/landing'} className="hover:opacity-90 transition-opacity flex-shrink-0">
           <img src="/logo-reachly-white.svg" alt="Reachly" className="h-9 w-auto" />
         </Link>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-7">
-          {/* Search icon — only on landing */}
           {isLanding && (
             <button
               onClick={() => setSearchOpen(true)}
@@ -165,7 +215,6 @@ export function Nav() {
             )
           ))}
 
-          {/* Plataforma CTA — only on landing */}
           {isLanding && (
             <Link
               href="/"
@@ -208,13 +257,71 @@ export function Nav() {
             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
-          {/* Login / Register */}
-          <Link
-            href="/login"
-            className="hidden sm:inline-flex items-center bg-white text-[#4A1FA8] font-semibold text-sm px-4 py-2 rounded-lg hover:bg-[#F0E8FF] transition-colors duration-150"
-          >
-            {isLanding ? 'Iniciar sesión' : 'Registrarse'}
-          </Link>
+          {/* Auth: user dropdown or login button */}
+          {authUser ? (
+            <div className="relative hidden sm:block" ref={userMenuRef}>
+              <button
+                onClick={() => setUserMenuOpen(v => !v)}
+                className="flex items-center gap-2 pl-1 pr-3 py-1 rounded-xl hover:bg-white/10 transition-colors"
+              >
+                {authUser.avatar_url ? (
+                  <img
+                    src={authUser.avatar_url}
+                    alt={authUser.nombre}
+                    className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                  />
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                    {authUser.iniciales}
+                  </div>
+                )}
+                <span className="text-sm text-white font-medium hidden lg:block max-w-[100px] truncate">
+                  {authUser.nombre.split(' ')[0]}
+                </span>
+              </button>
+
+              {userMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-52 bg-card border border-border rounded-xl shadow-xl overflow-hidden z-50 animate-scale-in">
+                  <div className="px-4 py-3 border-b border-border">
+                    <p className="text-sm font-semibold text-foreground truncate">{authUser.nombre}</p>
+                    <p className="text-xs text-muted-foreground capitalize">{authUser.tipo}</p>
+                  </div>
+                  <div className="p-1.5">
+                    <Link
+                      href="/perfil"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 text-sm text-foreground rounded-lg hover:bg-accent transition-colors"
+                    >
+                      <User className="w-4 h-4 text-muted-foreground" />
+                      Mi perfil
+                    </Link>
+                    <Link
+                      href={authUser.tipo === 'marca' ? '/dashboard/marca' : '/dashboard/influencer'}
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 text-sm text-foreground rounded-lg hover:bg-accent transition-colors"
+                    >
+                      <LayoutDashboard className="w-4 h-4 text-muted-foreground" />
+                      Dashboard
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Cerrar sesión
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="hidden sm:inline-flex items-center bg-white text-[#4A1FA8] font-semibold text-sm px-4 py-2 rounded-lg hover:bg-[#F0E8FF] transition-colors duration-150"
+            >
+              {isLanding ? 'Iniciar sesión' : 'Registrarse'}
+            </Link>
+          )}
 
           {/* Hamburger */}
           <button
@@ -231,6 +338,22 @@ export function Nav() {
       {menuOpen && (
         <div className="md:hidden fixed top-16 inset-x-0 z-40 bg-[#4A1FA8] dark:bg-[#1A1428] border-t border-white/10 shadow-lg animate-slide-down">
           <div className="flex flex-col gap-1 p-5">
+            {authUser && (
+              <div className="flex items-center gap-3 px-3 py-3 mb-2 border-b border-white/10">
+                {authUser.avatar_url ? (
+                  <img src={authUser.avatar_url} alt={authUser.nombre} className="w-9 h-9 rounded-full object-cover" />
+                ) : (
+                  <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold text-white">
+                    {authUser.iniciales}
+                  </div>
+                )}
+                <div>
+                  <p className="text-sm font-semibold text-white">{authUser.nombre}</p>
+                  <p className="text-xs text-white/60 capitalize">{authUser.tipo}</p>
+                </div>
+              </div>
+            )}
+
             {activeLinks.map(({ href, label }) => (
               isLanding ? (
                 <a
@@ -255,6 +378,7 @@ export function Nav() {
                 </Link>
               )
             ))}
+
             {isLanding && (
               <Link
                 href="/"
@@ -264,13 +388,32 @@ export function Nav() {
                 Plataforma →
               </Link>
             )}
-            <Link
-              href={isLanding ? '/login' : '/registro'}
-              onClick={() => setMenuOpen(false)}
-              className="mt-3 text-center bg-white text-[#4A1FA8] font-semibold text-sm px-4 py-2.5 rounded-lg hover:bg-[#F0E8FF] transition-colors"
-            >
-              {isLanding ? 'Iniciar sesión' : 'Registrarse'}
-            </Link>
+
+            {authUser ? (
+              <>
+                <Link
+                  href="/perfil"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-base py-2 px-3 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+                >
+                  Mi perfil
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="mt-2 text-center text-red-300 text-sm py-2.5 rounded-lg hover:bg-white/10 transition-colors"
+                >
+                  Cerrar sesión
+                </button>
+              </>
+            ) : (
+              <Link
+                href={isLanding ? '/login' : '/registro'}
+                onClick={() => setMenuOpen(false)}
+                className="mt-3 text-center bg-white text-[#4A1FA8] font-semibold text-sm px-4 py-2.5 rounded-lg hover:bg-[#F0E8FF] transition-colors"
+              >
+                {isLanding ? 'Iniciar sesión' : 'Registrarse'}
+              </Link>
+            )}
           </div>
         </div>
       )}
@@ -282,7 +425,6 @@ export function Nav() {
           onClick={e => { if (e.target === e.currentTarget) setSearchOpen(false) }}
         >
           <div className="w-[90%] max-w-[560px] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden max-h-[70vh] flex flex-col animate-scale-in">
-            {/* Input */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
               <Search className="w-4 h-4 text-muted-foreground flex-shrink-0" />
               <input
@@ -297,7 +439,6 @@ export function Nav() {
               <kbd className="text-[10px] border border-border text-muted-foreground px-1.5 py-0.5 rounded">ESC</kbd>
             </div>
 
-            {/* Results */}
             <div className="overflow-y-auto p-2">
               {query.length < 2 ? (
                 <p className="text-center text-muted-foreground text-sm py-8">Escribe para buscar en toda la plataforma</p>
