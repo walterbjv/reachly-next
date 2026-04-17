@@ -131,12 +131,14 @@ export default async function InfluencerPage({ params }: { params: Promise<{ id:
             >
               Ver campañas
             </Link>
-            <Link
-              href="/mensajes"
-              className="block text-center w-full border border-border text-muted-foreground font-medium text-sm px-4 py-2.5 rounded-xl hover:border-[#B89EF0] transition-colors"
-            >
-              Mensaje directo
-            </Link>
+            {inf.profile_id && (
+              <Link
+                href={`/mensajes?with=${inf.profile_id}`}
+                className="block text-center w-full border border-border text-muted-foreground font-medium text-sm px-4 py-2.5 rounded-xl hover:border-[#B89EF0] transition-colors"
+              >
+                Mensaje directo
+              </Link>
+            )}
           </div>
 
           {/* Categoría */}
