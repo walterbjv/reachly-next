@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { cn } from '@/lib/utils'
@@ -49,6 +49,14 @@ function formatTime(iso: string) {
 }
 
 export default function MensajesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[calc(100vh-64px)] flex items-center justify-center"><Loader2 className="w-5 h-5 animate-spin text-muted-foreground" /></div>}>
+      <MensajesContent />
+    </Suspense>
+  )
+}
+
+function MensajesContent() {
   const searchParams = useSearchParams()
   const withParam = searchParams.get('with')
 
