@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/useUserStore'
 import { cn } from '@/lib/utils'
+import { supabase } from '@/lib/supabase'
 
 const CATEGORIAS = ['Moda', 'Tech', 'Fitness', 'Gastronomía', 'Viajes', 'Gaming', 'Música', 'Arte', 'Educación', 'Lifestyle']
 const OBJETIVOS = ['Conseguir campañas', 'Hacer networking', 'Crecer mi audiencia', 'Encontrar influencers', 'Publicar campañas', 'Analizar tendencias']
@@ -33,8 +34,49 @@ export default function OnboardingPage() {
     setArr(arr.includes(val) ? arr.filter(v => v !== val) : [...arr, val])
   }
 
-  function finish() {
-    setUser({ nombre, bio, ubicacion, tipo: user?.tipo ?? 'influencer', redes })
+  async function finish() {
+    const { data: { user: authUser } } = await supabase.auth.getUser()
+    if (!authUser) return
+
+    const tipo = user?.tipo ?? authUser.user_metadata?.tipo ?? 'influencer'
+
+    await supabase.auth.updateUser({
+      data: { nombre, bio, ubicacion, redes, categorias: selectedCats, objetivos: selectedObjs },
+    })
+
+    await supabase.from('profiles').upsert({
+      id: authUser.id,
+      nombre,
+      bio,
+      ubicacion,
+      redes,
+      categorias: selectedCats,
+      objetivos: selectedObjs,
+      updated_at: new Date().toISOString(),
+    })
+
+    if (tipo === 'influencer') {
+      await supabase.from('influencers').upsert({
+        profile_id: authUser.id,
+        full_name: nombre,
+        bio,
+        location: ubicacion,
+        followers_count: 0,
+        engagement_rate: 0,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'profile_id' })
+    }
+
+    if (tipo === 'marca') {
+      await supabase.from('brands').upsert({
+        profile_id: authUser.id,
+        company_name: nombre,
+        description: bio,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'profile_id' })
+    }
+
+    setUser({ nombre, bio, ubicacion, tipo, redes })
     completeOnboarding()
     setStep(4)
   }
@@ -75,7 +117,6 @@ export default function OnboardingPage() {
           {/* Step 1: Profile */}
           {step === 1 && (
             <div className="animate-fade-up">
-              <div className="w-12 h-12 rounded-xl bg-[#F0E8FF] dark:bg-[#2A1F45] flex items-center justify-center text-2xl mb-5">👋</div>
               <h2 className="text-xl font-bold text-foreground mb-2">Completá tu perfil</h2>
               <p className="text-muted-foreground text-sm mb-6">Contanos un poco sobre vos.</p>
 
@@ -135,7 +176,6 @@ export default function OnboardingPage() {
           {/* Step 2: Interests */}
           {step === 2 && (
             <div className="animate-fade-up">
-              <div className="w-12 h-12 rounded-xl bg-[#F0E8FF] dark:bg-[#2A1F45] flex items-center justify-center text-2xl mb-5">✨</div>
               <h2 className="text-xl font-bold text-foreground mb-2">Tus intereses</h2>
               <p className="text-muted-foreground text-sm mb-6">Seleccioná las categorías que más te interesan.</p>
 
@@ -185,7 +225,6 @@ export default function OnboardingPage() {
           {/* Step 3: Social networks */}
           {step === 3 && (
             <div className="animate-fade-up">
-              <div className="w-12 h-12 rounded-xl bg-[#F0E8FF] dark:bg-[#2A1F45] flex items-center justify-center text-2xl mb-5">🔗</div>
               <h2 className="text-xl font-bold text-foreground mb-2">Conectá tus redes</h2>
               <p className="text-muted-foreground text-sm mb-6">Opcional — podés completarlo desde tu perfil más tarde.</p>
 
@@ -222,8 +261,8 @@ export default function OnboardingPage() {
           {/* Step 4: Success */}
           {step === 4 && (
             <div className="animate-fade-up text-center py-4">
-              <div className="w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-4xl mx-auto mb-6 animate-scale-in">
-                ✅
+              <div className="w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mx-auto mb-6 animate-scale-in">
+                <svg className="w-9 h-9 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
               </div>
               <h2 className="text-2xl font-bold text-foreground mb-2">
                 ¡Bienvenido{nombre ? `, ${nombre.split(' ')[0]}` : ''}!

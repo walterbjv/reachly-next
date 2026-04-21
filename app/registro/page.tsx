@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/useUserStore'
 import { cn } from '@/lib/utils'
+import { supabase } from '@/lib/supabase'
 
 type Tipo = 'influencer' | 'marca'
 type Step = 1 | 2 | 3
@@ -11,13 +12,11 @@ type Step = 1 | 2 | 3
 const TIPOS = [
   {
     id: 'influencer' as Tipo,
-    icon: '🎤',
     title: 'Soy influencer',
     desc: 'Quiero conectar con marcas y conseguir campañas pagas.',
   },
   {
     id: 'marca' as Tipo,
-    icon: '🏢',
     title: 'Soy una marca',
     desc: 'Quiero encontrar creadores para mis campañas de marketing.',
   },
@@ -30,6 +29,8 @@ export default function RegistroPage() {
   const [tipo, setTipo] = useState<Tipo | null>(null)
   const [form, setForm] = useState({ nombre: '', email: '', password: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [loading, setLoading] = useState(false)
+  const [serverError, setServerError] = useState('')
 
   function validate() {
     const e: Record<string, string> = {}
@@ -42,13 +43,42 @@ export default function RegistroPage() {
     return Object.keys(e).length === 0
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!validate()) return
+    setLoading(true)
+    setServerError('')
+
+    const { data, error } = await supabase.auth.signUp({
+      email: form.email,
+      password: form.password,
+      options: {
+        data: {
+          nombre: form.nombre,
+          tipo: tipo,
+        },
+      },
+    })
+
+    setLoading(false)
+
+    if (error) {
+      setServerError(error.message)
+      return
+    }
+
     setUser({
       nombre: form.nombre,
       email: form.email,
       tipo: tipo!,
     })
+
+    // Si hay sesión activa (sin confirmación de email), ir directo al dashboard
+    if (data.session) {
+      router.push(tipo === 'marca' ? '/dashboard/marca' : '/dashboard/influencer')
+      return
+    }
+
+    // Si requiere confirmación de email, mostrar pantalla de éxito
     setStep(3)
   }
 
@@ -83,7 +113,6 @@ export default function RegistroPage() {
                         : 'border-border hover:border-[#B89EF0] hover:bg-accent'
                     )}
                   >
-                    <span className="text-3xl">{t.icon}</span>
                     <div>
                       <div className="text-sm font-semibold text-foreground">{t.title}</div>
                       <div className="text-xs text-muted-foreground mt-0.5">{t.desc}</div>
@@ -132,43 +161,45 @@ export default function RegistroPage() {
                   </div>
                 ))}
               </div>
+              {serverError && (
+                <p className="text-xs text-red-500 mb-4 text-center">{serverError}</p>
+              )}
               <div className="flex gap-3">
                 <button onClick={() => setStep(1)} className="px-5 py-3 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-xl hover:bg-accent">
                   Atrás
                 </button>
                 <button
                   onClick={handleSubmit}
-                  className="flex-1 bg-[#4A1FA8] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors"
+                  disabled={loading}
+                  className="flex-1 bg-[#4A1FA8] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Crear cuenta
+                  {loading ? 'Creando cuenta...' : 'Crear cuenta'}
                 </button>
               </div>
             </div>
           )}
 
-          {/* Step 3: Success */}
+          {/* Step 3: Confirmar email */}
           {step === 3 && (
             <div className="animate-fade-up text-center py-4">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-3xl mx-auto mb-5 animate-scale-in">
-                🎉
+              <div className="w-16 h-16 rounded-full bg-[#F0E8FF] dark:bg-[#2A1F45] flex items-center justify-center mx-auto mb-5">
+                <svg className="w-8 h-8 text-[#4A1FA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
               </div>
-              <h2 className="text-2xl font-bold text-foreground mb-2">
-                ¡Bienvenido, {form.nombre.split(' ')[0]}!
+              <h2 className="text-xl font-bold text-foreground mb-2">
+                Revisá tu email
               </h2>
-              <p className="text-muted-foreground text-sm mb-8">
-                Tu cuenta está lista. Completá tu perfil para empezar.
+              <p className="text-muted-foreground text-sm mb-2">
+                Enviamos un link de confirmación a
+              </p>
+              <p className="text-[#4A1FA8] font-semibold text-sm mb-6">{form.email}</p>
+              <p className="text-muted-foreground text-xs mb-6">
+                Hacé click en el link del email para activar tu cuenta e ingresar a la plataforma.
               </p>
               <Link
-                href="/onboarding"
-                className="block w-full bg-[#4A1FA8] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors mb-3"
-              >
-                Completar perfil →
-              </Link>
-              <Link
-                href="/"
+                href="/login"
                 className="block w-full border border-border text-muted-foreground text-sm py-3 rounded-xl hover:border-[#B89EF0] transition-colors"
               >
-                Explorar ahora
+                Ir al login
               </Link>
             </div>
           )}
