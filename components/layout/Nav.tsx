@@ -495,31 +495,6 @@ export function Nav() {
                     </>
                   )}
                   {results.campanas.length > 0 && (
-                    <>
-                      <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mt-1">Campañas</p>
-                      {results.campanas.map((c, idx) => {
-                        const globalIdx = results.influencers.length + idx
-                        return (
-                          <button
-                            key={inf.id}
-                            onClick={() => navigate({ type: 'influencer', id: inf.id, name: inf.nombre, sub: inf.categoria, iniciales: inf.iniciales, categoria: inf.categoria })}
-                            className={cn(
-                              'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left min-h-[48px]',
-                              activeIdx === idx ? 'bg-accent' : 'hover:bg-accent/50'
-                            )}
-                            style={{ transition: 'background-color 100ms ease' }}
-                          >
-                            <InfluencerAvatar iniciales={inf.iniciales} categoria={inf.categoria} size="sm" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-semibold text-foreground truncate">{inf.nombre}</p>
-                              <p className="text-xs text-muted-foreground">{inf.categoria} · {inf.seguidores.toLocaleString()} seg.</p>
-                            </div>
-                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#F0E8FF] text-[#4A1FA8]">Influencer</span>
-                          </button>
-                        ))}
-                      </>
-                    )}
-                    {results.campanas.length > 0 && (
                       <>
                         <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mt-1">Campañas</p>
                         {results.campanas.map((c, idx) => {
@@ -550,10 +525,9 @@ export function Nav() {
                   </>
                 )}
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
     </>
   )
 }
