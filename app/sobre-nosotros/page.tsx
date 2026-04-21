@@ -11,9 +11,9 @@ const VALUES = [
 ]
 
 const TEAM = [
-  { iniciales: 'WJ', color: '#4A1FA8', nombre: 'Walter Jaramillo', rol: 'Co-Founder & CEO', bio: 'Ingeniero industrial matemático, apasionado por la innovación y las operaciones. Lidera la visión y estrategia de Reachly.' },
-  { iniciales: 'MS', color: '#1D9E75', nombre: 'Matías Salinas', rol: 'Co-Founder & CEO', bio: 'Ingeniero industrial con foco en tecnología y operaciones. Diseña los sistemas que hacen que Reachly escale en toda la región.' },
-  { iniciales: 'BF', color: '#BA7517', nombre: 'Benjamín Fuentes', rol: 'CMO', bio: 'Publicista con visión estratégica en marketing y comunicación de marca. Lidera el posicionamiento y crecimiento de Reachly en LATAM.' },
+  { iniciales: 'WJ', color: '#4A1FA8', nombre: 'Walter Jaramillo', rol: 'Co-Founder & CEO', bio: 'Ingeniero industrial matemático, apasionado por la innovación y las operaciones. Lidera la visión y estrategia de Reachly.', linkedin: 'https://www.linkedin.com/in/walter-jaramillo-3b325425b/' },
+  { iniciales: 'MS', color: '#1D9E75', nombre: 'Matías Salinas', rol: 'Co-Founder & CEO', bio: 'Ingeniero industrial con foco en tecnología y operaciones. Diseña los sistemas que hacen que Reachly escale en toda la región.', linkedin: 'https://www.linkedin.com/in/matias-salinas-ing-industrial/' },
+  { iniciales: 'BF', color: '#BA7517', nombre: 'Benjamín Fuentes', rol: 'CMO', bio: 'Publicista con visión estratégica en marketing y comunicación de marca. Lidera el posicionamiento y crecimiento de Reachly en LATAM.', linkedin: 'https://www.linkedin.com/in/benjam%C3%ADn-fuentes-correa-b780b0323/' },
 ]
 
 export default function SobreNosotrosPage() {
@@ -92,13 +92,22 @@ export default function SobreNosotrosPage() {
           <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#7B52D4] mb-10">El equipo</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {TEAM.map(m => (
-              <div key={m.nombre} className="bg-card border border-border rounded-2xl p-7 text-center">
+              <div key={m.nombre} className="bg-card border border-border rounded-2xl p-7 text-center flex flex-col items-center">
                 <div className="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white shadow-lg" style={{ background: m.color }}>
                   {m.iniciales}
                 </div>
                 <p className="text-[17px] font-bold text-foreground mb-1">{m.nombre}</p>
                 <p className="text-xs text-[#9B8EC4] font-medium tracking-wide mb-3">{m.rol}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{m.bio}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1">{m.bio}</p>
+                <a
+                  href={m.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#1A56DB] hover:bg-[#1648C0] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0H5C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM8 19H5V8h3v11zM6.5 6.73a1.77 1.77 0 110-3.54 1.77 1.77 0 010 3.54zM20 19h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97V19h-3V8h2.88v1.5h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.59V19z"/></svg>
+                  Ver perfil
+                </a>
               </div>
             ))}
           </div>
