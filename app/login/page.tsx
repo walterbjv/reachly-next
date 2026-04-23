@@ -126,7 +126,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-5">
-          ¿No tenés cuenta?{' '}
+          ¿No tienes cuenta?{' '}
           <Link href="/registro" className="text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors">
             Registrarse gratis
           </Link>

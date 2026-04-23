@@ -17,7 +17,7 @@ export default function GdprPage() {
           <h2 className="text-lg font-bold text-foreground mb-3">Base legal para el procesamiento</h2>
           <div className="space-y-3">
             {[
-              { base: 'Ejecución de contrato', desc: 'Procesamos datos necesarios para proveer nuestros servicios cuando aceptás nuestros Términos de Uso.' },
+              { base: 'Ejecución de contrato', desc: 'Procesamos datos necesarios para proveer nuestros servicios cuando aceptas nuestros Términos de Uso.' },
               { base: 'Interés legítimo', desc: 'Para mejorar la seguridad, prevenir fraudes y optimizar la plataforma.' },
               { base: 'Consentimiento', desc: 'Para comunicaciones de marketing y cookies no esenciales.' },
               { base: 'Obligación legal', desc: 'Cuando debemos cumplir con requerimientos legales o regulatorios.' },
@@ -54,8 +54,8 @@ export default function GdprPage() {
 
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">Responsable de protección de datos (DPO)</h2>
-          <p>Para ejercer tus derechos o hacer consultas GDPR, contactá a nuestro DPO: <span className="text-[#7B52D4]">gdpr@reachly.app</span></p>
-          <p className="mt-2">También podés presentar una reclamación ante la autoridad de control de protección de datos de tu país.</p>
+          <p>Para ejercer tus derechos o hacer consultas GDPR, contacta a nuestro DPO: <span className="text-[#7B52D4]">gdpr@reachly.app</span></p>
+          <p className="mt-2">También puedes presentar una reclamación ante la autoridad de control de protección de datos de tu país.</p>
         </section>
       </div>
     </div>

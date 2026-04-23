@@ -275,7 +275,7 @@ export default function PerfilPage() {
                 </div>
                 {redesFilled.length === 0 ? (
                   <div className="text-center py-4">
-                    <p className="text-xs text-muted-foreground mb-2">No tenés redes cargadas</p>
+                    <p className="text-xs text-muted-foreground mb-2">No tienes redes cargadas</p>
                     <button onClick={() => setEditOpen(true)} className="text-xs text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors">+ Agregar</button>
                   </div>
                 ) : (
@@ -321,7 +321,7 @@ export default function PerfilPage() {
               {/* Completar perfil prompt */}
               {(!profile.bio || redesFilled.length === 0) && (
                 <div className="bg-gradient-to-br from-[#F0E8FF] to-[#E8E0FB] dark:from-[#2A1F45] dark:to-[#1A1428] border border-[#C4AEFA]/40 rounded-xl p-5">
-                  <h3 className="text-sm font-bold text-[#4A1FA8] dark:text-[#B89EF0] mb-1">Completá tu perfil</h3>
+                  <h3 className="text-sm font-bold text-[#4A1FA8] dark:text-[#B89EF0] mb-1">Completa tu perfil</h3>
                   <p className="text-xs text-[#4A1FA8]/70 dark:text-[#B89EF0]/70 mb-3">Los perfiles completos reciben 3x más visibilidad de marcas.</p>
                   <button
                     onClick={() => setEditOpen(true)}
@@ -345,7 +345,7 @@ export default function PerfilPage() {
                   <p className="text-sm text-foreground/80 leading-relaxed">{profile.bio}</p>
                 ) : (
                   <div className="text-center py-8 border-2 border-dashed border-border rounded-xl">
-                    <p className="text-sm text-muted-foreground mb-3">Contá algo sobre vos para que las marcas te conozcan mejor.</p>
+                    <p className="text-sm text-muted-foreground mb-3">Cuenta algo sobre ti para que las marcas te conozcan mejor.</p>
                     <button onClick={() => setEditOpen(true)} className="text-sm text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors">+ Agregar bio</button>
                   </div>
                 )}
@@ -361,7 +361,7 @@ export default function PerfilPage() {
                 </div>
                 {portfolioCount === 0 ? (
                   <div className="text-center py-8 border-2 border-dashed border-border rounded-xl">
-                    <p className="text-sm text-muted-foreground mb-3">Mostrá tu mejor contenido a las marcas.</p>
+                    <p className="text-sm text-muted-foreground mb-3">Muestra tu mejor contenido a las marcas.</p>
                     <button
                       onClick={() => { setTab('blog'); setAddPostOpen(true) }}
                       className="text-sm text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors"
@@ -415,7 +415,7 @@ export default function PerfilPage() {
                   <ExternalLink className="w-7 h-7 text-muted-foreground" />
                 </div>
                 <h3 className="text-base font-semibold text-foreground mb-1">No hay posts todavía</h3>
-                <p className="text-sm text-muted-foreground mb-5 max-w-sm mx-auto">Agregá links a tus mejores posts de Instagram, TikTok, YouTube y más para que las marcas vean tu trabajo.</p>
+                <p className="text-sm text-muted-foreground mb-5 max-w-sm mx-auto">Agrega links a tus mejores posts de Instagram, TikTok, YouTube y más para que las marcas vean tu trabajo.</p>
                 <button
                   onClick={() => setAddPostOpen(true)}
                   className="bg-[#4A1FA8] text-white text-sm font-semibold px-6 py-2.5 rounded-xl hover:bg-[#6C3BF5] transition-colors"
@@ -492,7 +492,7 @@ export default function PerfilPage() {
                     <textarea
                       value={form.bio}
                       onChange={e => setForm(p => ({ ...p, bio: e.target.value }))}
-                      placeholder="Contá algo sobre vos..."
+                      placeholder="Escribe algo sobre ti..."
                       maxLength={250}
                       rows={3}
                       className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10 transition-all resize-none"
@@ -593,7 +593,7 @@ export default function PerfilPage() {
                 <textarea
                   value={newPost.caption}
                   onChange={e => setNewPost(p => ({ ...p, caption: e.target.value }))}
-                  placeholder="Contá de qué trata el post..."
+                  placeholder="Describe de qué trata el post..."
                   maxLength={150}
                   rows={2}
                   className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-all resize-none"

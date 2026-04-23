@@ -44,8 +44,8 @@ function formatTime(iso: string) {
   const diff = now.getTime() - d.getTime()
   if (diff < 60000) return 'ahora'
   if (diff < 3600000) return `${Math.floor(diff / 60000)}m`
-  if (diff < 86400000) return d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
-  return d.toLocaleDateString('es-AR', { day: 'numeric', month: 'short' })
+  if (diff < 86400000) return d.toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' })
+  return d.toLocaleDateString('es-CL', { day: 'numeric', month: 'short' })
 }
 
 export default function MensajesPage() {
@@ -296,8 +296,8 @@ function MensajesContent() {
             {!activePartnerId ? (
               <div className="flex flex-col items-center justify-center h-full text-center px-8">
                 <MessageSquare className="w-10 h-10 text-muted-foreground mb-3" />
-                <h3 className="text-base font-semibold text-foreground mb-1">Seleccioná una conversación</h3>
-                <p className="text-sm text-muted-foreground">O iniciá una nueva desde el perfil de un influencer.</p>
+                <h3 className="text-base font-semibold text-foreground mb-1">Selecciona una conversación</h3>
+                <p className="text-sm text-muted-foreground">O inicia una nueva desde el perfil de un influencer.</p>
               </div>
             ) : (
               <>

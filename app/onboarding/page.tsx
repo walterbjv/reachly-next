@@ -117,8 +117,8 @@ export default function OnboardingPage() {
           {/* Step 1: Profile */}
           {step === 1 && (
             <div className="animate-fade-up">
-              <h2 className="text-xl font-bold text-foreground mb-2">Completá tu perfil</h2>
-              <p className="text-muted-foreground text-sm mb-6">Contanos un poco sobre vos.</p>
+              <h2 className="text-xl font-bold text-foreground mb-2">Completa tu perfil</h2>
+              <p className="text-muted-foreground text-sm mb-6">Cuéntanos un poco sobre ti.</p>
 
               {/* Avatar preview */}
               <div className="flex items-center gap-4 p-4 bg-muted rounded-xl mb-6">
@@ -155,7 +155,7 @@ export default function OnboardingPage() {
                   <textarea
                     value={bio}
                     onChange={e => setBio(e.target.value)}
-                    placeholder="Contá algo sobre vos en una o dos frases..."
+                    placeholder="Cuéntanos algo sobre ti en una o dos frases..."
                     maxLength={200}
                     rows={3}
                     className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10 transition-all resize-none"
@@ -177,7 +177,7 @@ export default function OnboardingPage() {
           {step === 2 && (
             <div className="animate-fade-up">
               <h2 className="text-xl font-bold text-foreground mb-2">Tus intereses</h2>
-              <p className="text-muted-foreground text-sm mb-6">Seleccioná las categorías que más te interesan.</p>
+              <p className="text-muted-foreground text-sm mb-6">Selecciona las categorías que más te interesan.</p>
 
               <div className="mb-6">
                 <label className="text-xs font-semibold text-foreground block mb-3">Categorías</label>
@@ -198,7 +198,7 @@ export default function OnboardingPage() {
               </div>
 
               <div className="mb-7">
-                <label className="text-xs font-semibold text-foreground block mb-3">¿Qué buscás en Reachly?</label>
+                <label className="text-xs font-semibold text-foreground block mb-3">¿Qué buscas en Reachly?</label>
                 <div className="flex flex-wrap gap-2">
                   {OBJETIVOS.map(obj => (
                     <button
@@ -225,8 +225,8 @@ export default function OnboardingPage() {
           {/* Step 3: Social networks */}
           {step === 3 && (
             <div className="animate-fade-up">
-              <h2 className="text-xl font-bold text-foreground mb-2">Conectá tus redes</h2>
-              <p className="text-muted-foreground text-sm mb-6">Opcional — podés completarlo desde tu perfil más tarde.</p>
+              <h2 className="text-xl font-bold text-foreground mb-2">Conecta tus redes</h2>
+              <p className="text-muted-foreground text-sm mb-6">Opcional — puedes completarlo desde tu perfil más tarde.</p>
 
               <div className="space-y-3 mb-7">
                 {REDES.map(r => (
@@ -268,7 +268,7 @@ export default function OnboardingPage() {
                 ¡Bienvenido{nombre ? `, ${nombre.split(' ')[0]}` : ''}!
               </h2>
               <p className="text-muted-foreground text-sm mb-8 max-w-sm mx-auto">
-                Ya podés explorar influencers, descubrir campañas y conectar con las mejores marcas de LATAM.
+                Ya puedes explorar influencers, descubrir campañas y conectar con las mejores marcas de LATAM.
               </p>
               <div className="flex flex-col gap-3">
                 <Link href="/" className="block bg-[#4A1FA8] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors">

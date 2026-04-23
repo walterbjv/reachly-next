@@ -11,7 +11,7 @@ export default function TerminosPage() {
       <div className="space-y-8 text-sm text-foreground/80 leading-relaxed">
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">1. Aceptación de los términos</h2>
-          <p>Al acceder y usar Reachly, aceptás quedar vinculado por estos Términos de Uso. Si no estás de acuerdo con alguna parte de estos términos, no podés usar nuestros servicios.</p>
+          <p>Al acceder y usar Reachly, aceptas quedar vinculado por estos Términos de Uso. Si no estás de acuerdo con alguna parte de estos términos, no puedes usar nuestros servicios.</p>
         </section>
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">2. Descripción del servicio</h2>

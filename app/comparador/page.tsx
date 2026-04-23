@@ -201,7 +201,7 @@ export default function ComparadorPage() {
       {selected.length < 2 && !showPicker && (
         <div className="text-center py-16 text-muted-foreground">
           <div className="text-sm font-semibold text-muted-foreground mb-3">vs</div>
-          <p className="text-sm">Agregá al menos 2 influencers para comparar</p>
+          <p className="text-sm">Agrega al menos 2 influencers para comparar</p>
         </div>
       )}
     </div>

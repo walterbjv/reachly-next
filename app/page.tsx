@@ -4,7 +4,7 @@ import { fetchInfluencers } from '@/lib/api'
 
 export const metadata: Metadata = {
   title: 'Explorar influencers',
-  description: 'Descubrí los mejores influencers de LATAM. Filtrá por categoría, seguidores y engagement.',
+  description: 'Descubre los mejores influencers de LATAM. Filtra por categoría, seguidores y engagement.',
 }
 
 export default async function HomePage() {

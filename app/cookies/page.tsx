@@ -17,7 +17,7 @@ export default function CookiesPage() {
 
       <div className="space-y-8 text-sm text-foreground/80 leading-relaxed">
         <section>
-          <p>Reachly usa cookies y tecnologías similares para mejorar tu experiencia, analizar el uso de la plataforma y mostrarte contenido relevante. Esta política explica qué cookies usamos y cómo podés gestionarlas.</p>
+          <p>Reachly usa cookies y tecnologías similares para mejorar tu experiencia, analizar el uso de la plataforma y mostrarte contenido relevante. Esta política explica qué cookies usamos y cómo puedes gestionarlas.</p>
         </section>
 
         <section>
@@ -35,7 +35,7 @@ export default function CookiesPage() {
 
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">Cómo gestionar cookies</h2>
-          <p className="mb-3">Podés controlar las cookies desde la configuración de tu navegador. Ten en cuenta que desactivar ciertas cookies puede afectar el funcionamiento de la plataforma.</p>
+          <p className="mb-3">Puedes controlar las cookies desde la configuración de tu navegador. Ten en cuenta que desactivar ciertas cookies puede afectar el funcionamiento de la plataforma.</p>
           <ul className="list-disc pl-5 space-y-1">
             <li>Chrome: Configuración → Privacidad y seguridad → Cookies</li>
             <li>Firefox: Preferencias → Privacidad y seguridad</li>
@@ -45,7 +45,7 @@ export default function CookiesPage() {
 
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">Cookies de terceros</h2>
-          <p>Algunos de nuestros socios (analytics, publicidad) pueden establecer cookies en tu dispositivo. Revisá sus respectivas políticas de privacidad para más información.</p>
+          <p>Algunos de nuestros socios (analytics, publicidad) pueden establecer cookies en tu dispositivo. Revisa sus respectivas políticas de privacidad para más información.</p>
         </section>
 
         <section>

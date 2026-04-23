@@ -100,7 +100,7 @@ export default function RegistroPage() {
           {step === 1 && (
             <div className="animate-fade-up">
               <h1 className="text-2xl font-bold text-foreground mb-2">Crear cuenta</h1>
-              <p className="text-muted-foreground text-sm mb-7">¿Cómo querés usar Reachly?</p>
+              <p className="text-muted-foreground text-sm mb-7">¿Cómo quieres usar Reachly?</p>
               <div className="space-y-3 mb-8">
                 {TIPOS.map(t => (
                   <button
@@ -186,14 +186,14 @@ export default function RegistroPage() {
                 <svg className="w-8 h-8 text-[#4A1FA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
               </div>
               <h2 className="text-xl font-bold text-foreground mb-2">
-                Revisá tu email
+                Revisa tu email
               </h2>
               <p className="text-muted-foreground text-sm mb-2">
                 Enviamos un link de confirmación a
               </p>
               <p className="text-[#4A1FA8] font-semibold text-sm mb-6">{form.email}</p>
               <p className="text-muted-foreground text-xs mb-6">
-                Hacé click en el link del email para activar tu cuenta e ingresar a la plataforma.
+                Haz clic en el link del email para activar tu cuenta e ingresar a la plataforma.
               </p>
               <Link
                 href="/login"
@@ -206,7 +206,7 @@ export default function RegistroPage() {
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-5">
-          ¿Ya tenés cuenta?{' '}
+          ¿Ya tienes cuenta?{' '}
           <Link href="/login" className="text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors">
             Iniciar sesión
           </Link>
