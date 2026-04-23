@@ -219,7 +219,7 @@ export function Nav() {
             )
           ))}
 
-          {isLanding && (
+          {isLanding && authUser && (
             <Link
               href="/"
               className="text-sm text-white font-medium hover:text-[#C4AEFA] transition-colors duration-150"
@@ -405,7 +405,7 @@ export function Nav() {
               )
             ))}
 
-            {isLanding && (
+            {isLanding && authUser && (
               <Link
                 href="/"
                 onClick={() => setMenuOpen(false)}

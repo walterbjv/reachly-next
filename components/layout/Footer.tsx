@@ -1,12 +1,5 @@
 import Link from 'next/link'
 
-const PLATAFORMA = [
-  { href: '/', label: 'Explorar influencers' },
-  { href: '/campanas', label: 'Campañas' },
-  { href: '/tendencias', label: 'Tendencias' },
-  { href: '/comparador', label: 'Comparador' },
-]
-
 const EMPRESA = [
   { href: '/sobre-nosotros', label: 'Sobre nosotros' },
   { href: '/blog', label: 'Blog' },
@@ -26,7 +19,7 @@ export function Footer() {
   return (
     <footer className="bg-[#0D0625] pt-16 pb-8">
       <div className="max-w-[1100px] mx-auto px-[5%]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/7 mb-7">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 pb-12 border-b border-white/7 mb-7">
           {/* Brand col */}
           <div>
             <img src="/logo-reachly-white.svg" alt="Reachly" className="h-6 w-auto mb-2" />
@@ -49,7 +42,6 @@ export function Footer() {
           </div>
 
           {/* Links */}
-          <FooterCol title="Plataforma" links={PLATAFORMA} />
           <FooterCol title="Empresa" links={EMPRESA} />
           <FooterCol title="Legal" links={LEGAL} />
         </div>
