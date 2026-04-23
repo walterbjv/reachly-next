@@ -50,7 +50,7 @@ export default function CookiesPage() {
 
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">Contacto</h2>
-          <p>Para preguntas sobre nuestra política de cookies: <span className="text-[#7B52D4]">privacidad@reachly.app</span></p>
+          <p>Para preguntas sobre nuestra política de cookies: <span className="text-brand-400">privacidad@reachly.app</span></p>
         </section>
       </div>
     </div>

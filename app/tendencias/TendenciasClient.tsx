@@ -43,10 +43,10 @@ export function TendenciasClient({ influencers }: { influencers: Influencer[] })
   return (
     <div>
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-[#4A1FA8] to-[#2E1270] text-center px-[5%] py-14 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-brand-600 to-brand-800 text-center px-[5%] py-14 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 65% 40%, rgba(123,82,212,.3) 0%, transparent 60%)' }} />
         <div className="relative">
-          <div className="inline-block bg-white/10 border border-white/18 rounded-full px-4 py-1 text-xs text-[#C4AEFA] mb-4">Actualizado en tiempo real</div>
+          <div className="inline-block bg-white/10 border border-white/18 rounded-full px-4 py-1 text-xs text-brand-200 mb-4">Actualizado en tiempo real</div>
           <h1 className="text-white text-3xl md:text-4xl font-bold mb-3">Tendencias & Ranking</h1>
           <p className="text-white/60 text-base max-w-md mx-auto">
             Los influencers que más crecen, las categorías que dominan y hacia dónde va el mercado.
@@ -63,7 +63,7 @@ export function TendenciasClient({ influencers }: { influencers: Influencer[] })
               onClick={() => setPeriodo(p)}
               className={cn(
                 'text-sm px-4 py-2 rounded-lg font-medium transition-all',
-                periodo === p ? 'bg-[#4A1FA8] text-white' : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                periodo === p ? 'bg-brand-600 text-white' : 'text-muted-foreground hover:text-foreground hover:bg-accent'
               )}
             >
               {p.charAt(0).toUpperCase() + p.slice(1)}
@@ -79,7 +79,7 @@ export function TendenciasClient({ influencers }: { influencers: Influencer[] })
           {overallStats.map((s, i) => (
             <div
               key={s.label}
-              className="bg-card border border-border rounded-2xl p-5 hover:border-[#B89EF0] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 animate-fade-up"
+              className="bg-card border border-border rounded-2xl p-5 hover:border-brand-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 animate-fade-up"
               style={{ animationDelay: `${i * 0.06}s` }}
             >
               <div className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">{s.label}</div>
@@ -94,7 +94,7 @@ export function TendenciasClient({ influencers }: { influencers: Influencer[] })
         {/* Ranking table */}
         <div>
           <div className="mb-5">
-            <div className="text-xs font-semibold text-[#7B52D4] uppercase tracking-widest mb-1">Ranking</div>
+            <div className="text-xs font-semibold text-brand-400 uppercase tracking-widest mb-1">Ranking</div>
             <h2 className="text-xl font-bold text-foreground">Top influencers</h2>
           </div>
           <div className="bg-card border border-border rounded-2xl overflow-hidden">
@@ -137,7 +137,7 @@ export function TendenciasClient({ influencers }: { influencers: Influencer[] })
         {/* Categories */}
         <div>
           <div className="mb-5">
-            <div className="text-xs font-semibold text-[#7B52D4] uppercase tracking-widest mb-1">Categorías</div>
+            <div className="text-xs font-semibold text-brand-400 uppercase tracking-widest mb-1">Categorías</div>
             <h2 className="text-xl font-bold text-foreground">Categorías en tendencia</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -148,7 +148,7 @@ export function TendenciasClient({ influencers }: { influencers: Influencer[] })
                 <Link
                   key={cat}
                   href="/"
-                  className="bg-card border border-border rounded-2xl p-5 hover:border-[#B89EF0] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 animate-fade-up"
+                  className="bg-card border border-border rounded-2xl p-5 hover:border-brand-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 animate-fade-up"
                   style={{ animationDelay: `${i * 0.07}s` }}
                 >
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-3" style={{ background: c.bg }}>

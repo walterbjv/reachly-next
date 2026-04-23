@@ -29,7 +29,7 @@ export default async function InfluencerPage({ params }: { params: Promise<{ id:
   const inf = await fetchInfluencer(Number(id))
   if (!inf) notFound()
 
-  const colors = CATEGORIA_COLORS[inf.categoria] ?? { bg: '#F0E8FF', text: '#4A1FA8' }
+  const colors = CATEGORIA_COLORS[inf.categoria] ?? { bg: 'var(--color-brand-50)', text: 'var(--color-brand-600)' }
   const redesFilled = Object.entries(inf.redes ?? {}).filter(([, v]) => v)
 
   const stats = [
@@ -46,14 +46,14 @@ export default async function InfluencerPage({ params }: { params: Promise<{ id:
       </Link>
 
       {/* Profile header */}
-      <div className="bg-gradient-to-br from-[#4A1FA8] to-[#2E1270] rounded-2xl p-8 mb-5 mt-4">
+      <div className="bg-gradient-to-br from-brand-600 to-brand-800 rounded-2xl p-8 mb-5 mt-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
           {/* Avatar */}
           <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0">
             {inf.avatar_url ? (
               <img src={inf.avatar_url} alt={inf.nombre} className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold" style={{ background: colors.avatar ?? '#4A1FA8' }}>
+              <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold" style={{ background: colors.avatar ?? 'var(--color-brand-600)' }}>
                 {inf.iniciales}
               </div>
             )}
@@ -86,7 +86,7 @@ export default async function InfluencerPage({ params }: { params: Promise<{ id:
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         {stats.map(s => (
           <div key={s.label} className="bg-card border border-border rounded-xl p-5 text-center">
-            <div className="text-xl font-bold text-[#4A1FA8] dark:text-[#B89EF0] tracking-tight">{s.value}</div>
+            <div className="text-xl font-bold text-brand-600 dark:text-brand-300 tracking-tight">{s.value}</div>
             <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
           </div>
         ))}
@@ -127,14 +127,14 @@ export default async function InfluencerPage({ params }: { params: Promise<{ id:
             <h2 className="text-base font-bold text-foreground mb-4">Contacto</h2>
             <Link
               href="/campanas"
-              className="block text-center w-full bg-[#4A1FA8] text-white font-semibold text-sm px-4 py-2.5 rounded-xl hover:bg-[#6C3BF5] transition-colors mb-3"
+              className="block text-center w-full bg-brand-600 text-white font-semibold text-sm px-4 py-2.5 rounded-xl hover:bg-brand-500 transition-colors mb-3"
             >
               Ver campañas
             </Link>
             {inf.profile_id && (
               <Link
                 href={`/mensajes?with=${inf.profile_id}`}
-                className="block text-center w-full border border-border text-muted-foreground font-medium text-sm px-4 py-2.5 rounded-xl hover:border-[#B89EF0] transition-colors"
+                className="block text-center w-full border border-border text-muted-foreground font-medium text-sm px-4 py-2.5 rounded-xl hover:border-brand-300 transition-colors"
               >
                 Mensaje directo
               </Link>

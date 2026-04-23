@@ -78,10 +78,10 @@ export function FollowButton({ targetProfileId, variant = 'dark' }: Props) {
           variant === 'dark'
             ? following
               ? 'bg-white/15 text-white border border-white/30 hover:bg-red-500/20 hover:border-red-400/40 hover:text-red-300'
-              : 'bg-white text-[#4A1FA8] hover:bg-[#F0E8FF]'
+              : 'bg-white text-brand-600 hover:bg-brand-50'
             : following
               ? 'border border-border text-muted-foreground hover:bg-red-50 hover:text-red-500 hover:border-red-200 dark:hover:bg-red-900/20'
-              : 'bg-[#4A1FA8] text-white hover:bg-[#6C3BF5]'
+              : 'bg-brand-600 text-white hover:bg-brand-500'
         )}
       >
         {loading

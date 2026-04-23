@@ -13,14 +13,14 @@ interface Props {
 export function CampanaCard({ campana: c, index = 0 }: Props) {
   const { isCampanaFav, toggleCampana } = useFavoritosStore()
   const isFav = isCampanaFav(c.id)
-  const colors = CATEGORIA_COLORS[c.categoria] ?? { bg: '#F0E8FF', text: '#4A1FA8' }
+  const colors = CATEGORIA_COLORS[c.categoria] ?? { bg: 'var(--color-brand-50)', text: 'var(--color-brand-600)' }
 
   return (
     <Link
       href={`/campanas/${c.id}`}
       className={cn(
         'group block bg-card border border-border rounded-[18px] p-[22px]',
-        'hover:border-[#B89EF0] hover:shadow-[0_8px_36px_rgba(74,31,168,.12)] hover:-translate-y-0.5',
+        'hover:border-brand-300 hover:shadow-[0_8px_36px_rgba(74,31,168,.12)] hover:-translate-y-0.5',
         'transition-all duration-200 animate-fade-up'
       )}
       style={{ animationDelay: `${index * 0.06}s` }}

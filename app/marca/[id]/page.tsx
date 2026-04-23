@@ -78,15 +78,15 @@ export default async function MarcaPage({ params }: { params: Promise<{ id: stri
     <div className="max-w-[1100px] mx-auto px-[5%] py-10">
       {/* Header */}
       <div className="bg-card border border-border rounded-2xl overflow-hidden mb-6">
-        <div className="h-28 bg-gradient-to-br from-[#2E1270] to-[#4A1FA8]" />
+        <div className="h-28 bg-gradient-to-br from-brand-800 to-[var(--color-brand-600)]" />
         <div className="px-6 pb-6">
           <div className="flex flex-wrap items-end justify-between gap-4 -mt-8 mb-5">
-            <div className="w-16 h-16 rounded-2xl border-4 border-card bg-[#4A1FA8] flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
+            <div className="w-16 h-16 rounded-2xl border-4 border-card bg-brand-600 flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
               {brand.iniciales}
             </div>
             <Link
               href={`/mensajes`}
-              className="bg-[#4A1FA8] text-white text-sm font-semibold px-5 py-2 rounded-xl hover:bg-[#6C3BF5] transition-colors"
+              className="bg-brand-600 text-white text-sm font-semibold px-5 py-2 rounded-xl hover:bg-brand-500 transition-colors"
             >
               Contactar
             </Link>
@@ -96,7 +96,7 @@ export default async function MarcaPage({ params }: { params: Promise<{ id: stri
           <p className="text-sm text-foreground/80 mt-3 max-w-2xl">{brand.descripcion}</p>
           <div className="flex flex-wrap gap-2 mt-4">
             {brand.categoria.map(c => (
-              <span key={c} className="text-xs px-3 py-1.5 rounded-full bg-[#F0E8FF] dark:bg-[#2A1F45] text-[#4A1FA8] dark:text-[#B89EF0] font-medium">{c}</span>
+              <span key={c} className="text-xs px-3 py-1.5 rounded-full bg-brand-50 dark:bg-brand-900 text-brand-600 dark:text-brand-300 font-medium">{c}</span>
             ))}
           </div>
         </div>
@@ -152,12 +152,12 @@ export default async function MarcaPage({ params }: { params: Promise<{ id: stri
             </div>
             <div>
               <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Sitio web</p>
-              <p className="text-sm text-[#7B52D4] mt-0.5">{brand.sitio}</p>
+              <p className="text-sm text-brand-400 mt-0.5">{brand.sitio}</p>
             </div>
           </div>
           <Link
             href="/mensajes"
-            className="block w-full text-center mt-5 bg-[#4A1FA8] text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-[#6C3BF5] transition-colors"
+            className="block w-full text-center mt-5 bg-brand-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-brand-500 transition-colors"
           >
             Enviar mensaje
           </Link>
@@ -168,15 +168,15 @@ export default async function MarcaPage({ params }: { params: Promise<{ id: stri
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base font-bold text-foreground">Influencers que podrían interesarte</h2>
-          <Link href="/" className="text-sm text-[#7B52D4] hover:text-[#4A1FA8] transition-colors">Ver todos →</Link>
+          <Link href="/" className="text-sm text-brand-400 hover:text-brand-600 transition-colors">Ver todos →</Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {sugeridos.map(inf => (
-            <Link key={inf.id} href={`/influencer/${inf.id}`} className="bg-card border border-border rounded-xl p-4 hover:border-[#B89EF0] transition-colors">
+            <Link key={inf.id} href={`/influencer/${inf.id}`} className="bg-card border border-border rounded-xl p-4 hover:border-brand-300 transition-colors">
               <div className="flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-full overflow-hidden mb-3">
                   <svg width="48" height="48" viewBox="0 0 48 48">
-                    <circle cx="24" cy="24" r="24" fill="#4A1FA8" />
+                    <circle cx="24" cy="24" r="24" fill="var(--color-brand-600)" />
                     <text x="24" y="24" textAnchor="middle" dominantBaseline="central" fill="white" fontSize="16" fontWeight="600" fontFamily="sans-serif">{inf.iniciales}</text>
                   </svg>
                 </div>

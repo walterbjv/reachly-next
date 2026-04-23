@@ -63,7 +63,7 @@ export function Servicios() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="servicios" className="py-24 px-[5%] bg-[#F4F2FB] dark:bg-[#0D0A1A]">
+    <section id="servicios" className="py-24 px-[5%] bg-reachly-bg dark:bg-background">
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           className="mb-14"
@@ -72,12 +72,12 @@ export function Servicios() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.55, ease: EASE }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#7B52D4] mb-3">Servicios</p>
+          <p className="text-xs font-semibold uppercase tracking-[.12em] text-brand-400 mb-3">Servicios</p>
           <h2 className="text-[clamp(26px,3.5vw,40px)] font-bold text-foreground leading-tight mb-4">
             Diseñado para cada<br />lado del ecosistema
           </h2>
           <p className="text-[17px] text-muted-foreground leading-relaxed max-w-[560px]">
-            Ya seas una marca, influencer o agencia, Reachly tiene las herramientas exactas que necesitás para crecer.
+            Ya seas una marca, influencer o agencia, Reachly tiene las herramientas exactas que necesitas para crecer.
           </p>
         </motion.div>
 
@@ -95,8 +95,8 @@ export function Servicios() {
             transition={{ type: 'spring', duration: 0.4, bounce: 0.15 }}
             className="bg-white dark:bg-card border border-border rounded-2xl p-8 cursor-default"
           >
-            <div className="w-[52px] h-[52px] rounded-2xl bg-[#F0E8FF] dark:bg-[#2A1F45] flex items-center justify-center mb-5">
-              <Building2 className="w-6 h-6 text-[#4A1FA8]" />
+            <div className="w-[52px] h-[52px] rounded-2xl bg-brand-50 dark:bg-brand-900 flex items-center justify-center mb-5">
+              <Building2 className="w-6 h-6 text-brand-600" />
             </div>
             <h3 className="text-xl font-bold text-foreground mb-2">Para Marcas</h3>
             <p className="text-sm text-muted-foreground leading-relaxed mb-6">
@@ -107,7 +107,7 @@ export function Servicios() {
             </ul>
             <Link
               href="/registro"
-              className="block w-full text-center border border-border text-[#4A1FA8] font-medium text-sm py-2.5 rounded-xl hover:border-[#4A1FA8] hover:bg-[#F0E8FF] active:scale-[0.98] transition-all"
+              className="block w-full text-center border border-border text-brand-600 font-medium text-sm py-2.5 rounded-xl hover:border-brand-600 hover:bg-brand-50 active:scale-[0.98] transition-all"
               style={{ transition: 'all 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
             >
               Crear cuenta de marca →
@@ -120,7 +120,7 @@ export function Servicios() {
             whileHover={{ y: -6, boxShadow: '0 20px 60px rgba(74,31,168,.35)' }}
             transition={{ type: 'spring', duration: 0.4, bounce: 0.15 }}
             className="rounded-2xl p-8 cursor-default relative overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, #4A1FA8 0%, #2E1270 100%)' }}
+            style={{ background: 'linear-gradient(135deg, var(--color-brand-600) 0%, var(--color-brand-800) 100%)' }}
           >
             {/* Subtle glow overlay */}
             <div
@@ -140,7 +140,7 @@ export function Servicios() {
               </ul>
               <Link
                 href="/registro"
-                className="block w-full text-center bg-white text-[#4A1FA8] font-semibold text-sm py-2.5 rounded-xl hover:opacity-90 active:scale-[0.98] transition-all"
+                className="block w-full text-center bg-white text-brand-600 font-semibold text-sm py-2.5 rounded-xl hover:opacity-90 active:scale-[0.98] transition-all"
                 style={{ transition: 'all 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
               >
                 Crear mi perfil gratis →
@@ -155,8 +155,8 @@ export function Servicios() {
             transition={{ type: 'spring', duration: 0.4, bounce: 0.15 }}
             className="bg-white dark:bg-card border border-border rounded-2xl p-8 cursor-default"
           >
-            <div className="w-[52px] h-[52px] rounded-2xl bg-[#F0E8FF] dark:bg-[#2A1F45] flex items-center justify-center mb-5">
-              <Trophy className="w-6 h-6 text-[#4A1FA8]" />
+            <div className="w-[52px] h-[52px] rounded-2xl bg-brand-50 dark:bg-brand-900 flex items-center justify-center mb-5">
+              <Trophy className="w-6 h-6 text-brand-600" />
             </div>
             <h3 className="text-xl font-bold text-foreground mb-2">Para Agencias</h3>
             <p className="text-sm text-muted-foreground leading-relaxed mb-6">
@@ -167,7 +167,7 @@ export function Servicios() {
             </ul>
             <Link
               href="/registro"
-              className="block w-full text-center border border-border text-[#4A1FA8] font-medium text-sm py-2.5 rounded-xl hover:border-[#4A1FA8] hover:bg-[#F0E8FF] active:scale-[0.98] transition-all"
+              className="block w-full text-center border border-border text-brand-600 font-medium text-sm py-2.5 rounded-xl hover:border-brand-600 hover:bg-brand-50 active:scale-[0.98] transition-all"
               style={{ transition: 'all 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
             >
               Hablar con ventas →

@@ -23,7 +23,7 @@ export function ComoFunciona() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="como-funciona" className="py-24 px-[5%] bg-white dark:bg-[#1A1428]">
+    <section id="como-funciona" className="py-24 px-[5%] bg-white dark:bg-card">
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           className="mb-12"
@@ -32,7 +32,7 @@ export function ComoFunciona() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.55, ease: EASE }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#7B52D4] mb-3">Cómo funciona Reachly</p>
+          <p className="text-xs font-semibold uppercase tracking-[.12em] text-brand-400 mb-3">Cómo funciona Reachly</p>
           <h2 className="text-[clamp(26px,3.5vw,40px)] font-bold text-foreground leading-tight mb-4">
             De cero a campañas<br />en pocos minutos
           </h2>
@@ -56,14 +56,14 @@ export function ComoFunciona() {
               className={`px-5 py-2 rounded-full text-sm font-medium relative active:scale-[0.97] ${
                 tab === t
                   ? 'text-white'
-                  : 'border border-border text-muted-foreground hover:text-foreground hover:border-[#C4AEFA]'
+                  : 'border border-border text-muted-foreground hover:text-foreground hover:border-brand-200'
               }`}
               style={{ transition: 'border-color 180ms ease, color 180ms ease' }}
             >
               {tab === t && (
                 <motion.span
                   layoutId="tab-bg"
-                  className="absolute inset-0 bg-[#4A1FA8] rounded-full"
+                  className="absolute inset-0 bg-brand-600 rounded-full"
                   transition={{ type: 'spring', duration: 0.4, bounce: 0.2 }}
                 />
               )}
@@ -90,7 +90,7 @@ export function ComoFunciona() {
                 {i < steps.length - 1 && (
                   <div className="hidden sm:block absolute top-5 left-[calc(50%+24px)] right-0 h-0.5 bg-border" />
                 )}
-                <div className="w-10 h-10 rounded-full bg-[#4A1FA8] text-white font-bold text-sm flex items-center justify-center mb-4 relative z-10 shadow-[0_4px_12px_rgba(74,31,168,.35)]">
+                <div className="w-10 h-10 rounded-full bg-brand-600 text-white font-bold text-sm flex items-center justify-center mb-4 relative z-10 shadow-[0_4px_12px_rgba(74,31,168,.35)]">
                   {s.num}
                 </div>
                 <h3 className="text-base font-bold text-foreground mb-2">{s.title}</h3>

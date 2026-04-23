@@ -94,11 +94,11 @@ export default function OnboardingPage() {
               <div key={label} className="flex items-center gap-2 flex-1 last:flex-none">
                 <div className={cn(
                   'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 transition-all',
-                  step > s ? 'bg-emerald-500 text-white' : step === s ? 'bg-[#4A1FA8] text-white' : 'bg-border text-muted-foreground'
+                  step > s ? 'bg-emerald-500 text-white' : step === s ? 'bg-brand-600 text-white' : 'bg-border text-muted-foreground'
                 )}>
                   {step > s ? '✓' : s}
                 </div>
-                <span className={cn('text-xs hidden sm:block', step === s ? 'text-[#4A1FA8] font-semibold' : 'text-muted-foreground')}>
+                <span className={cn('text-xs hidden sm:block', step === s ? 'text-brand-600 font-semibold' : 'text-muted-foreground')}>
                   {label}
                 </span>
                 {i < 3 && <div className={cn('flex-1 h-0.5 mx-1', step > s ? 'bg-emerald-500' : 'bg-border')} />}
@@ -107,7 +107,7 @@ export default function OnboardingPage() {
           })}
         </div>
         <div className="h-1 bg-border rounded-full overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-[#4A1FA8] to-[#7B52D4] rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
+          <div className="h-full bg-gradient-to-r from-brand-600 to-brand-400 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
         </div>
       </div>
 
@@ -124,7 +124,7 @@ export default function OnboardingPage() {
               <div className="flex items-center gap-4 p-4 bg-muted rounded-xl mb-6">
                 <div className="w-12 h-12 rounded-full flex-shrink-0 overflow-hidden">
                   <svg width="48" height="48" viewBox="0 0 48 48">
-                    <circle cx="24" cy="24" r="24" fill="#4A1FA8" />
+                    <circle cx="24" cy="24" r="24" fill="var(--color-brand-600)" />
                     <text x="24" y="24" textAnchor="middle" dominantBaseline="central" fill="white" fontSize="17" fontWeight="600" fontFamily="sans-serif">{iniciales}</text>
                   </svg>
                 </div>
@@ -146,7 +146,7 @@ export default function OnboardingPage() {
                       value={f.value}
                       onChange={e => f.onChange(e.target.value)}
                       placeholder={f.placeholder}
-                      className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10 transition-all"
+                      className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10 transition-all"
                     />
                   </div>
                 ))}
@@ -158,14 +158,14 @@ export default function OnboardingPage() {
                     placeholder="Cuéntanos algo sobre ti en una o dos frases..."
                     maxLength={200}
                     rows={3}
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10 transition-all resize-none"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10 transition-all resize-none"
                   />
                 </div>
               </div>
               <div className="flex justify-end">
                 <button
                   onClick={() => nombre.trim() && setStep(2)}
-                  className="bg-[#4A1FA8] text-white font-semibold text-sm px-7 py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors"
+                  className="bg-brand-600 text-white font-semibold text-sm px-7 py-3 rounded-xl hover:bg-brand-500 transition-colors"
                 >
                   Continuar
                 </button>
@@ -188,7 +188,7 @@ export default function OnboardingPage() {
                       onClick={() => toggleChip(cat, selectedCats, setSelectedCats)}
                       className={cn(
                         'text-sm px-4 py-1.5 rounded-full border font-medium transition-all',
-                        selectedCats.includes(cat) ? 'bg-[#4A1FA8] text-white border-[#4A1FA8]' : 'bg-card text-foreground border-border hover:border-[#C4AEFA]'
+                        selectedCats.includes(cat) ? 'bg-brand-600 text-white border-brand-600' : 'bg-card text-foreground border-border hover:border-brand-200'
                       )}
                     >
                       {cat}
@@ -206,7 +206,7 @@ export default function OnboardingPage() {
                       onClick={() => toggleChip(obj, selectedObjs, setSelectedObjs)}
                       className={cn(
                         'text-sm px-4 py-1.5 rounded-full border font-medium transition-all',
-                        selectedObjs.includes(obj) ? 'bg-[#4A1FA8] text-white border-[#4A1FA8]' : 'bg-card text-foreground border-border hover:border-[#C4AEFA]'
+                        selectedObjs.includes(obj) ? 'bg-brand-600 text-white border-brand-600' : 'bg-card text-foreground border-border hover:border-brand-200'
                       )}
                     >
                       {obj}
@@ -217,7 +217,7 @@ export default function OnboardingPage() {
 
               <div className="flex justify-between">
                 <button onClick={() => setStep(1)} className="px-5 py-3 text-sm text-muted-foreground hover:text-foreground rounded-xl hover:bg-accent transition-colors">Atrás</button>
-                <button onClick={() => setStep(3)} className="bg-[#4A1FA8] text-white font-semibold text-sm px-7 py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors">Continuar</button>
+                <button onClick={() => setStep(3)} className="bg-brand-600 text-white font-semibold text-sm px-7 py-3 rounded-xl hover:bg-brand-500 transition-colors">Continuar</button>
               </div>
             </div>
           )}
@@ -242,7 +242,7 @@ export default function OnboardingPage() {
                         onChange={e => setRedes(p => ({ ...p, [r.id]: e.target.value }))}
                         placeholder={r.placeholder}
                         className={cn(
-                          'w-full py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-all',
+                          'w-full py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-all',
                           r.prefix ? 'pl-7 pr-4' : 'px-4'
                         )}
                       />
@@ -253,7 +253,7 @@ export default function OnboardingPage() {
 
               <div className="flex justify-between">
                 <button onClick={() => setStep(2)} className="px-5 py-3 text-sm text-muted-foreground hover:text-foreground rounded-xl hover:bg-accent transition-colors">Atrás</button>
-                <button onClick={finish} className="bg-[#4A1FA8] text-white font-semibold text-sm px-7 py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors">Finalizar</button>
+                <button onClick={finish} className="bg-brand-600 text-white font-semibold text-sm px-7 py-3 rounded-xl hover:bg-brand-500 transition-colors">Finalizar</button>
               </div>
             </div>
           )}
@@ -271,10 +271,10 @@ export default function OnboardingPage() {
                 Ya puedes explorar influencers, descubrir campañas y conectar con las mejores marcas de LATAM.
               </p>
               <div className="flex flex-col gap-3">
-                <Link href="/" className="block bg-[#4A1FA8] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors">
+                <Link href="/" className="block bg-brand-600 text-white font-semibold text-sm py-3 rounded-xl hover:bg-brand-500 transition-colors">
                   Explorar influencers
                 </Link>
-                <Link href="/campanas" className="block border border-border text-muted-foreground text-sm py-3 rounded-xl hover:border-[#B89EF0] transition-colors">
+                <Link href="/campanas" className="block border border-border text-muted-foreground text-sm py-3 rounded-xl hover:border-brand-300 transition-colors">
                   Ver campañas
                 </Link>
               </div>

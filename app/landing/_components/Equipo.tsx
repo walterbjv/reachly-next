@@ -16,7 +16,7 @@ const cardVars = {
 const TEAM = [
   {
     initials: 'WJ',
-    color: '#4A1FA8',
+    color: 'var(--color-brand-600)',
     name: 'Walter Jaramillo',
     role: 'Co-Founder & CEO',
     bio: 'Ingeniero industrial matemático, apasionado por la inovación y las operaciones. Lidera la visión y estrategia de Reachly.',
@@ -60,7 +60,7 @@ export function Equipo() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.55, ease: EASE }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#7B52D4] mb-3">El equipo</p>
+          <p className="text-xs font-semibold uppercase tracking-[.12em] text-brand-400 mb-3">El equipo</p>
           <h2 className="text-[clamp(26px,3.5vw,40px)] font-bold text-foreground leading-tight">
             Las personas detrás de Reachly
           </h2>
@@ -88,7 +88,7 @@ export function Equipo() {
                 {member.initials}
               </div>
               <p className="text-base font-bold text-foreground mb-1">{member.name}</p>
-              <p className="text-sm font-medium text-[#7B52D4] mb-4">{member.role}</p>
+              <p className="text-sm font-medium text-brand-400 mb-4">{member.role}</p>
               <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">{member.bio}</p>
               <a
                 href={member.linkedin}

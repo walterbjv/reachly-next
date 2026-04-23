@@ -90,7 +90,7 @@ export default function RegistroPage() {
           {[1, 2, 3].map(s => (
             <div key={s} className={cn(
               'w-2 h-2 rounded-full transition-all',
-              step === s ? 'bg-[#4A1FA8] w-6' : step > s ? 'bg-[#4A1FA8]' : 'bg-border'
+              step === s ? 'bg-brand-600 w-6' : step > s ? 'bg-brand-600' : 'bg-border'
             )} />
           ))}
         </div>
@@ -109,8 +109,8 @@ export default function RegistroPage() {
                     className={cn(
                       'w-full flex items-center gap-4 p-4 rounded-xl border text-left transition-all duration-150',
                       tipo === t.id
-                        ? 'border-[#4A1FA8] bg-[#F0E8FF] dark:bg-[#2A1F45]'
-                        : 'border-border hover:border-[#B89EF0] hover:bg-accent'
+                        ? 'border-brand-600 bg-brand-50 dark:bg-brand-900'
+                        : 'border-border hover:border-brand-300 hover:bg-accent'
                     )}
                   >
                     <div>
@@ -123,7 +123,7 @@ export default function RegistroPage() {
               <button
                 onClick={() => tipo && setStep(2)}
                 disabled={!tipo}
-                className="w-full bg-[#4A1FA8] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-full bg-brand-600 text-white font-semibold text-sm py-3 rounded-xl hover:bg-brand-500 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Continuar →
               </button>
@@ -154,7 +154,7 @@ export default function RegistroPage() {
                       onChange={e => setForm(prev => ({ ...prev, [f.id]: e.target.value }))}
                       className={cn(
                         'w-full px-4 py-3 rounded-xl border text-sm bg-background text-foreground placeholder:text-muted-foreground outline-none transition-all',
-                        errors[f.id] ? 'border-red-400 focus:border-red-400' : 'border-border focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10'
+                        errors[f.id] ? 'border-red-400 focus:border-red-400' : 'border-border focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10'
                       )}
                     />
                     {errors[f.id] && <p className="text-xs text-red-500 mt-1">{errors[f.id]}</p>}
@@ -171,7 +171,7 @@ export default function RegistroPage() {
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="flex-1 bg-[#4A1FA8] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="flex-1 bg-brand-600 text-white font-semibold text-sm py-3 rounded-xl hover:bg-brand-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Creando cuenta...' : 'Crear cuenta'}
                 </button>
@@ -182,8 +182,8 @@ export default function RegistroPage() {
           {/* Step 3: Confirmar email */}
           {step === 3 && (
             <div className="animate-fade-up text-center py-4">
-              <div className="w-16 h-16 rounded-full bg-[#F0E8FF] dark:bg-[#2A1F45] flex items-center justify-center mx-auto mb-5">
-                <svg className="w-8 h-8 text-[#4A1FA8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+              <div className="w-16 h-16 rounded-full bg-brand-50 dark:bg-brand-900 flex items-center justify-center mx-auto mb-5">
+                <svg className="w-8 h-8 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
               </div>
               <h2 className="text-xl font-bold text-foreground mb-2">
                 Revisa tu email
@@ -191,13 +191,13 @@ export default function RegistroPage() {
               <p className="text-muted-foreground text-sm mb-2">
                 Enviamos un link de confirmación a
               </p>
-              <p className="text-[#4A1FA8] font-semibold text-sm mb-6">{form.email}</p>
+              <p className="text-brand-600 font-semibold text-sm mb-6">{form.email}</p>
               <p className="text-muted-foreground text-xs mb-6">
                 Haz clic en el link del email para activar tu cuenta e ingresar a la plataforma.
               </p>
               <Link
                 href="/login"
-                className="block w-full border border-border text-muted-foreground text-sm py-3 rounded-xl hover:border-[#B89EF0] transition-colors"
+                className="block w-full border border-border text-muted-foreground text-sm py-3 rounded-xl hover:border-brand-300 transition-colors"
               >
                 Ir al login
               </Link>
@@ -207,7 +207,7 @@ export default function RegistroPage() {
 
         <p className="text-center text-sm text-muted-foreground mt-5">
           ¿Ya tienes cuenta?{' '}
-          <Link href="/login" className="text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors">
+          <Link href="/login" className="text-brand-400 hover:text-brand-600 font-medium transition-colors">
             Iniciar sesión
           </Link>
         </p>

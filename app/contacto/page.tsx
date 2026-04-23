@@ -14,7 +14,7 @@ export default function ContactoPage() {
     <div className="max-w-[900px] mx-auto px-[5%] py-12">
       <div className="text-center mb-10">
         <h1 className="text-3xl font-bold text-foreground mb-3">Contacto</h1>
-        <p className="text-muted-foreground">¿Tenés preguntas? Estamos para ayudarte.</p>
+        <p className="text-muted-foreground">¿Tienes preguntas? Estamos para ayudarte.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -29,13 +29,13 @@ export default function ContactoPage() {
             <div key={c.titulo} className="bg-card border border-border rounded-xl p-4">
               <div>
                 <p className="text-xs text-muted-foreground">{c.titulo}</p>
-                <p className="text-sm font-medium text-[#7B52D4]">{c.info}</p>
+                <p className="text-sm font-medium text-brand-400">{c.info}</p>
               </div>
             </div>
           ))}
           <div className="bg-card border border-border rounded-xl p-4">
             <p className="text-xs text-muted-foreground mb-1">Horario de atención</p>
-            <p className="text-sm text-foreground">Lun–Vie, 9:00–18:00 (ART)</p>
+            <p className="text-sm text-foreground">Lun–Vie, 9:00–18:00 (CLT)</p>
           </div>
         </div>
 
@@ -60,7 +60,7 @@ export default function ContactoPage() {
                     value={form.nombre}
                     onChange={e => setForm(p => ({ ...p, nombre: e.target.value }))}
                     placeholder="Tu nombre"
-                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-colors"
+                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-colors"
                   />
                 </div>
                 <div>
@@ -71,7 +71,7 @@ export default function ContactoPage() {
                     value={form.email}
                     onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
                     placeholder="tu@email.com"
-                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-colors"
+                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-colors"
                   />
                 </div>
               </div>
@@ -82,8 +82,8 @@ export default function ContactoPage() {
                   type="text"
                   value={form.asunto}
                   onChange={e => setForm(p => ({ ...p, asunto: e.target.value }))}
-                  placeholder="¿Sobre qué querés hablar?"
-                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-colors"
+                  placeholder="¿Sobre qué quieres hablar?"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-colors"
                 />
               </div>
               <div>
@@ -92,14 +92,14 @@ export default function ContactoPage() {
                   required
                   value={form.mensaje}
                   onChange={e => setForm(p => ({ ...p, mensaje: e.target.value }))}
-                  placeholder="Contanos tu consulta..."
+                  placeholder="Cuéntanos tu consulta..."
                   rows={5}
-                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-colors resize-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-colors resize-none"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-[#4A1FA8] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors"
+                className="w-full bg-brand-600 text-white font-semibold text-sm py-3 rounded-xl hover:bg-brand-500 transition-colors"
               >
                 Enviar mensaje
               </button>

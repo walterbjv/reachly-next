@@ -19,7 +19,7 @@ export function CasosDeExito() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="casos" className="py-24 px-[5%] bg-[#F4F2FB] dark:bg-[#0D0A1A]">
+    <section id="casos" className="py-24 px-[5%] bg-reachly-bg dark:bg-background">
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           className="mb-14"
@@ -28,7 +28,7 @@ export function CasosDeExito() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.55, ease: EASE }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#7B52D4] mb-3">Casos de éxito</p>
+          <p className="text-xs font-semibold uppercase tracking-[.12em] text-brand-400 mb-3">Casos de éxito</p>
           <h2 className="text-[clamp(26px,3.5vw,40px)] font-bold text-foreground leading-tight mb-4">
             Resultados que hablan<br />por sí solos
           </h2>
@@ -67,7 +67,7 @@ export function CasosDeExito() {
 
               <div className="grid grid-cols-3 gap-3 mb-5">
                 {c.metrics.map(m => (
-                  <div key={m.l} className="text-center bg-[#F4F2FB] dark:bg-[#1A1428] rounded-xl py-3">
+                  <div key={m.l} className="text-center bg-reachly-bg dark:bg-card rounded-xl py-3">
                     <div className="text-lg font-bold text-foreground tabular-nums">{m.n}</div>
                     <div className="text-[10px] text-muted-foreground">{m.l}</div>
                   </div>

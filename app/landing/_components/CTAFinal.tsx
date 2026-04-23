@@ -15,7 +15,7 @@ const itemVars = {
 
 export function CTAFinal() {
   return (
-    <section className="relative bg-gradient-to-br from-[#4A1FA8] to-[#2E1270] text-center px-[5%] py-24 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-brand-600 to-brand-800 text-center px-[5%] py-24 overflow-hidden">
       {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -47,18 +47,18 @@ export function CTAFinal() {
           variants={itemVars}
           className="text-white text-[clamp(28px,4vw,44px)] font-bold leading-tight mb-4 tracking-tight"
         >
-          Encontrá tu match perfecto<br />hoy mismo
+          Encuentra tu match perfecto<br />hoy mismo
         </motion.h2>
 
         <motion.p variants={itemVars} className="text-white/60 text-base mb-8 leading-relaxed">
-          Más de 12.400 influencers y marcas verificadas están listas para colaborar. Registrate gratis y encontrá tu match perfecto hoy.
+          Más de 12.400 influencers y marcas verificadas están listas para colaborar. Regístrate gratis y encuentra tu match perfecto hoy.
         </motion.p>
 
         <motion.div variants={itemVars} className="flex flex-col sm:flex-row gap-3 justify-center">
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ type: 'spring', duration: 0.25, bounce: 0.2 }}>
             <Link
               href="/registro"
-              className="inline-flex items-center justify-center bg-white text-[#4A1FA8] font-bold text-sm px-8 py-3.5 rounded-xl hover:bg-[#F0E8FF] transition-colors shadow-lg w-full sm:w-auto"
+              className="inline-flex items-center justify-center bg-white text-brand-600 font-bold text-sm px-8 py-3.5 rounded-xl hover:bg-brand-50 transition-colors shadow-lg w-full sm:w-auto"
               style={{ transition: 'background-color 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
             >
               Crear cuenta gratis →

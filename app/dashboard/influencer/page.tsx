@@ -38,7 +38,7 @@ export default async function DashboardInfluencerPage() {
   return (
     <div className="max-w-[1100px] mx-auto px-[5%] py-10">
       {/* Welcome */}
-      <div className="bg-gradient-to-br from-[#4A1FA8] to-[#2E1270] rounded-2xl p-7 mb-7 flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-gradient-to-br from-brand-600 to-brand-800 rounded-2xl p-7 mb-7 flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-white text-2xl font-bold mb-1">Hola, {primerNombre}</h1>
           <p className="text-white/60 text-sm">{profile?.ubicacion ? `${profile.ubicacion} · ` : ''}Explorá las campañas disponibles para vos.</p>
@@ -47,7 +47,7 @@ export default async function DashboardInfluencerPage() {
           <Link href="/perfil" className="bg-white/15 text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-white/25 transition-colors">
             Editar perfil
           </Link>
-          <Link href="/campanas" className="bg-[#7B52D4] text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-[#6C3BF5] transition-colors">
+          <Link href="/campanas" className="bg-brand-400 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-brand-500 transition-colors">
             Explorar campañas
           </Link>
         </div>
@@ -111,7 +111,7 @@ export default async function DashboardInfluencerPage() {
       <div className="mt-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base font-bold text-foreground">Campañas sugeridas para vos</h2>
-          <Link href="/campanas" className="text-sm text-[#7B52D4] hover:text-[#4A1FA8] transition-colors">Ver todas →</Link>
+          <Link href="/campanas" className="text-sm text-brand-400 hover:text-brand-600 transition-colors">Ver todas →</Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {suggested.map((c, i) => <CampanaCard key={c.id} campana={c} index={i} />)}

@@ -29,7 +29,7 @@ export function InfluencerAvatar({
   color,
   className,
 }: InfluencerAvatarProps) {
-  const fill = color ?? (categoria ? getAvatarColor(categoria) : '#4A1FA8')
+  const fill = color ?? (categoria ? getAvatarColor(categoria) : 'var(--color-brand-600)')
   const s = sizes[size]
 
   return (

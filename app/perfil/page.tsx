@@ -167,9 +167,9 @@ export default function PerfilPage() {
   return (
     <div className="min-h-[calc(100vh-64px)] bg-background">
       {/* Full-width cover */}
-      <div className="h-52 bg-gradient-to-br from-[#4A1FA8] via-[#6C3BF5] to-[#7B52D4] relative overflow-hidden">
+      <div className="h-52 bg-gradient-to-br from-brand-600 via-brand-500 to-brand-400 relative overflow-hidden">
         <div className="absolute inset-0 opacity-20" style={{
-          backgroundImage: 'radial-gradient(circle at 20% 50%, #ffffff 0%, transparent 50%), radial-gradient(circle at 80% 20%, #C4AEFA 0%, transparent 40%)'
+          backgroundImage: 'radial-gradient(circle at 20% 50%, #ffffff 0%, transparent 50%), radial-gradient(circle at 80% 20%, var(--color-brand-200) 0%, transparent 40%)'
         }} />
       </div>
 
@@ -179,7 +179,7 @@ export default function PerfilPage() {
           <div className="flex items-end gap-5">
             {/* Avatar */}
             <div className="relative flex-shrink-0">
-              <div className="w-28 h-28 rounded-2xl border-4 border-background overflow-hidden bg-[#4A1FA8] flex items-center justify-center shadow-xl">
+              <div className="w-28 h-28 rounded-2xl border-4 border-background overflow-hidden bg-brand-600 flex items-center justify-center shadow-xl">
                 {profile.avatar_url ? (
                   <img src={profile.avatar_url} alt={nombre} className="w-full h-full object-cover" />
                 ) : (
@@ -189,7 +189,7 @@ export default function PerfilPage() {
               <button
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploadingAvatar}
-                className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[#4A1FA8] border-2 border-background flex items-center justify-center hover:bg-[#6C3BF5] transition-colors shadow-md"
+                className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-brand-600 border-2 border-background flex items-center justify-center hover:bg-brand-500 transition-colors shadow-md"
               >
                 {uploadingAvatar ? <Loader2 className="w-3.5 h-3.5 text-white animate-spin" /> : <Camera className="w-3.5 h-3.5 text-white" />}
               </button>
@@ -200,7 +200,7 @@ export default function PerfilPage() {
             <div className="pb-1">
               <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-2xl font-bold text-foreground">{nombre}</h1>
-                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#F0E8FF] dark:bg-[#2A1F45] text-[#4A1FA8] dark:text-[#B89EF0] capitalize">
+                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-50 dark:bg-brand-900 text-brand-600 dark:text-brand-300 capitalize">
                   {profile.tipo}
                 </span>
               </div>
@@ -235,7 +235,7 @@ export default function PerfilPage() {
             { label: 'Tipo', value: profile.tipo === 'influencer' ? 'Influencer' : 'Marca', icon: <span className="text-sm">#</span> },
           ].map(s => (
             <div key={s.label} className="bg-card border border-border rounded-xl p-4 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-[#F0E8FF] dark:bg-[#2A1F45] flex items-center justify-center text-[#4A1FA8] dark:text-[#B89EF0] flex-shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-brand-50 dark:bg-brand-900 flex items-center justify-center text-brand-600 dark:text-brand-300 flex-shrink-0">
                 {s.icon}
               </div>
               <div>
@@ -271,12 +271,12 @@ export default function PerfilPage() {
               <div className="bg-card border border-border rounded-xl p-5">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-sm font-bold text-foreground">Redes sociales</h2>
-                  <button onClick={() => setEditOpen(true)} className="text-xs text-[#7B52D4] hover:text-[#4A1FA8] transition-colors">Editar</button>
+                  <button onClick={() => setEditOpen(true)} className="text-xs text-brand-400 hover:text-brand-600 transition-colors">Editar</button>
                 </div>
                 {redesFilled.length === 0 ? (
                   <div className="text-center py-4">
                     <p className="text-xs text-muted-foreground mb-2">No tienes redes cargadas</p>
-                    <button onClick={() => setEditOpen(true)} className="text-xs text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors">+ Agregar</button>
+                    <button onClick={() => setEditOpen(true)} className="text-xs text-brand-400 hover:text-brand-600 font-medium transition-colors">+ Agregar</button>
                   </div>
                 ) : (
                   <div className="space-y-2.5">
@@ -302,17 +302,17 @@ export default function PerfilPage() {
               <div className="bg-card border border-border rounded-xl p-5">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-sm font-bold text-foreground">Categorías</h2>
-                  <button onClick={() => setEditOpen(true)} className="text-xs text-[#7B52D4] hover:text-[#4A1FA8] transition-colors">Editar</button>
+                  <button onClick={() => setEditOpen(true)} className="text-xs text-brand-400 hover:text-brand-600 transition-colors">Editar</button>
                 </div>
                 {(profile.categorias ?? []).length === 0 ? (
                   <div className="text-center py-4">
                     <p className="text-xs text-muted-foreground mb-2">Sin categorías</p>
-                    <button onClick={() => setEditOpen(true)} className="text-xs text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors">+ Agregar</button>
+                    <button onClick={() => setEditOpen(true)} className="text-xs text-brand-400 hover:text-brand-600 font-medium transition-colors">+ Agregar</button>
                   </div>
                 ) : (
                   <div className="flex flex-wrap gap-2">
                     {profile.categorias!.map(cat => (
-                      <span key={cat} className="text-xs px-3 py-1.5 rounded-full bg-[#F0E8FF] dark:bg-[#2A1F45] text-[#4A1FA8] dark:text-[#B89EF0] font-medium">{cat}</span>
+                      <span key={cat} className="text-xs px-3 py-1.5 rounded-full bg-brand-50 dark:bg-brand-900 text-brand-600 dark:text-brand-300 font-medium">{cat}</span>
                     ))}
                   </div>
                 )}
@@ -320,12 +320,12 @@ export default function PerfilPage() {
 
               {/* Completar perfil prompt */}
               {(!profile.bio || redesFilled.length === 0) && (
-                <div className="bg-gradient-to-br from-[#F0E8FF] to-[#E8E0FB] dark:from-[#2A1F45] dark:to-[#1A1428] border border-[#C4AEFA]/40 rounded-xl p-5">
-                  <h3 className="text-sm font-bold text-[#4A1FA8] dark:text-[#B89EF0] mb-1">Completa tu perfil</h3>
-                  <p className="text-xs text-[#4A1FA8]/70 dark:text-[#B89EF0]/70 mb-3">Los perfiles completos reciben 3x más visibilidad de marcas.</p>
+                <div className="bg-gradient-to-br from-brand-50 to-brand-100 dark:from-brand-900 dark:to-card border border-brand-200/40 rounded-xl p-5">
+                  <h3 className="text-sm font-bold text-brand-600 dark:text-brand-300 mb-1">Completa tu perfil</h3>
+                  <p className="text-xs text-brand-600/70 dark:text-brand-300/70 mb-3">Los perfiles completos reciben 3x más visibilidad de marcas.</p>
                   <button
                     onClick={() => setEditOpen(true)}
-                    className="text-xs font-semibold text-white bg-[#4A1FA8] px-4 py-2 rounded-lg hover:bg-[#6C3BF5] transition-colors"
+                    className="text-xs font-semibold text-white bg-brand-600 px-4 py-2 rounded-lg hover:bg-brand-500 transition-colors"
                   >
                     Completar ahora
                   </button>
@@ -339,14 +339,14 @@ export default function PerfilPage() {
               <div className="bg-card border border-border rounded-xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-sm font-bold text-foreground">Sobre mí</h2>
-                  <button onClick={() => setEditOpen(true)} className="text-xs text-[#7B52D4] hover:text-[#4A1FA8] transition-colors">Editar</button>
+                  <button onClick={() => setEditOpen(true)} className="text-xs text-brand-400 hover:text-brand-600 transition-colors">Editar</button>
                 </div>
                 {profile.bio ? (
                   <p className="text-sm text-foreground/80 leading-relaxed">{profile.bio}</p>
                 ) : (
                   <div className="text-center py-8 border-2 border-dashed border-border rounded-xl">
                     <p className="text-sm text-muted-foreground mb-3">Cuenta algo sobre ti para que las marcas te conozcan mejor.</p>
-                    <button onClick={() => setEditOpen(true)} className="text-sm text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors">+ Agregar bio</button>
+                    <button onClick={() => setEditOpen(true)} className="text-sm text-brand-400 hover:text-brand-600 font-medium transition-colors">+ Agregar bio</button>
                   </div>
                 )}
               </div>
@@ -355,7 +355,7 @@ export default function PerfilPage() {
               <div className="bg-card border border-border rounded-xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-sm font-bold text-foreground">Portfolio reciente</h2>
-                  <button onClick={() => setTab('blog')} className="text-xs text-[#7B52D4] hover:text-[#4A1FA8] transition-colors">
+                  <button onClick={() => setTab('blog')} className="text-xs text-brand-400 hover:text-brand-600 transition-colors">
                     Ver todo ({portfolioCount}) →
                   </button>
                 </div>
@@ -364,7 +364,7 @@ export default function PerfilPage() {
                     <p className="text-sm text-muted-foreground mb-3">Muestra tu mejor contenido a las marcas.</p>
                     <button
                       onClick={() => { setTab('blog'); setAddPostOpen(true) }}
-                      className="text-sm text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors"
+                      className="text-sm text-brand-400 hover:text-brand-600 font-medium transition-colors"
                     >
                       + Agregar primer post
                     </button>
@@ -379,7 +379,7 @@ export default function PerfilPage() {
                           href={post.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="aspect-square rounded-xl bg-gradient-to-br from-[#F0E8FF] to-[#E8E0FB] dark:from-[#2A1F45] dark:to-[#1A1428] flex flex-col items-center justify-center gap-1 hover:opacity-80 transition-opacity"
+                          className="aspect-square rounded-xl bg-gradient-to-br from-brand-50 to-brand-100 dark:from-brand-900 dark:to-card flex flex-col items-center justify-center gap-1 hover:opacity-80 transition-opacity"
                         >
                           <span className={cn('text-sm font-black', cfg?.color)}>{cfg?.icon}</span>
                           {post.caption && <span className="text-[9px] text-muted-foreground text-center px-2 line-clamp-2">{post.caption}</span>}
@@ -403,7 +403,7 @@ export default function PerfilPage() {
               </div>
               <button
                 onClick={() => setAddPostOpen(true)}
-                className="flex items-center gap-2 bg-[#4A1FA8] text-white text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-[#6C3BF5] transition-colors"
+                className="flex items-center gap-2 bg-brand-600 text-white text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-brand-500 transition-colors"
               >
                 <Plus className="w-4 h-4" /> Agregar post
               </button>
@@ -418,7 +418,7 @@ export default function PerfilPage() {
                 <p className="text-sm text-muted-foreground mb-5 max-w-sm mx-auto">Agrega links a tus mejores posts de Instagram, TikTok, YouTube y más para que las marcas vean tu trabajo.</p>
                 <button
                   onClick={() => setAddPostOpen(true)}
-                  className="bg-[#4A1FA8] text-white text-sm font-semibold px-6 py-2.5 rounded-xl hover:bg-[#6C3BF5] transition-colors"
+                  className="bg-brand-600 text-white text-sm font-semibold px-6 py-2.5 rounded-xl hover:bg-brand-500 transition-colors"
                 >
                   Agregar mi primer post
                 </button>
@@ -444,7 +444,7 @@ export default function PerfilPage() {
                           href={post.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-medium text-[#7B52D4] hover:text-[#4A1FA8] transition-colors"
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-brand-400 hover:text-brand-600 transition-colors"
                         >
                           <ExternalLink className="w-3 h-3" /> Ver post
                         </a>
@@ -483,7 +483,7 @@ export default function PerfilPage() {
                         value={form[f.id as keyof typeof form]}
                         onChange={e => setForm(p => ({ ...p, [f.id]: e.target.value }))}
                         placeholder={f.placeholder}
-                        className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10 transition-all"
+                        className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10 transition-all"
                       />
                     </div>
                   ))}
@@ -495,7 +495,7 @@ export default function PerfilPage() {
                       placeholder="Escribe algo sobre ti..."
                       maxLength={250}
                       rows={3}
-                      className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10 transition-all resize-none"
+                      className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10 transition-all resize-none"
                     />
                     <p className="text-xs text-muted-foreground text-right mt-1">{form.bio.length}/250</p>
                   </div>
@@ -514,7 +514,7 @@ export default function PerfilPage() {
                           value={redes[r.id] ?? ''}
                           onChange={e => setRedes(p => ({ ...p, [r.id]: e.target.value }))}
                           placeholder={r.label}
-                          className={cn('w-full py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-all', r.prefix ? 'pl-7 pr-4' : 'px-4')}
+                          className={cn('w-full py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-all', r.prefix ? 'pl-7 pr-4' : 'px-4')}
                         />
                       </div>
                     </div>
@@ -529,7 +529,7 @@ export default function PerfilPage() {
                       key={cat}
                       type="button"
                       onClick={() => setCategorias(prev => prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat])}
-                      className={cn('text-xs px-3 py-1.5 rounded-full border font-medium transition-all', categorias.includes(cat) ? 'bg-[#4A1FA8] text-white border-[#4A1FA8]' : 'bg-card text-foreground border-border hover:border-[#C4AEFA]')}
+                      className={cn('text-xs px-3 py-1.5 rounded-full border font-medium transition-all', categorias.includes(cat) ? 'bg-brand-600 text-white border-brand-600' : 'bg-card text-foreground border-border hover:border-brand-200')}
                     >
                       {cat}
                     </button>
@@ -542,7 +542,7 @@ export default function PerfilPage() {
               <button
                 onClick={handleSaveProfile}
                 disabled={saving}
-                className="flex-1 flex items-center justify-center gap-2 bg-[#4A1FA8] text-white text-sm font-semibold py-2.5 rounded-xl hover:bg-[#6C3BF5] transition-colors disabled:opacity-60"
+                className="flex-1 flex items-center justify-center gap-2 bg-brand-600 text-white text-sm font-semibold py-2.5 rounded-xl hover:bg-brand-500 transition-colors disabled:opacity-60"
               >
                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                 {saving ? 'Guardando...' : 'Guardar cambios'}
@@ -571,7 +571,7 @@ export default function PerfilPage() {
                       key={r.id}
                       type="button"
                       onClick={() => setNewPost(p => ({ ...p, platform: r.id }))}
-                      className={cn('flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border font-medium transition-all', newPost.platform === r.id ? 'bg-[#4A1FA8] text-white border-[#4A1FA8]' : 'border-border text-foreground hover:border-[#C4AEFA]')}
+                      className={cn('flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border font-medium transition-all', newPost.platform === r.id ? 'bg-brand-600 text-white border-brand-600' : 'border-border text-foreground hover:border-brand-200')}
                     >
                       {r.icon} {r.label}
                     </button>
@@ -585,7 +585,7 @@ export default function PerfilPage() {
                   value={newPost.url}
                   onChange={e => setNewPost(p => ({ ...p, url: e.target.value }))}
                   placeholder="https://instagram.com/p/..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-all"
                 />
               </div>
               <div>
@@ -596,7 +596,7 @@ export default function PerfilPage() {
                   placeholder="Describe de qué trata el post..."
                   maxLength={150}
                   rows={2}
-                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-all resize-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-all resize-none"
                 />
               </div>
             </div>
@@ -605,7 +605,7 @@ export default function PerfilPage() {
               <button
                 onClick={handleAddPost}
                 disabled={!newPost.url}
-                className="flex-1 bg-[#4A1FA8] text-white text-sm font-semibold py-2.5 rounded-xl hover:bg-[#6C3BF5] transition-colors disabled:opacity-40"
+                className="flex-1 bg-brand-600 text-white text-sm font-semibold py-2.5 rounded-xl hover:bg-brand-500 transition-colors disabled:opacity-40"
               >
                 Agregar
               </button>

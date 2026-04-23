@@ -19,7 +19,7 @@ export function Testimonios() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section className="py-24 px-[5%] bg-[#F4F2FB] dark:bg-[#0D0A1A]">
+    <section className="py-24 px-[5%] bg-reachly-bg dark:bg-background">
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           className="text-center mb-14"
@@ -28,7 +28,7 @@ export function Testimonios() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.55, ease: EASE }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#7B52D4] mb-3">Testimonios</p>
+          <p className="text-xs font-semibold uppercase tracking-[.12em] text-brand-400 mb-3">Testimonios</p>
           <h2 className="text-[clamp(26px,3.5vw,40px)] font-bold text-foreground leading-tight">
             Lo que dicen nuestros usuarios
           </h2>

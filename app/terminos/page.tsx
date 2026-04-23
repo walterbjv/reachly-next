@@ -45,7 +45,7 @@ export default function TerminosPage() {
         </section>
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">8. Contacto</h2>
-          <p>Para consultas sobre estos términos: <span className="text-[#7B52D4]">legal@reachly.app</span></p>
+          <p>Para consultas sobre estos términos: <span className="text-brand-400">legal@reachly.app</span></p>
         </section>
       </div>
     </div>

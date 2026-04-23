@@ -49,7 +49,7 @@ export function StatsBand() {
   const inView = useInView(ref, { once: true, margin: '-40px' })
 
   return (
-    <div ref={ref} className="bg-[#1A0A3D] py-14 px-[5%]">
+    <div ref={ref} className="bg-brand-950 py-14 px-[5%]">
       <div className="max-w-[1100px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6">
         {STATS.map((s) => (
           <div key={s.label} className="text-center">

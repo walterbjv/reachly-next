@@ -43,7 +43,7 @@ export const STEPS_CREATORS = [
 export const CASOS = [
   {
     logo: 'NK',
-    color: '#4A1FA8',
+    color: 'var(--color-brand-600)',
     brand: 'Nike Chile',
     camp: 'Campaña Primavera 2024 · 15 influencers',
     metrics: [
@@ -53,7 +53,7 @@ export const CASOS = [
     ],
     quote: '"Reachly nos ayudó a encontrar exactamente el perfil que necesitábamos. En 48 horas teníamos 15 influencers confirmados."',
     av: 'CA',
-    avColor: '#4A1FA8',
+    avColor: 'var(--color-brand-600)',
     author: 'Carlos A.',
     role: 'Marketing Manager · Nike Chile',
   },
@@ -165,7 +165,7 @@ export const TESTIMONIOS = [
     stars: 5,
     quote: '"Reachly transformó la manera en que gestionamos campañas. Antes tardábamos semanas buscando influencers; ahora en un día tenemos todo listo y confirmado."',
     av: 'PA',
-    color: '#4A1FA8',
+    color: 'var(--color-brand-600)',
     name: 'Pamela A.',
     role: 'CMO · Falabella Digital',
   },

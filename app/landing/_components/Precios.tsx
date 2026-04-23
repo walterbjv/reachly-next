@@ -22,7 +22,7 @@ export function Precios() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="precios" className="py-24 px-[5%] bg-white dark:bg-[#1A1428]">
+    <section id="precios" className="py-24 px-[5%] bg-white dark:bg-card">
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           className="mb-12 text-center"
@@ -31,7 +31,7 @@ export function Precios() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.55, ease: EASE }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#7B52D4] mb-3">Precios</p>
+          <p className="text-xs font-semibold uppercase tracking-[.12em] text-brand-400 mb-3">Precios</p>
           <h2 className="text-[clamp(26px,3.5vw,40px)] font-bold text-foreground leading-tight mb-4">
             Planes para cada<br />tamaño de negocio
           </h2>
@@ -55,7 +55,7 @@ export function Precios() {
           <button
             onClick={() => setAnnual(v => !v)}
             aria-label="Cambiar ciclo de facturación"
-            className={`w-11 h-6 rounded-full relative transition-colors duration-200 ${annual ? 'bg-[#4A1FA8]' : 'bg-muted'}`}
+            className={`w-11 h-6 rounded-full relative transition-colors duration-200 ${annual ? 'bg-brand-600' : 'bg-muted'}`}
           >
             <motion.span
               layout
@@ -94,10 +94,10 @@ export function Precios() {
               transition={{ type: 'spring', duration: 0.35, bounce: 0.1 }}
               className={`rounded-2xl p-7 relative border ${
                 p.pop
-                  ? 'border-[#4A1FA8] shadow-[0_8px_40px_rgba(74,31,168,.25)] -translate-y-2'
+                  ? 'border-brand-600 shadow-[0_8px_40px_rgba(74,31,168,.25)] -translate-y-2'
                   : 'border-border bg-white dark:bg-card'
               }`}
-              style={p.pop ? { background: 'linear-gradient(135deg, #4A1FA8 0%, #2E1270 100%)' } : undefined}
+              style={p.pop ? { background: 'linear-gradient(135deg, var(--color-brand-600) 0%, var(--color-brand-800) 100%)' } : undefined}
             >
               {p.pop && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#5BE8B8] text-[#0D3D2A] text-[10px] font-bold px-3 py-1 rounded-full whitespace-nowrap">
@@ -159,10 +159,10 @@ export function Precios() {
                 href="/registro"
                 className={`block w-full text-center text-sm font-semibold py-2.5 rounded-xl active:scale-[0.97] ${
                   p.btnStyle === 'white'
-                    ? 'bg-white text-[#4A1FA8] hover:opacity-90'
+                    ? 'bg-white text-brand-600 hover:opacity-90'
                     : p.pop
                     ? 'border border-white/30 text-white hover:bg-white/10'
-                    : 'border border-border text-[#4A1FA8] hover:border-[#4A1FA8] hover:bg-[#F0E8FF]'
+                    : 'border border-border text-brand-600 hover:border-brand-600 hover:bg-brand-50'
                 }`}
                 style={{ transition: 'all 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
               >

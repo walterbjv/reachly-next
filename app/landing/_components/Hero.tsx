@@ -19,7 +19,7 @@ export function Hero() {
   const initial = reduce ? false : 'hidden'
 
   return (
-    <section className="relative bg-gradient-to-br from-[#4A1FA8] to-[#2E1270] overflow-hidden px-[5%] pt-20 pb-16 md:pt-28 md:pb-20">
+    <section className="relative bg-gradient-to-br from-brand-600 to-brand-800 overflow-hidden px-[5%] pt-20 pb-16 md:pt-28 md:pb-20">
       {/* Background radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -32,7 +32,7 @@ export function Hero() {
 
           <motion.div
             variants={itemVars}
-            className="inline-flex items-center gap-2 bg-white/10 border border-white/[.18] rounded-full px-4 py-1.5 text-xs text-[#C4AEFA] mb-6"
+            className="inline-flex items-center gap-2 bg-white/10 border border-white/[.18] rounded-full px-4 py-1.5 text-xs text-brand-200 mb-6"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#5BE8B8] flex-shrink-0" />
             Plataforma #1 de influencer marketing en LATAM
@@ -43,7 +43,7 @@ export function Hero() {
             className="text-white text-[clamp(32px,5vw,56px)] font-bold leading-[1.1] tracking-tight mb-4"
           >
             Conecta tu marca con los<br />
-            <span className="text-[#C4AEFA]">creadores perfectos</span>
+            <span className="text-brand-200">creadores perfectos</span>
           </motion.h1>
 
           <motion.p
@@ -56,7 +56,7 @@ export function Hero() {
           <motion.div variants={itemVars} className="flex flex-wrap gap-3 mb-10">
             <Link
               href="/registro"
-              className="inline-flex items-center bg-white text-[#4A1FA8] font-bold text-sm px-7 py-3.5 rounded-xl hover:bg-[#F0E8FF] transition-colors shadow-lg active:scale-[0.97]"
+              className="inline-flex items-center bg-white text-brand-600 font-bold text-sm px-7 py-3.5 rounded-xl hover:bg-brand-50 transition-colors shadow-lg active:scale-[0.97]"
             >
               Soy una marca →
             </Link>
@@ -95,7 +95,7 @@ export function Hero() {
                 <span className="text-base">🎉</span> ¡Nuevo match!
               </div>
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white border-2 border-white/20 bg-[#4A1FA8]">NC</div>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white border-2 border-white/20 bg-brand-600">NC</div>
                 <span className="text-white/40 text-xs">→</span>
                 <div className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white border-2 border-white/20 bg-[#1D9E75]">MS</div>
               </div>
@@ -121,7 +121,7 @@ export function Hero() {
                   <div className="w-full h-1 bg-white/10 rounded-full mb-2 overflow-hidden">
                     <div
                       className="h-full rounded-full"
-                      style={{ width: `${s.pct}%`, background: 'linear-gradient(90deg, #7B52D4, #5BE8B8)' }}
+                      style={{ width: `${s.pct}%`, background: 'linear-gradient(90deg, var(--color-brand-400), #5BE8B8)' }}
                     />
                   </div>
                 </div>
@@ -139,7 +139,7 @@ export function Hero() {
                   { lbl: 'Revisión', color: '#E8A320' },
                   { lbl: 'Negociando', color: '#185FA5' },
                   { lbl: 'Acuerdo', color: '#1D9E75' },
-                  { lbl: 'Publicado', color: '#4A1FA8' },
+                  { lbl: 'Publicado', color: 'var(--color-brand-600)' },
                 ].map((s, i, arr) => (
                   <div key={s.lbl} className="flex items-center flex-1 last:flex-none">
                     <div className="flex flex-col items-center">

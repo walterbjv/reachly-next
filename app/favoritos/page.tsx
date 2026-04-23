@@ -44,7 +44,7 @@ export default function FavoritosPage() {
             onClick={() => setTab(t)}
             className={cn(
               'text-sm px-5 py-2 rounded-lg font-medium transition-all',
-              tab === t ? 'bg-[#4A1FA8] text-white' : 'text-muted-foreground hover:text-foreground'
+              tab === t ? 'bg-brand-600 text-white' : 'text-muted-foreground hover:text-foreground'
             )}
           >
             {label}
@@ -87,7 +87,7 @@ function EmptyState({ type }: { type: Tab }) {
       </p>
       <Link
         href={type === 'influencers' ? '/' : '/campanas'}
-        className="inline-block bg-[#4A1FA8] text-white font-semibold text-sm px-6 py-2.5 rounded-xl hover:bg-[#6C3BF5] transition-colors"
+        className="inline-block bg-brand-600 text-white font-semibold text-sm px-6 py-2.5 rounded-xl hover:bg-brand-500 transition-colors"
       >
         {type === 'influencers' ? 'Explorar influencers' : 'Ver campañas'}
       </Link>

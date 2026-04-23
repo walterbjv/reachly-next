@@ -21,7 +21,7 @@ export default async function CampanaDetailPage({ params }: { params: Promise<{ 
   const campana = await fetchCampana(Number(id))
   if (!campana) notFound()
 
-  const colors = CATEGORIA_COLORS[campana.categoria] ?? { bg: '#F0E8FF', text: '#4A1FA8' }
+  const colors = CATEGORIA_COLORS[campana.categoria] ?? { bg: 'var(--color-brand-50)', text: 'var(--color-brand-600)' }
 
   return (
     <div className="max-w-[800px] mx-auto px-[5%] py-12">
@@ -52,7 +52,7 @@ export default async function CampanaDetailPage({ params }: { params: Promise<{ 
           <span className="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">
             {campana.presupuesto}
           </span>
-          <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#F0E8FF] text-[#4A1FA8]">
+          <span className="text-xs font-semibold px-3 py-1 rounded-full bg-brand-50 text-brand-600">
             Activa
           </span>
         </div>
@@ -64,13 +64,13 @@ export default async function CampanaDetailPage({ params }: { params: Promise<{ 
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row gap-3">
           <Link
             href="/registro"
-            className="flex-1 text-center bg-[#4A1FA8] text-white font-semibold text-sm px-6 py-3 rounded-xl hover:bg-[#6C3BF5] transition-colors"
+            className="flex-1 text-center bg-brand-600 text-white font-semibold text-sm px-6 py-3 rounded-xl hover:bg-brand-500 transition-colors"
           >
             Postularme a esta campaña
           </Link>
           <Link
             href="/campanas"
-            className="flex-1 text-center border border-border text-muted-foreground font-medium text-sm px-6 py-3 rounded-xl hover:border-[#B89EF0] hover:text-foreground transition-colors"
+            className="flex-1 text-center border border-border text-muted-foreground font-medium text-sm px-6 py-3 rounded-xl hover:border-brand-300 hover:text-foreground transition-colors"
           >
             Ver más campañas
           </Link>

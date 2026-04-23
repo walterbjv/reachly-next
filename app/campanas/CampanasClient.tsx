@@ -23,8 +23,8 @@ export function CampanasClient({ campanas }: { campanas: Campana[] }) {
   return (
     <div>
       {/* Header */}
-      <div className="bg-gradient-to-br from-[#4A1FA8] to-[#2E1270] px-[5%] py-14 text-center">
-        <div className="inline-block bg-white/10 border border-white/18 rounded-full px-4 py-1 text-xs text-[#C4AEFA] mb-4">
+      <div className="bg-gradient-to-br from-brand-600 to-brand-800 px-[5%] py-14 text-center">
+        <div className="inline-block bg-white/10 border border-white/18 rounded-full px-4 py-1 text-xs text-brand-200 mb-4">
           Campañas activas
         </div>
         <h1 className="text-white text-3xl md:text-4xl font-bold mb-3">Campañas disponibles</h1>
@@ -41,7 +41,7 @@ export function CampanasClient({ campanas }: { campanas: Campana[] }) {
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Buscar campaña o marca..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10 transition-all"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10 transition-all"
           />
         </div>
 
@@ -54,8 +54,8 @@ export function CampanasClient({ campanas }: { campanas: Campana[] }) {
               className={cn(
                 'text-sm px-4 py-1.5 rounded-full border font-medium transition-all',
                 categoria === cat
-                  ? 'bg-[#4A1FA8] text-white border-[#4A1FA8]'
-                  : 'bg-card text-[#4A1FA8] border-border hover:bg-[#F0E8FF]'
+                  ? 'bg-brand-600 text-white border-brand-600'
+                  : 'bg-card text-brand-600 border-border hover:bg-brand-50'
               )}
             >
               {cat}

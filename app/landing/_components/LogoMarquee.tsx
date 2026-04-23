@@ -15,7 +15,7 @@ export function LogoMarquee() {
           {[...LOGOS, ...LOGOS].map((l, i) => (
             <span
               key={i}
-              className="px-8 text-[13px] font-black font-mono tracking-wider text-muted-foreground border-r border-border hover:text-[#4A1FA8] transition-colors cursor-default whitespace-nowrap py-1"
+              className="px-8 text-[13px] font-black font-mono tracking-wider text-muted-foreground border-r border-border hover:text-brand-600 transition-colors cursor-default whitespace-nowrap py-1"
               style={{ transition: 'color 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
             >
               {l}

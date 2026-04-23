@@ -32,7 +32,7 @@ function Avatar({ profile, size = 'md' }: { profile: Profile; size?: 'sm' | 'md'
   return profile.avatar_url ? (
     <img src={profile.avatar_url} alt={profile.nombre} className={cn(dim, 'rounded-full object-cover flex-shrink-0')} />
   ) : (
-    <div className={cn(dim, 'rounded-full bg-[#4A1FA8] text-white font-bold flex items-center justify-center flex-shrink-0')}>
+    <div className={cn(dim, 'rounded-full bg-brand-600 text-white font-bold flex items-center justify-center flex-shrink-0')}>
       {iniciales}
     </div>
   )
@@ -281,7 +281,7 @@ function MensajesContent() {
                       <p className="text-xs text-muted-foreground truncate">{conv.lastMessage.content}</p>
                     </div>
                     {conv.unreadCount > 0 && (
-                      <span className="w-5 h-5 rounded-full bg-[#4A1FA8] text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">
+                      <span className="w-5 h-5 rounded-full bg-brand-600 text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">
                         {conv.unreadCount}
                       </span>
                     )}
@@ -330,7 +330,7 @@ function MensajesContent() {
                         <div className={cn(
                           'max-w-[72%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed',
                           isMe
-                            ? 'bg-[#4A1FA8] text-white rounded-br-sm'
+                            ? 'bg-brand-600 text-white rounded-br-sm'
                             : 'bg-muted text-foreground rounded-bl-sm'
                         )}>
                           {m.content}
@@ -354,12 +354,12 @@ function MensajesContent() {
                     onChange={e => setInput(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                     placeholder="Escribí un mensaje..."
-                    className="flex-1 px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-colors"
+                    className="flex-1 px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-colors"
                   />
                   <button
                     onClick={sendMessage}
                     disabled={!input.trim() || sending}
-                    className="w-10 h-10 rounded-xl bg-[#4A1FA8] hover:bg-[#6C3BF5] text-white flex items-center justify-center transition-colors flex-shrink-0 disabled:opacity-50"
+                    className="w-10 h-10 rounded-xl bg-brand-600 hover:bg-brand-500 text-white flex items-center justify-center transition-colors flex-shrink-0 disabled:opacity-50"
                   >
                     {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                   </button>

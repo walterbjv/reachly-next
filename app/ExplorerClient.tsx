@@ -37,10 +37,10 @@ export function ExplorerClient({ initialInfluencers }: Props) {
   return (
     <div>
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-[#4A1FA8] to-[#2E1270] text-center px-[5%] py-16 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-brand-600 to-brand-800 text-center px-[5%] py-16 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 65% 40%, rgba(123,82,212,.3) 0%, transparent 60%)' }} />
         <div className="relative">
-          <div className="inline-block bg-white/10 border border-white/18 rounded-full px-5 py-1.5 text-xs text-[#C4AEFA] mb-4 tracking-wide">
+          <div className="inline-block bg-white/10 border border-white/18 rounded-full px-5 py-1.5 text-xs text-brand-200 mb-4 tracking-wide">
             Plataforma #1 de influencer marketing en LATAM
           </div>
           <h1 className="text-white text-3xl md:text-5xl font-bold tracking-tight leading-tight mb-3">
@@ -52,7 +52,7 @@ export function ExplorerClient({ initialInfluencers }: Props) {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={() => document.getElementById('explorer')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-white text-[#4A1FA8] font-bold text-sm px-7 py-3 rounded-xl hover:bg-[#F0E8FF] transition-colors shadow-md"
+              className="bg-white text-brand-600 font-bold text-sm px-7 py-3 rounded-xl hover:bg-brand-50 transition-colors shadow-md"
             >
               Soy influencer
             </button>
@@ -67,7 +67,7 @@ export function ExplorerClient({ initialInfluencers }: Props) {
       </section>
 
       {/* Stats bar */}
-      <div className="bg-[#1A0A3D] py-6">
+      <div className="bg-brand-950 py-6">
         <div className="max-w-[1100px] mx-auto px-[5%] flex justify-center flex-wrap gap-6 md:gap-0">
           {[['12.4K', 'Influencers'], ['3.2K', 'Marcas'], ['89K', 'Matches']].map(([num, label], i) => (
             <div key={label} className={`text-center px-8 md:px-14 ${i > 0 ? 'border-l border-white/9' : ''}`}>
@@ -81,7 +81,7 @@ export function ExplorerClient({ initialInfluencers }: Props) {
       {/* Explorer */}
       <div id="explorer" className="max-w-[1100px] mx-auto px-[5%] py-12">
         <div className="mb-7">
-          <div className="text-xs font-semibold text-[#7B52D4] uppercase tracking-widest mb-1">Directorio · Explorar</div>
+          <div className="text-xs font-semibold text-brand-400 uppercase tracking-widest mb-1">Directorio · Explorar</div>
           <h2 className="text-xl md:text-2xl font-bold text-foreground tracking-tight">Influencers destacados</h2>
         </div>
 
@@ -94,13 +94,13 @@ export function ExplorerClient({ initialInfluencers }: Props) {
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder="Buscar influencer por nombre..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10 transition-all"
             />
           </div>
           <select
             value={orden}
             onChange={e => setOrden(e.target.value as Orden)}
-            className="px-4 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm outline-none focus:border-[#7B52D4] cursor-pointer transition-colors sm:w-44"
+            className="px-4 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm outline-none focus:border-brand-400 cursor-pointer transition-colors sm:w-44"
           >
             <option value="none">Ordenar por...</option>
             <option value="seguidores">Mayor seguidores</option>
@@ -118,8 +118,8 @@ export function ExplorerClient({ initialInfluencers }: Props) {
               className={cn(
                 'text-sm px-5 py-1.5 rounded-full border font-medium transition-all duration-150',
                 categoria === cat
-                  ? 'bg-[#4A1FA8] text-white border-[#4A1FA8]'
-                  : 'bg-card text-[#4A1FA8] border-border hover:bg-[#F0E8FF] hover:border-[#C4AEFA]'
+                  ? 'bg-brand-600 text-white border-brand-600'
+                  : 'bg-card text-brand-600 border-border hover:bg-brand-50 hover:border-brand-200'
               )}
             >
               {cat}
@@ -130,7 +130,7 @@ export function ExplorerClient({ initialInfluencers }: Props) {
         {/* Advanced filters toggle */}
         <button
           onClick={() => setShowFilters(v => !v)}
-          className="flex items-center gap-2 text-sm text-[#6B5A8E] border border-border bg-card px-4 py-2 rounded-lg mb-4 hover:border-[#C4AEFA] hover:text-[#4A1FA8] transition-colors"
+          className="flex items-center gap-2 text-sm text-reachly-text2 border border-border bg-card px-4 py-2 rounded-lg mb-4 hover:border-brand-200 hover:text-brand-600 transition-colors"
         >
           <SlidersHorizontal className="w-4 h-4" />
           Filtros avanzados {showFilters ? '▴' : '▾'}
@@ -143,7 +143,7 @@ export function ExplorerClient({ initialInfluencers }: Props) {
               <select
                 value={segMin}
                 onChange={e => setSegMin(Number(e.target.value))}
-                className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none focus:border-[#7B52D4] cursor-pointer"
+                className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none focus:border-brand-400 cursor-pointer"
               >
                 <option value={0}>Sin mínimo</option>
                 <option value={10000}>10K+</option>
@@ -157,7 +157,7 @@ export function ExplorerClient({ initialInfluencers }: Props) {
               <select
                 value={engMin}
                 onChange={e => setEngMin(Number(e.target.value))}
-                className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none focus:border-[#7B52D4] cursor-pointer"
+                className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none focus:border-brand-400 cursor-pointer"
               >
                 <option value={0}>Sin mínimo</option>
                 <option value={3}>3%+</option>

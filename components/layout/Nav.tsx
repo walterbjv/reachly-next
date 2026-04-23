@@ -174,7 +174,7 @@ export function Nav() {
       <nav
         className={cn(
           'sticky top-0 z-50 h-16 flex items-center justify-between px-[5%]',
-          'bg-[#4A1FA8] dark:bg-[#1A1428]',
+          'bg-brand-600 dark:bg-card',
           scrolled && 'shadow-[0_4px_28px_rgba(74,31,168,.4)]'
         )}
         style={{ transition: 'box-shadow 250ms cubic-bezier(0.23, 1, 0.32, 1)' }}
@@ -222,7 +222,7 @@ export function Nav() {
           {isLanding && authUser && (
             <Link
               href="/"
-              className="text-sm text-white font-medium hover:text-[#C4AEFA] transition-colors duration-150"
+              className="text-sm text-white font-medium hover:text-brand-200 transition-colors duration-150"
             >
               Plataforma →
             </Link>
@@ -332,7 +332,7 @@ export function Nav() {
           ) : (
             <Link
               href="/login"
-              className="hidden sm:inline-flex items-center bg-white text-[#4A1FA8] font-semibold text-sm px-4 py-2 rounded-lg hover:bg-[#F0E8FF] transition-colors duration-150"
+              className="hidden sm:inline-flex items-center bg-white text-brand-600 font-semibold text-sm px-4 py-2 rounded-lg hover:bg-brand-50 transition-colors duration-150"
             >
               {isLanding ? 'Iniciar sesión' : 'Registrarse'}
             </Link>
@@ -362,7 +362,7 @@ export function Nav() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden fixed top-16 inset-x-0 z-40 bg-[#4A1FA8] dark:bg-[#1A1428] border-t border-white/10 shadow-lg animate-slide-down">
+        <div className="md:hidden fixed top-16 inset-x-0 z-40 bg-brand-600 dark:bg-card border-t border-white/10 shadow-lg animate-slide-down">
           <div className="flex flex-col gap-1 p-5">
             {authUser && (
               <div className="flex items-center gap-3 px-3 py-3 mb-2 border-b border-white/10">
@@ -435,7 +435,7 @@ export function Nav() {
               <Link
                 href={isLanding ? '/login' : '/registro'}
                 onClick={() => setMenuOpen(false)}
-                className="mt-3 text-center bg-white text-[#4A1FA8] font-semibold text-sm px-4 py-2.5 rounded-lg hover:bg-[#F0E8FF] transition-colors"
+                className="mt-3 text-center bg-white text-brand-600 font-semibold text-sm px-4 py-2.5 rounded-lg hover:bg-brand-50 transition-colors"
               >
                 {isLanding ? 'Iniciar sesión' : 'Registrarse'}
               </Link>
@@ -447,7 +447,7 @@ export function Nav() {
       {/* Search modal */}
       {searchOpen && (
         <div
-          className="fixed inset-0 z-[100] flex justify-center pt-[min(20vh,140px)] bg-[#0D0A1A]/60 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex justify-center pt-[min(20vh,140px)] bg-brand-950/60 backdrop-blur-sm"
           onClick={e => { if (e.target === e.currentTarget) setSearchOpen(false) }}
         >
           <div className="w-[90%] max-w-[560px] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden max-h-[70vh] flex flex-col animate-scale-in">
@@ -489,7 +489,7 @@ export function Nav() {
                             <p className="text-sm font-semibold text-foreground truncate">{inf.nombre}</p>
                             <p className="text-xs text-muted-foreground">{inf.categoria} · {inf.seguidores.toLocaleString()} seg.</p>
                           </div>
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#F0E8FF] text-[#4A1FA8]">Influencer</span>
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-brand-50 text-brand-600">Influencer</span>
                         </button>
                       ))}
                     </>

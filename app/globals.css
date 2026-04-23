@@ -45,12 +45,24 @@
   --color-reachly-border: var(--reachly-border);
   --color-reachly-nav: var(--reachly-nav);
 
-  /* Primary brand shades */
+  /* Primary brand shades (named aliases) */
   --color-brand: #4A1FA8;
   --color-brand-light: #7B52D4;
   --color-brand-dark: #2E1270;
   --color-brand-hover: #6C3BF5;
   --color-brand-soft: #F0E8FF;
+
+  /* Numeric brand scale — bg-brand-600, text-brand-300, border-brand-200, etc. */
+  --color-brand-50: #F0E8FF;
+  --color-brand-100: #E8E0FB;
+  --color-brand-200: #C4AEFA;
+  --color-brand-300: #B89EF0;
+  --color-brand-400: #7B52D4;
+  --color-brand-500: #6C3BF5;
+  --color-brand-600: #4A1FA8;
+  --color-brand-800: #2E1270;
+  --color-brand-900: #2A1F45;
+  --color-brand-950: #1A0A3D;
 
   /* ── Animation easing tokens (Emil's philosophy) ──────────── */
   --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);

@@ -55,11 +55,11 @@ export default function PrivacidadPage() {
         </section>
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">6. Cookies</h2>
-          <p>Usamos cookies para mejorar tu experiencia. Podés gestionar tus preferencias en nuestra <span className="text-[#7B52D4]">Política de cookies</span>.</p>
+          <p>Usamos cookies para mejorar tu experiencia. Podés gestionar tus preferencias en nuestra <span className="text-brand-400">Política de cookies</span>.</p>
         </section>
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">7. Contacto</h2>
-          <p>Para ejercer tus derechos o consultas de privacidad: <span className="text-[#7B52D4]">privacidad@reachly.app</span></p>
+          <p>Para ejercer tus derechos o consultas de privacidad: <span className="text-brand-400">privacidad@reachly.app</span></p>
         </section>
       </div>
     </div>

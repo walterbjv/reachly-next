@@ -54,7 +54,7 @@ export default function ComparadorPage() {
         {[0, 1, 2].map(slot => {
           const inf = selected[slot]
           return (
-            <div key={slot} className={`bg-card border rounded-2xl p-5 flex flex-col items-center text-center min-h-[160px] justify-center ${inf ? 'border-[#B89EF0]' : 'border-dashed border-border'}`}>
+            <div key={slot} className={`bg-card border rounded-2xl p-5 flex flex-col items-center text-center min-h-[160px] justify-center ${inf ? 'border-brand-300' : 'border-dashed border-border'}`}>
               {inf ? (
                 <>
                   <div className="relative mb-3">
@@ -68,7 +68,7 @@ export default function ComparadorPage() {
                   </div>
                   <p className="text-sm font-bold text-foreground">{inf.nombre}</p>
                   <p className="text-xs text-muted-foreground">{inf.categoria}</p>
-                  <Link href={`/influencer/${inf.id}`} className="text-[10px] text-[#7B52D4] hover:underline mt-1">Ver perfil →</Link>
+                  <Link href={`/influencer/${inf.id}`} className="text-[10px] text-brand-400 hover:underline mt-1">Ver perfil →</Link>
                 </>
               ) : (
                 <button
@@ -101,7 +101,7 @@ export default function ComparadorPage() {
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Nombre del influencer..."
-            className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] transition-colors mb-2"
+            className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-colors mb-2"
           />
           {filtered.length > 0 && (
             <div className="space-y-1">
@@ -142,7 +142,7 @@ export default function ComparadorPage() {
                     <span className="text-muted-foreground">{inf.seguidores >= 1000 ? `${(inf.seguidores / 1000).toFixed(0)}K` : inf.seguidores}</span>
                   </div>
                   <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div className="h-full bg-[#4A1FA8] rounded-full transition-all duration-700" style={{ width: `${getBar(inf.seguidores, maxSeg)}%` }} />
+                    <div className="h-full bg-brand-600 rounded-full transition-all duration-700" style={{ width: `${getBar(inf.seguidores, maxSeg)}%` }} />
                   </div>
                 </div>
               ))}

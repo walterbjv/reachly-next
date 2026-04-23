@@ -92,13 +92,13 @@ export default function LoginPage() {
                 value={form.email}
                 onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
                 placeholder="tu@email.com"
-                className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10 transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10 transition-all"
               />
             </div>
             <div>
               <div className="flex justify-between items-center mb-1.5">
                 <label className="text-xs font-semibold text-foreground">Contraseña</label>
-                <button type="button" className="text-xs text-[#7B52D4] hover:text-[#4A1FA8] transition-colors">
+                <button type="button" className="text-xs text-brand-400 hover:text-brand-600 transition-colors">
                   ¿Olvidaste tu contraseña?
                 </button>
               </div>
@@ -108,7 +108,7 @@ export default function LoginPage() {
                 value={form.password}
                 onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
                 placeholder="Tu contraseña"
-                className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-[#7B52D4] focus:ring-2 focus:ring-[#7B52D4]/10 transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10 transition-all"
               />
             </div>
             {error && <p className="text-xs text-red-500 text-center">{error}</p>}
@@ -116,8 +116,8 @@ export default function LoginPage() {
               type="submit"
               disabled={loading}
               className={cn(
-                'w-full bg-[#4A1FA8] text-white font-semibold text-sm py-3 rounded-xl transition-all mt-2',
-                loading ? 'opacity-70 cursor-wait' : 'hover:bg-[#6C3BF5]'
+                'w-full bg-brand-600 text-white font-semibold text-sm py-3 rounded-xl transition-all mt-2',
+                loading ? 'opacity-70 cursor-wait' : 'hover:bg-brand-500'
               )}
             >
               {loading ? 'Ingresando...' : 'Ingresar'}
@@ -127,7 +127,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-muted-foreground mt-5">
           ¿No tienes cuenta?{' '}
-          <Link href="/registro" className="text-[#7B52D4] hover:text-[#4A1FA8] font-medium transition-colors">
+          <Link href="/registro" className="text-brand-400 hover:text-brand-600 font-medium transition-colors">
             Registrarse gratis
           </Link>
         </p>

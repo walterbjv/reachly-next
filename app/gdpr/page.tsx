@@ -54,7 +54,7 @@ export default function GdprPage() {
 
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">Responsable de protección de datos (DPO)</h2>
-          <p>Para ejercer tus derechos o hacer consultas GDPR, contacta a nuestro DPO: <span className="text-[#7B52D4]">gdpr@reachly.app</span></p>
+          <p>Para ejercer tus derechos o hacer consultas GDPR, contacta a nuestro DPO: <span className="text-brand-400">gdpr@reachly.app</span></p>
           <p className="mt-2">También puedes presentar una reclamación ante la autoridad de control de protección de datos de tu país.</p>
         </section>
       </div>

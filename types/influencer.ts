@@ -25,7 +25,7 @@ export type Categoria = 'Moda' | 'Tech' | 'Fitness' | 'Gastronomía' | 'Viajes' 
 export const CATEGORIAS: Categoria[] = ['Moda', 'Tech', 'Fitness', 'Gastronomía', 'Viajes', 'Gaming']
 
 export const CATEGORIA_COLORS: Record<string, { bg: string; text: string; avatar: string }> = {
-  Moda:        { bg: '#F0E8FF', text: '#4A1FA8', avatar: '#4A1FA8' },
+  Moda:        { bg: 'var(--color-brand-50)', text: 'var(--color-brand-600)', avatar: 'var(--color-brand-600)' },
   Tech:        { bg: '#E6F1FB', text: '#0C447C', avatar: '#185FA5' },
   Fitness:     { bg: '#FAECE7', text: '#993C1D', avatar: '#D85A30' },
   Gastronomía: { bg: '#E1F5EE', text: '#0F6E56', avatar: '#1D9E75' },
