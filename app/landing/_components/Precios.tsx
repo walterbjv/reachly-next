@@ -72,7 +72,7 @@ export function Precios() {
           <motion.span
             animate={{ opacity: annual ? 1 : 0.35 }}
             transition={{ duration: 0.2 }}
-            className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700"
+            className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400"
           >
             Ahorra 20%
           </motion.span>
@@ -141,12 +141,10 @@ export function Precios() {
                 {p.features.map(f => (
                   <li key={f} className={`flex items-start gap-2 text-[13px] ${p.pop ? 'text-white/75' : 'text-muted-foreground'}`}>
                     <span
-                      className="w-[18px] h-[18px] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                      style={
-                        p.pop
-                          ? { background: 'rgba(29,158,117,.2)', color: '#5BE8B8' }
-                          : { background: '#E1F5EE', color: '#1D9E75' }
-                      }
+                      className={`w-[18px] h-[18px] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                        p.pop ? '' : 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
+                      }`}
+                      style={p.pop ? { background: 'rgba(29,158,117,.2)', color: '#5BE8B8' } : undefined}
                     >
                       <Check className="w-2.5 h-2.5" strokeWidth={3} />
                     </span>

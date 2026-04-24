@@ -57,7 +57,7 @@ export default async function DashboardMarcaPage() {
           <div key={s.label} className="bg-card border border-border rounded-xl p-5">
             <div className="text-xs text-muted-foreground mb-2">{s.label}</div>
             <div className="text-2xl font-bold text-foreground">{s.value}</div>
-            <div className={`text-xs font-semibold mt-1 ${s.up ? 'text-emerald-600' : 'text-red-500'}`}>
+            <div className={`text-xs font-semibold mt-1 ${s.up ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
               ▲ {s.change} este mes
             </div>
           </div>

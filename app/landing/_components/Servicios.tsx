@@ -44,12 +44,10 @@ function FeatureItem({ text, inverted }: { text: string; inverted?: boolean }) {
   return (
     <li className="flex items-start gap-2 text-sm">
       <span
-        className="w-[18px] h-[18px] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-        style={
-          inverted
-            ? { background: 'rgba(29,158,117,.2)', color: '#5BE8B8' }
-            : { background: '#E1F5EE', color: '#1D9E75' }
-        }
+        className={`w-[18px] h-[18px] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+          inverted ? '' : 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
+        }`}
+        style={inverted ? { background: 'rgba(29,158,117,.2)', color: '#5BE8B8' } : undefined}
       >
         <Check className="w-2.5 h-2.5" strokeWidth={3} />
       </span>

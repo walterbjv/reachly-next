@@ -37,6 +37,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `try{var t=JSON.parse(localStorage.getItem('reachly-theme')||'{}');if(t&&t.state&&t.state.isDark)document.documentElement.classList.add('dark')}catch(e){}` }} />
+      </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ThemeProvider>
           <Nav />

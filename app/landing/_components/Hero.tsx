@@ -25,6 +25,11 @@ export function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 65% 40%, rgba(123,82,212,.35) 0%, transparent 60%)' }}
       />
+      {/* Dark mode: soft fade at the bottom to blend into page bg */}
+      <div
+        className="absolute bottom-0 inset-x-0 h-16 pointer-events-none hidden dark:block"
+        style={{ background: 'linear-gradient(to bottom, transparent, var(--background))' }}
+      />
 
       <div className="relative max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* ── Left — staggered entrance ── */}

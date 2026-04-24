@@ -67,7 +67,7 @@ export function CasosDeExito() {
 
               <div className="grid grid-cols-3 gap-3 mb-5">
                 {c.metrics.map(m => (
-                  <div key={m.l} className="text-center bg-reachly-bg dark:bg-card rounded-xl py-3">
+                  <div key={m.l} className="text-center bg-reachly-bg dark:bg-muted rounded-xl py-3">
                     <div className="text-lg font-bold text-foreground tabular-nums">{m.n}</div>
                     <div className="text-[10px] text-muted-foreground">{m.l}</div>
                   </div>
