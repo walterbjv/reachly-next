@@ -19,16 +19,15 @@ export function Hero() {
   const initial = reduce ? false : 'hidden'
 
   return (
-    <section className="relative bg-gradient-to-br from-brand-600 to-brand-800 overflow-hidden px-[5%] pt-20 pb-16 md:pt-28 md:pb-20">
-      {/* Background radial glow */}
+    <section className="relative bg-gradient-to-br from-brand-600 to-brand-800 dark:from-brand-950 dark:to-[#0D0A1A] overflow-hidden px-[5%] pt-20 pb-16 md:pt-28 md:pb-20">
+      {/* Background radial glow — brighter in dark mode */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 65% 40%, rgba(123,82,212,.35) 0%, transparent 60%)' }}
       />
-      {/* Dark mode: soft fade at the bottom to blend into page bg */}
       <div
-        className="absolute bottom-0 inset-x-0 h-16 pointer-events-none hidden dark:block"
-        style={{ background: 'linear-gradient(to bottom, transparent, var(--background))' }}
+        className="absolute inset-0 pointer-events-none hidden dark:block"
+        style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(108,59,245,.28) 0%, transparent 70%)' }}
       />
 
       <div className="relative max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

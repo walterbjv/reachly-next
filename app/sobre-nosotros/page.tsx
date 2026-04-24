@@ -20,7 +20,7 @@ export default function SobreNosotrosPage() {
   return (
     <div className="bg-background">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-brand-600 to-brand-800 text-center px-[5%] py-16">
+      <div className="bg-gradient-to-br from-brand-600 to-brand-800 dark:from-brand-950 dark:to-[#0D0A1A] text-center px-[5%] py-16">
         <div className="inline-block bg-white/10 border border-white/[.18] rounded-full px-4 py-1.5 text-xs text-brand-200 mb-5">Nuestra historia</div>
         <h1 className="text-white text-[clamp(28px,4vw,48px)] font-bold leading-tight">
           Construyendo el futuro<br />del influencer marketing
