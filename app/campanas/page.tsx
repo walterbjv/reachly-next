@@ -4,7 +4,7 @@ import { CampanasClient } from './CampanasClient'
 
 export const metadata: Metadata = {
   title: 'Campañas',
-  description: 'Explorá las campañas disponibles y postulate a colaboraciones con las mejores marcas.',
+  description: 'Explora las campañas disponibles y postúlate a colaboraciones con las mejores marcas.',
 }
 
 export default async function CampanasPage() {

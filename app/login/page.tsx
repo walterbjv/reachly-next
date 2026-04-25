@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/useUserStore'
 import { cn } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
+import { ReachlyLogoLink } from '@/components/layout/ReachlyLogoLink'
+import { ForgotPasswordModal } from './ForgotPasswordModal'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -12,6 +14,7 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [forgotOpen, setForgotOpen] = useState(false)
 
   async function handleGoogle() {
     await supabase.auth.signInWithOAuth({
@@ -56,7 +59,7 @@ export default function LoginPage() {
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center px-5 py-12">
       <div className="w-full max-w-[400px]">
         <div className="text-center mb-8">
-          <img src="/logo-reachly.svg" alt="Reachly" className="h-8 w-auto mx-auto mb-2" />
+          <ReachlyLogoLink variant="dark" imgClassName="h-8 mx-auto mb-2" className="inline-block" />
           <h1 className="text-xl font-bold text-foreground">Iniciar sesión</h1>
           <p className="text-muted-foreground text-sm mt-1">Bienvenido de vuelta</p>
         </div>
@@ -98,7 +101,11 @@ export default function LoginPage() {
             <div>
               <div className="flex justify-between items-center mb-1.5">
                 <label className="text-xs font-semibold text-foreground">Contraseña</label>
-                <button type="button" className="text-xs text-brand-400 hover:text-brand-600 transition-colors">
+                <button
+                  type="button"
+                  onClick={() => setForgotOpen(true)}
+                  className="text-xs text-brand-400 hover:text-brand-600 transition-colors"
+                >
                   ¿Olvidaste tu contraseña?
                 </button>
               </div>
@@ -132,6 +139,8 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
+
+      <ForgotPasswordModal open={forgotOpen} onClose={() => setForgotOpen(false)} />
     </div>
   )
 }

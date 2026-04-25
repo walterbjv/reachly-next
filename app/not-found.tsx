@@ -1,6 +1,14 @@
+'use client'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function NotFound() {
+  const { isLoggedIn } = useAuth()
+  const pathname = usePathname()
+  const homeHref = isLoggedIn ? '/' : '/landing'
+  const showCampanas = isLoggedIn && pathname?.startsWith('/campanas')
+
   return (
     <div className="min-h-[calc(100vh-128px)] flex items-center justify-center px-[5%]">
       <div className="text-center">
@@ -10,12 +18,14 @@ export default function NotFound() {
           La página que buscas no existe o fue movida.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
-          <Link href="/" className="bg-brand-600 text-white font-semibold text-sm px-6 py-2.5 rounded-xl hover:bg-brand-500 transition-colors">
+          <Link href={homeHref} className="bg-brand-600 text-white font-semibold text-sm px-6 py-2.5 rounded-xl hover:bg-brand-500 transition-colors">
             Volver al inicio
           </Link>
-          <Link href="/campanas" className="border border-border text-foreground text-sm font-medium px-6 py-2.5 rounded-xl hover:bg-accent transition-colors">
-            Ver campañas
-          </Link>
+          {showCampanas && (
+            <Link href="/campanas" className="border border-border text-foreground text-sm font-medium px-6 py-2.5 rounded-xl hover:bg-accent transition-colors">
+              Ver campañas
+            </Link>
+          )}
         </div>
       </div>
     </div>

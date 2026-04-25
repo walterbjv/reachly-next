@@ -12,6 +12,7 @@ import { InfluencerAvatar } from '@/components/ui/InfluencerAvatar'
 import { cn } from '@/lib/utils'
 import { Search, Moon, Sun, Menu, X, LogOut, User, LayoutDashboard } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
+import { LANDING_NAV_LINKS } from '@/components/layout/nav-links'
 
 const EASE = [0.23, 1, 0.32, 1] as const
 
@@ -22,14 +23,6 @@ const NAV_LINKS = [
   { href: '/comparador', label: 'Comparador' },
   { href: '/mensajes', label: 'Mensajes' },
   { href: '/favoritos', label: 'Guardados' },
-]
-
-const LANDING_NAV_LINKS = [
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#como-funciona', label: 'Cómo funciona' },
-  { href: '#casos', label: 'Casos de éxito' },
-  { href: '#precios', label: 'Precios' },
-  { href: '#faq', label: 'FAQ' },
 ]
 
 interface AuthUser {

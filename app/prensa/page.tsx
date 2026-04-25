@@ -47,10 +47,11 @@ export default function PrensaPage() {
       {/* Contacto */}
       <div className="bg-card border border-border rounded-2xl p-8 text-center">
         <h2 className="text-lg font-bold text-foreground mb-2">Contacto de prensa</h2>
-        <p className="text-muted-foreground text-sm mb-4">¿Sos periodista o trabajás en medios? Estamos disponibles para entrevistas, datos exclusivos y demos.</p>
+        <p className="text-muted-foreground text-sm mb-4">¿Eres periodista o trabajas en medios? Estamos disponibles para entrevistas, datos exclusivos y demos.</p>
         <div className="space-y-1 text-sm">
           <p className="text-foreground">Email: <span className="text-brand-400">prensa@reachly.app</span></p>
-          <p className="text-foreground">Tel: <span className="text-brand-400">+54 11 4000-0000</span></p>
+          {/* TODO: reemplazar por teléfono oficial de prensa */}
+          <p className="text-foreground">Tel: <span className="text-brand-400">+56 9 8765 4321</span></p>
         </div>
       </div>
     </div>

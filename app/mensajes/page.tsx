@@ -353,7 +353,7 @@ function MensajesContent() {
                     value={input}
                     onChange={e => setInput(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-                    placeholder="Escribí un mensaje..."
+                    placeholder="Escribe un mensaje..."
                     className="flex-1 px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground outline-none focus:border-brand-400 transition-colors"
                   />
                   <button

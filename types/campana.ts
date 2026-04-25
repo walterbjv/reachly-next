@@ -9,4 +9,5 @@ export interface Campana {
   estado?: 'activa' | 'cerrada' | 'borrador'
   seguidoresMin?: number
   engagementMin?: number
+  brandId?: number
 }

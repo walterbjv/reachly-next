@@ -83,7 +83,7 @@ function EmptyState({ type }: { type: Tab }) {
         {type === 'influencers' ? 'Sin influencers guardados' : 'Sin campañas guardadas'}
       </h3>
       <p className="text-sm text-muted-foreground mb-6">
-        {type === 'influencers' ? 'Explorá y guardá los que más te interesen.' : 'Guardá campañas para revisarlas después.'}
+        {type === 'influencers' ? 'Explora y guarda los que más te interesen.' : 'Guarda campañas para revisarlas después.'}
       </p>
       <Link
         href={type === 'influencers' ? '/' : '/campanas'}
