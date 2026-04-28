@@ -1,29 +1,12 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-
-const PUBLIC_ROUTES = [
-  '/landing',
-  '/login',
-  '/registro',
-  '/auth',
-  '/sobre-nosotros',
-  '/blog',
-  '/prensa',
-  '/careers',
-  '/contacto',
-  '/terminos',
-  '/privacidad',
-  '/cookies',
-  '/gdpr',
-]
+import { isUnauthenticatedRoute, pathMatches } from '@/lib/routes'
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Permitir rutas públicas
-  const isPublic = PUBLIC_ROUTES.some(route => pathname === route || pathname.startsWith(route + '/'))
-  if (isPublic) return NextResponse.next()
+  if (isUnauthenticatedRoute(pathname)) return NextResponse.next()
 
   const response = NextResponse.next()
 
@@ -50,7 +33,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  if (pathname === '/dashboard/marca' || pathname.startsWith('/dashboard/marca/')) {
+  // Usamos pathMatches en vez de isRoleRoute('marca') porque ROLE_ROUTES.marca
+  // incluye '/marca', que hoy contiene perfiles públicos /marca/[id]. La
+  // unificación con isRoleRoute se hará en el punto 5 cuando esos perfiles
+  // se muevan a /m/[id].
+  if (pathMatches(pathname, ['/dashboard/marca'])) {
     const tipo = session.user.user_metadata?.tipo
     if (tipo === 'influencer') {
       return NextResponse.redirect(new URL('/dashboard/influencer', request.url))
