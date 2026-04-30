@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import type { Session } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 import { useUserStore } from '@/store/useUserStore'
 
@@ -33,6 +34,7 @@ function toIniciales(nombre: string): string {
 export function useAuth(): UseAuthResult {
   const storeUser = useUserStore((s) => s.user)
   const setStoreUser = useUserStore((s) => s.setUser)
+  const clearStoreUser = useUserStore((s) => s.clearUser)
 
   const [user, setUser] = useState<AuthUser | null>(() =>
     storeUser
@@ -49,24 +51,17 @@ export function useAuth(): UseAuthResult {
   useEffect(() => {
     let cancelled = false
 
-    supabase.auth.getUser().then(async ({ data }) => {
-      if (cancelled) return
-      if (!data.user) {
-        setUser(null)
-        setIsLoading(false)
-        return
-      }
-
+    async function syncFromSession(session: Session) {
       const { data: profile } = await supabase
         .from('profiles')
         .select('nombre, avatar_url, tipo')
-        .eq('id', data.user.id)
+        .eq('id', session.user.id)
         .single()
 
       if (cancelled) return
 
-      const nombre = profile?.nombre ?? data.user.user_metadata?.nombre ?? 'Usuario'
-      const tipo: Role = profile?.tipo ?? data.user.user_metadata?.tipo ?? 'influencer'
+      const nombre = profile?.nombre ?? session.user.user_metadata?.nombre ?? 'Usuario'
+      const tipo: Role = profile?.tipo ?? session.user.user_metadata?.tipo ?? 'influencer'
       const iniciales = toIniciales(nombre)
 
       const authUser: AuthUser = {
@@ -79,12 +74,40 @@ export function useAuth(): UseAuthResult {
       setUser(authUser)
       setStoreUser({ nombre, tipo, iniciales })
       setIsLoading(false)
-    })
+    }
+
+    // onAuthStateChange dispara INITIAL_SESSION en mount con la sesión actual
+    // y luego SIGNED_IN / SIGNED_OUT / TOKEN_REFRESHED / USER_UPDATED.
+    // Centralizar todo en el listener (sin getUser() inicial separado) evita
+    // race conditions entre un fetch inicial y los eventos del listener.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (cancelled) return
+
+        if (event === 'SIGNED_OUT') {
+          setUser(null)
+          clearStoreUser()
+          setIsLoading(false)
+          return
+        }
+
+        // INITIAL_SESSION sin sesión = arranque sin login. No llamamos
+        // clearStoreUser para preservar flags persistidos como onboardingDone.
+        if (!session?.user) {
+          setUser(null)
+          setIsLoading(false)
+          return
+        }
+
+        void syncFromSession(session)
+      },
+    )
 
     return () => {
       cancelled = true
+      subscription.unsubscribe()
     }
-  }, [setStoreUser])
+  }, [setStoreUser, clearStoreUser])
 
   return {
     isLoggedIn: user !== null,

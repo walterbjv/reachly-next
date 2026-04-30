@@ -8,7 +8,7 @@ Este archivo le da contexto completo a Claude Code sobre el estado, la visión y
 
 ## Qué es Reachly
 
-Plataforma de matching algorítmico entre marcas e influencers de LATAM. "Tinder profesional" donde el match lo decide la data, no un humano con sesgos. Sin agencias intermediarias.
+Plataforma CHILENA de matching algorítmico entre marcas e influencers de LATAM. "Tinder profesional" donde el match lo decide la data, no un humano con sesgos. Sin agencias intermediarias.
 
 **Modelo de negocio:** comisión por campaña cerrada + suscripción para marcas + freemium. Influencers usan gratis.
 

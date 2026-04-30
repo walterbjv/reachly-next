@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useThemeStore } from '@/store/useThemeStore'
-import { useUserStore } from '@/store/useUserStore'
 import { fetchInfluencers, fetchCampanas } from '@/lib/api'
 import type { Influencer } from '@/types/influencer'
 import type { Campana } from '@/types/campana'
@@ -13,6 +12,7 @@ import { cn } from '@/lib/utils'
 import { Search, Moon, Sun, Menu, X, LogOut, User, LayoutDashboard } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { LANDING_NAV_LINKS } from '@/components/layout/nav-links'
+import { useAuth } from '@/hooks/useAuth'
 
 const EASE = [0.23, 1, 0.32, 1] as const
 
@@ -25,18 +25,10 @@ const NAV_LINKS = [
   { href: '/favoritos', label: 'Guardados' },
 ]
 
-interface AuthUser {
-  nombre: string
-  iniciales: string
-  avatar_url?: string | null
-  tipo: 'influencer' | 'marca'
-}
-
 export function Nav() {
   const pathname = usePathname()
   const router = useRouter()
   const { isDark, toggle } = useThemeStore()
-  const { clearUser } = useUserStore()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
@@ -48,7 +40,7 @@ export function Nav() {
   const [allInfluencers, setAllInfluencers] = useState<Influencer[]>([])
   const [allCampanas, setAllCampanas] = useState<Campana[]>([])
   const [activeIdx, setActiveIdx] = useState(-1)
-  const [authUser, setAuthUser] = useState<AuthUser | null>(null)
+  const { user: authUser } = useAuth()
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const userMenuRef = useRef<HTMLDivElement>(null)
@@ -58,26 +50,6 @@ export function Nav() {
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])
-
-  // Load auth user
-  useEffect(() => {
-    supabase.auth.getUser().then(async ({ data }) => {
-      if (!data.user) return
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('nombre, avatar_url, tipo')
-        .eq('id', data.user.id)
-        .single()
-      const nombre = profile?.nombre ?? data.user.user_metadata?.nombre ?? 'Usuario'
-      const iniciales = nombre.split(' ').slice(0, 2).map((p: string) => p[0]).join('').toUpperCase() || '?'
-      setAuthUser({
-        nombre,
-        iniciales,
-        avatar_url: profile?.avatar_url,
-        tipo: profile?.tipo ?? data.user.user_metadata?.tipo ?? 'influencer',
-      })
-    })
-  }, [pathname])
 
   // Close user menu on outside click
   useEffect(() => {
@@ -155,7 +127,6 @@ export function Nav() {
   async function handleLogout() {
     setUserMenuOpen(false)
     await supabase.auth.signOut()
-    clearUser()
     router.push('/landing')
   }
 
