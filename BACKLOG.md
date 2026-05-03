@@ -41,6 +41,39 @@ Pagos.
       que mover el estado a Context, SWR o React Query. Reevaluar
       cuando haya más consumidores de useAuth o cuando se note
       impacto de performance.
+- [ ] Implementar Google OAuth para el botón "Iniciar sesión con
+      Google" en /login. Hoy el botón existe pero no funciona.
+      Requiere: configurar credenciales OAuth en Google Cloud Console,
+      registrar redirect URIs en Supabase Auth, conectar el flujo
+      signInWithOAuth({ provider: 'google' }). No es urgente para v1
+      si el login con email funciona, pero baja la fricción de registro.
+- [ ] Warning de Next.js: "Detected scroll-behavior: smooth on the
+      <html> element". Recomienda añadir data-scroll-behavior="smooth"
+      al <html> en app/layout.tsx para evitar comportamiento raro
+      durante transiciones de ruta. Cosmético pero limpia la consola.
+- [ ] Onboarding sigue haciendo silent default a 'influencer' cuando
+      `tipo` falta tanto en Zustand como en user_metadata
+      (app/onboarding/page.tsx:41). Tras el punto 4 ahora el valor se
+      persiste a ambas fuentes, pero la elección sigue siendo
+      automática. Solución: añadir un step "elige tu rol" al onboarding
+      cuando tipo está missing, con la misma UI que el step 1 de
+      /registro. Elevar a urgente cuando aterrice Google OAuth (que
+      hoy no setea tipo en signup).
+- [ ] Hint TypeScript pre-existente: `router` declarado y no usado en
+      app/onboarding/page.tsx:21. Detectado durante el punto 4, no
+      relacionado con el refactor. Remover en una pasada de cleanup.
+
+## Notas arquitectónicas
+
+- **Fuente de verdad de `tipo` (post punto 4):** distribuida en dos
+  capas. `user_metadata.tipo` es la fuente operacional rápida, leída
+  por middleware en cada request privado sin hit a DB. `profiles.tipo`
+  es la fuente de consulta para joins y agregaciones, leída por
+  useAuth y auth/callback con fallback a user_metadata. Onboarding
+  escribe ambas para mantenerlas sincronizadas. **Cualquier flujo
+  futuro que cambie el rol del usuario DEBE escribir las dos.** Si la
+  lista de fuentes crece o aparece un tercer escritor, considerar
+  centralizar en un helper `setUserRole(userId, tipo)` en lib/api.ts.
 
 ## Resuelto
 
@@ -55,3 +88,28 @@ Pagos.
 Ver CLAUDE.md sección "Páginas por construir" y "Modelo de datos >
 Tablas por construir" para el detalle. Este backlog se enfoca en bugs
 y deuda específica, no en el plan de construcción.
+
+## Bugs del flujo de onboarding (detectados durante smoke test del punto 3-4)
+
+Estos 3 bugs comparten causa raíz: el onboarding fue construido genérico, 
+sin la separación por rol que CLAUDE.md establece. Las observaciones 2 y 3 
+probablemente se resuelven de forma más limpia después del punto 5 del 
+refactor estructural (migración a /[rol]/*).
+
+- [ ] **Registro nuevo NO redirige a /onboarding automáticamente.** 
+      Usuario se registra, llega a la app, pero su perfil queda incompleto 
+      (sin bio, sin categorías, sin redes). Si nunca visita /onboarding 
+      manualmente, queda invisible para el algoritmo de matching. Bug 
+      pre-existente al refactor, identificado durante smoke test.
+
+- [ ] **Onboarding idéntico para marca e influencer.** Hoy todos los 
+      usuarios ven el mismo formulario, optimizado para influencers 
+      (categorías de contenido, redes sociales). Carla debería ver campos 
+      de empresa: rubro, descripción, presupuesto orientativo. Pendiente 
+      de definir post-punto-5: ¿una página /onboarding con vista 
+      condicional, o dos páginas /marca/onboarding y /influencer/onboarding?
+
+- [ ] **Pantalla final del onboarding genérica.** Hoy ofrece "explorar 
+      campañas E influencers" — debería ser solo lo relevante al rol: 
+      Sofía va a su feed swipe, Carla va a su dashboard. La redirección 
+      final debería respetar el rol seteado.

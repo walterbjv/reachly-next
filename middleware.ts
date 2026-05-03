@@ -1,7 +1,41 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { isUnauthenticatedRoute, pathMatches } from '@/lib/routes'
+import { isUnauthenticatedRoute, pathMatches, type Role } from '@/lib/routes'
+
+const KNOWN_ROLES: readonly Role[] = ['marca', 'influencer']
+
+function isKnownRole(t: unknown): t is Role {
+  return typeof t === 'string' && KNOWN_ROLES.includes(t as Role)
+}
+
+// Si el path es el área privada de un rol específico, decide qué hacer:
+// - tipo desconocido o ausente → redirige a /onboarding (mismo
+//   comportamiento que app/auth/callback/route.ts).
+// - tipo es el otro rol conocido → redirige al dashboard correcto.
+// - tipo coincide con expectedRole → null (deja pasar).
+//
+// Usamos pathMatches con la ruta literal /dashboard/[rol] en vez de
+// isRoleRoute() porque ROLE_ROUTES también incluye /[rol], que hoy contiene
+// perfiles públicos /marca/[id] y /influencer/[id]. La unificación con
+// isRoleRoute se hará en el punto 5 cuando esos perfiles se muevan a
+// /m/[id] y /u/[id].
+function enforceRoleArea(
+  pathname: string,
+  expectedRole: Role,
+  tipo: unknown,
+  request: NextRequest,
+): NextResponse | null {
+  if (!pathMatches(pathname, [`/dashboard/${expectedRole}`])) return null
+
+  if (!isKnownRole(tipo)) {
+    return NextResponse.redirect(new URL('/onboarding', request.url))
+  }
+  if (tipo !== expectedRole) {
+    return NextResponse.redirect(new URL(`/dashboard/${tipo}`, request.url))
+  }
+  return null
+}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -33,25 +67,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // Usamos pathMatches en vez de isRoleRoute('marca') porque ROLE_ROUTES.marca
-  // incluye '/marca', que hoy contiene perfiles públicos /marca/[id]. La
-  // unificación con isRoleRoute se hará en el punto 5 cuando esos perfiles
-  // se muevan a /m/[id].
-  if (pathMatches(pathname, ['/dashboard/marca'])) {
-    const tipo = session.user.user_metadata?.tipo
-    if (tipo === 'influencer') {
-      return NextResponse.redirect(new URL('/dashboard/influencer', request.url))
-    }
-    if (tipo !== 'marca') {
-      return NextResponse.redirect(new URL('/', request.url))
-    }
-  }
+  const tipo = session.user.user_metadata?.tipo
 
-  // Redirigir al dashboard correcto según el rol
+  const marcaGate = enforceRoleArea(pathname, 'marca', tipo, request)
+  if (marcaGate) return marcaGate
+
+  const influencerGate = enforceRoleArea(pathname, 'influencer', tipo, request)
+  if (influencerGate) return influencerGate
+
+  // Redirigir al dashboard correcto desde la home. Sin rol seteado,
+  // mandamos a /onboarding en vez de asumir un default.
   if (pathname === '/') {
-    const tipo = session.user.user_metadata?.tipo ?? 'influencer'
-    const dashboard = tipo === 'marca' ? '/dashboard/marca' : '/dashboard/influencer'
-    return NextResponse.redirect(new URL(dashboard, request.url))
+    if (!isKnownRole(tipo)) {
+      return NextResponse.redirect(new URL('/onboarding', request.url))
+    }
+    return NextResponse.redirect(new URL(`/dashboard/${tipo}`, request.url))
   }
 
   return response

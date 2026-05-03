@@ -41,12 +41,13 @@ export default function OnboardingPage() {
     const tipo = user?.tipo ?? authUser.user_metadata?.tipo ?? 'influencer'
 
     await supabase.auth.updateUser({
-      data: { nombre, bio, ubicacion, redes, categorias: selectedCats, objetivos: selectedObjs },
+      data: { nombre, tipo, bio, ubicacion, redes, categorias: selectedCats, objetivos: selectedObjs },
     })
 
     await supabase.from('profiles').upsert({
       id: authUser.id,
       nombre,
+      tipo,
       bio,
       ubicacion,
       redes,
