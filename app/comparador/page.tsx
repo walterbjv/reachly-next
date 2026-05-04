@@ -68,7 +68,7 @@ export default function ComparadorPage() {
                   </div>
                   <p className="text-sm font-bold text-foreground">{inf.nombre}</p>
                   <p className="text-xs text-muted-foreground">{inf.categoria}</p>
-                  <Link href={`/influencer/${inf.id}`} className="text-[10px] text-brand-400 hover:underline mt-1">Ver perfil →</Link>
+                  <Link href={`/u/${inf.id}`} className="text-[10px] text-brand-400 hover:underline mt-1">Ver perfil →</Link>
                 </>
               ) : (
                 <button

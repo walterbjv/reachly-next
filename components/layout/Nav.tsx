@@ -121,7 +121,7 @@ export function Nav() {
   function navigate(r: typeof allResults[number]) {
     setSearchOpen(false)
     setQuery('')
-    router.push(r.type === 'influencer' ? `/influencer/${r.id}` : `/campanas/${r.id}`)
+    router.push(r.type === 'influencer' ? `/u/${r.id}` : `/campanas/${r.id}`)
   }
 
   async function handleLogout() {

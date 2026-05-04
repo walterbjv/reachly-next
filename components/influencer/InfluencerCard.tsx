@@ -21,7 +21,7 @@ export function InfluencerCard({ influencer: inf, index = 0 }: Props) {
 
   return (
     <Link
-      href={`/influencer/${inf.id}`}
+      href={`/u/${inf.id}`}
       className={cn(
         'group block bg-card border border-border rounded-[18px] p-[22px]',
         'hover:border-brand-300 hover:shadow-[0_8px_36px_rgba(74,31,168,.12)] hover:-translate-y-0.5',

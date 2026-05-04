@@ -115,7 +115,7 @@ export default async function DashboardMarcaPage() {
           <h2 className="text-base font-bold text-foreground mb-4">Matches recientes</h2>
           <div className="space-y-3">
             {influencers.slice(0, 4).map(inf => (
-              <Link key={inf.id} href={`/influencer/${inf.id}`} className="flex items-center gap-3 py-1.5 hover:opacity-80 transition-opacity">
+              <Link key={inf.id} href={`/u/${inf.id}`} className="flex items-center gap-3 py-1.5 hover:opacity-80 transition-opacity">
                 <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
                   <svg width="32" height="32" viewBox="0 0 32 32">
                     <circle cx="16" cy="16" r="16" fill="var(--color-brand-600)" />

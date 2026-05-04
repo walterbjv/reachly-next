@@ -107,7 +107,7 @@ export function TendenciasClient({ influencers }: { influencers: Influencer[] })
               return (
                 <Link
                   key={inf.id}
-                  href={`/influencer/${inf.id}`}
+                  href={`/u/${inf.id}`}
                   className="grid grid-cols-[40px_1fr_auto] md:grid-cols-[48px_1fr_100px_100px_80px] items-center px-5 py-4 border-t border-border hover:bg-muted/30 transition-colors"
                 >
                   <span className={cn(
@@ -177,7 +177,7 @@ export function TendenciasClient({ influencers }: { influencers: Influencer[] })
                 {list.map(inf => (
                   <Link
                     key={inf.id}
-                    href={`/influencer/${inf.id}`}
+                    href={`/u/${inf.id}`}
                     className="flex items-center gap-3 py-2.5 border-b border-border last:border-0 hover:opacity-80 transition-opacity"
                   >
                     <InfluencerAvatar iniciales={inf.iniciales} categoria={inf.categoria} size="sm" />

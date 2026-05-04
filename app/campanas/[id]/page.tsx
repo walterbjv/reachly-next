@@ -50,7 +50,7 @@ export default async function CampanaDetailPage({ params }: { params: Promise<{ 
           <div className="flex-1 min-w-0">
             <div className="text-white/70 text-sm mb-1">
               {campana.brandId ? (
-                <Link href={`/marca/${campana.brandId}`} className="hover:text-white transition-colors">
+                <Link href={`/m/${campana.brandId}`} className="hover:text-white transition-colors">
                   {campana.marca} →
                 </Link>
               ) : (
@@ -150,7 +150,7 @@ export default async function CampanaDetailPage({ params }: { params: Promise<{ 
             </div>
             {campana.brandId && (
               <Link
-                href={`/marca/${campana.brandId}`}
+                href={`/m/${campana.brandId}`}
                 className="block text-center w-full border border-border text-muted-foreground font-medium text-sm px-4 py-2 rounded-xl hover:border-brand-300 hover:text-foreground transition-colors"
               >
                 Ver perfil →

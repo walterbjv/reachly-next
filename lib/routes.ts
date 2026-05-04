@@ -13,6 +13,8 @@ export const PUBLIC_ROUTES = [
   '/blog',
   '/prensa',
   '/careers',
+  '/u',
+  '/m',
 ] as const
 
 export const AUTH_ROUTES = [

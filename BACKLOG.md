@@ -21,6 +21,47 @@ y se espera que muchos se resuelvan naturalmente al ejecutar el punto 5
       contactar/contratar (depende de tablas invitaciones, matches y
       mensajes pendientes de construir)
 
+## Bugs del flujo de onboarding (detectados durante smoke test del punto 3-4)
+
+Estos 3 bugs comparten causa raíz: el onboarding fue construido genérico,
+sin la separación por rol que CLAUDE.md establece. Las observaciones 2 y 3
+probablemente se resuelven de forma más limpia después del punto 5 del
+refactor estructural (migración a /[rol]/*).
+
+- [ ] **Registro nuevo NO redirige a /onboarding automáticamente.**
+      Usuario se registra, llega a la app, pero su perfil queda incompleto
+      (sin bio, sin categorías, sin redes). Si nunca visita /onboarding
+      manualmente, queda invisible para el algoritmo de matching. Bug
+      pre-existente al refactor, identificado durante smoke test.
+
+- [ ] **Onboarding idéntico para marca e influencer.** Hoy todos los
+      usuarios ven el mismo formulario, optimizado para influencers
+      (categorías de contenido, redes sociales). Carla debería ver campos
+      de empresa: rubro, descripción, presupuesto orientativo. Pendiente
+      de definir post-punto-5: ¿una página /onboarding con vista
+      condicional, o dos páginas /marca/onboarding y /influencer/onboarding?
+
+- [ ] **Pantalla final del onboarding genérica.** Hoy ofrece "explorar
+      campañas E influencers" — debería ser solo lo relevante al rol:
+      Sofía va a su feed swipe, Carla va a su dashboard. La redirección
+      final debería respetar el rol seteado.
+
+## Bugs de UX detectados durante el smoke test del punto 5a
+
+- [ ] Crear 404 contextuales para perfiles inexistentes. Hoy /u/{id}
+      y /m/{id} con IDs que no existen muestran el 404 genérico de
+      Reachly ("Página no encontrada"). El mensaje técnicamente es
+      correcto, pero confuso: la página existe, lo que no existe es
+      el perfil. Crear app/u/[id]/not-found.tsx y app/m/[id]/not-found.tsx
+      con mensajes específicos ("Este influencer ya no está en Reachly...",
+      "Esta marca no existe...") y CTAs apropiados (botón a explorador
+      en lugar de "Volver al inicio").
+
+      Niveles más ambiciosos posibles para futuro: 404 con diseño
+      distinto por área (mobile/influencer vs desktop/marca), o
+      sistema completo de errores (500, 403, 401). Decidir según
+      feedback de usuarios reales.
+
 ## Inconsistencia entre nav actual y nav acordado
 
 La barra de Carla actualmente muestra: Explorar, Campañas, Tendencias,
@@ -88,28 +129,3 @@ Pagos.
 Ver CLAUDE.md sección "Páginas por construir" y "Modelo de datos >
 Tablas por construir" para el detalle. Este backlog se enfoca en bugs
 y deuda específica, no en el plan de construcción.
-
-## Bugs del flujo de onboarding (detectados durante smoke test del punto 3-4)
-
-Estos 3 bugs comparten causa raíz: el onboarding fue construido genérico, 
-sin la separación por rol que CLAUDE.md establece. Las observaciones 2 y 3 
-probablemente se resuelven de forma más limpia después del punto 5 del 
-refactor estructural (migración a /[rol]/*).
-
-- [ ] **Registro nuevo NO redirige a /onboarding automáticamente.** 
-      Usuario se registra, llega a la app, pero su perfil queda incompleto 
-      (sin bio, sin categorías, sin redes). Si nunca visita /onboarding 
-      manualmente, queda invisible para el algoritmo de matching. Bug 
-      pre-existente al refactor, identificado durante smoke test.
-
-- [ ] **Onboarding idéntico para marca e influencer.** Hoy todos los 
-      usuarios ven el mismo formulario, optimizado para influencers 
-      (categorías de contenido, redes sociales). Carla debería ver campos 
-      de empresa: rubro, descripción, presupuesto orientativo. Pendiente 
-      de definir post-punto-5: ¿una página /onboarding con vista 
-      condicional, o dos páginas /marca/onboarding y /influencer/onboarding?
-
-- [ ] **Pantalla final del onboarding genérica.** Hoy ofrece "explorar 
-      campañas E influencers" — debería ser solo lo relevante al rol: 
-      Sofía va a su feed swipe, Carla va a su dashboard. La redirección 
-      final debería respetar el rol seteado.
