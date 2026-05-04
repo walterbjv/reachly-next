@@ -61,6 +61,15 @@ refactor estructural (migración a /[rol]/*).
       distinto por área (mobile/influencer vs desktop/marca), o
       sistema completo de errores (500, 403, 401). Decidir según
       feedback de usuarios reales.
+ - [ ] No hay forma fácil de volver a páginas públicas (landing, sobre 
+      nosotros, términos, blog, etc.) desde el Nav de la app cuando 
+      estás logueado. Hoy las únicas vías son el botón atrás del 
+      navegador, editar la URL manualmente, o cerrar sesión. 
+      Solución recomendada: añadir un Footer global (o al menos en 
+      las páginas privadas) con links a las páginas públicas. 
+      Patrón estándar de SaaS (Stripe, Notion, GitHub lo hacen así). 
+      Detectado tras el cierre del refactor 5b mientras navegando 
+      como marca.
 
 ## Inconsistencia entre nav actual y nav acordado
 
