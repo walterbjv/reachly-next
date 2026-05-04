@@ -57,6 +57,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/onboarding`)
   }
 
-  const dashboard = tipo === 'marca' ? '/dashboard/marca' : '/dashboard/influencer'
+  const dashboard = tipo === 'marca' ? '/marca/dashboard' : '/influencer/dashboard'
   return NextResponse.redirect(`${origin}${dashboard}`)
 }

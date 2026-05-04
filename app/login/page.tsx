@@ -43,7 +43,11 @@ export default function LoginPage() {
     }
 
     const meta = data.user.user_metadata
-    const tipo = meta.tipo ?? 'influencer'
+    const tipo = meta.tipo as 'marca' | 'influencer' | undefined
+    if (!tipo || (tipo !== 'marca' && tipo !== 'influencer')) {
+      router.push('/onboarding')
+      return
+    }
     setUser({
       nombre: meta.nombre ?? form.email.split('@')[0],
       email: form.email,
@@ -52,7 +56,7 @@ export default function LoginPage() {
       ubicacion: meta.ubicacion,
       redes: meta.redes,
     })
-    router.push(tipo === 'marca' ? '/dashboard/marca' : '/dashboard/influencer')
+    router.push(tipo === 'marca' ? '/marca/dashboard' : '/influencer/dashboard')
   }
 
   return (

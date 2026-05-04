@@ -29,12 +29,10 @@ export const ONBOARDING_ROUTES = [
   '/onboarding',
 ] as const
 
-// Rutas restringidas por rol. Contempla las dos estructuras durante la
-// transición: la actual /dashboard/[rol] y la objetivo /[rol] (punto 5
-// del refactor estructural).
+// Rutas restringidas por rol. Cada rol ocupa su propio namespace.
 export const ROLE_ROUTES = {
-  marca: ['/dashboard/marca', '/marca'],
-  influencer: ['/dashboard/influencer', '/influencer'],
+  marca: ['/marca'],
+  influencer: ['/influencer'],
 } as const
 
 export type Role = keyof typeof ROLE_ROUTES

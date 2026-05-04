@@ -275,7 +275,7 @@ export function Nav() {
                       Mi perfil
                     </Link>
                     <Link
-                      href={authUser.tipo === 'marca' ? '/dashboard/marca' : '/dashboard/influencer'}
+                      href={authUser.tipo === 'marca' ? '/marca/dashboard' : '/influencer/dashboard'}
                       onClick={() => setUserMenuOpen(false)}
                       className="flex items-center gap-2.5 px-3 py-2 text-sm text-foreground rounded-lg hover:bg-accent transition-colors"
                     >

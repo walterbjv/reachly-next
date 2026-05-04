@@ -1,44 +1,53 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { isUnauthenticatedRoute, pathMatches, type Role } from '@/lib/routes'
+import { isUnauthenticatedRoute, isRoleRoute, type Role } from '@/lib/routes'
 
 const KNOWN_ROLES: readonly Role[] = ['marca', 'influencer']
+
+// Subpaths bajo /marca/* e /influencer/* que pertenecen a las áreas
+// privadas. Los segmentos que NO estén aquí se tratan como IDs de
+// perfiles públicos legacy y se redirigen a /m/ o /u/.
+const RESERVED_SUBPATHS = new Set([
+  'dashboard', 'swipe', 'postulaciones', 'mensajes',
+  'perfil', 'campanas', 'comparador', 'tendencias', 'pagos', 'favoritos',
+])
 
 function isKnownRole(t: unknown): t is Role {
   return typeof t === 'string' && KNOWN_ROLES.includes(t as Role)
 }
 
-// Si el path es el área privada de un rol específico, decide qué hacer:
-// - tipo desconocido o ausente → redirige a /onboarding (mismo
-//   comportamiento que app/auth/callback/route.ts).
-// - tipo es el otro rol conocido → redirige al dashboard correcto.
-// - tipo coincide con expectedRole → null (deja pasar).
-//
-// Usamos pathMatches con la ruta literal /dashboard/[rol] en vez de
-// isRoleRoute() porque ROLE_ROUTES también incluye /[rol], que hoy contiene
-// perfiles públicos /marca/[id] y /influencer/[id]. La unificación con
-// isRoleRoute se hará en el punto 5 cuando esos perfiles se muevan a
-// /m/[id] y /u/[id].
 function enforceRoleArea(
   pathname: string,
   expectedRole: Role,
   tipo: unknown,
   request: NextRequest,
 ): NextResponse | null {
-  if (!pathMatches(pathname, [`/dashboard/${expectedRole}`])) return null
+  if (!isRoleRoute(pathname, expectedRole)) return null
 
   if (!isKnownRole(tipo)) {
     return NextResponse.redirect(new URL('/onboarding', request.url))
   }
   if (tipo !== expectedRole) {
-    return NextResponse.redirect(new URL(`/dashboard/${tipo}`, request.url))
+    return NextResponse.redirect(new URL(`/${tipo}/dashboard`, request.url))
   }
   return null
 }
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // Redirect legacy public profile URLs before any auth check.
+  // Matches /influencer/<segment> and /marca/<segment> where <segment>
+  // is not a reserved private-area subpath.
+  const legacyMatch = pathname.match(/^\/(influencer|marca)\/([^/]+)$/)
+  if (legacyMatch) {
+    const [, area, segment] = legacyMatch
+    if (!RESERVED_SUBPATHS.has(segment)) {
+      const target = area === 'influencer' ? `/u/${segment}` : `/m/${segment}`
+      return NextResponse.redirect(new URL(target, request.url), { status: 308 })
+    }
+  }
 
   if (isUnauthenticatedRoute(pathname)) return NextResponse.next()
 
@@ -75,13 +84,11 @@ export async function middleware(request: NextRequest) {
   const influencerGate = enforceRoleArea(pathname, 'influencer', tipo, request)
   if (influencerGate) return influencerGate
 
-  // Redirigir al dashboard correcto desde la home. Sin rol seteado,
-  // mandamos a /onboarding en vez de asumir un default.
   if (pathname === '/') {
     if (!isKnownRole(tipo)) {
       return NextResponse.redirect(new URL('/onboarding', request.url))
     }
-    return NextResponse.redirect(new URL(`/dashboard/${tipo}`, request.url))
+    return NextResponse.redirect(new URL(`/${tipo}/dashboard`, request.url))
   }
 
   return response
