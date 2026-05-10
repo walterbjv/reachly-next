@@ -16,11 +16,18 @@ import { useAuth } from '@/hooks/useAuth'
 
 const EASE = [0.23, 1, 0.32, 1] as const
 
-const NAV_LINKS = [
+const NAV_LINKS_MARCA = [
   { href: '/', label: 'Explorar' },
   { href: '/campanas', label: 'Campañas' },
-  { href: '/tendencias', label: 'Tendencias' },
-  { href: '/comparador', label: 'Comparador' },
+  { href: '/marca/tendencias', label: 'Tendencias' },
+  { href: '/marca/comparador', label: 'Comparador' },
+  { href: '/mensajes', label: 'Mensajes' },
+  { href: '/favoritos', label: 'Guardados' },
+]
+
+const NAV_LINKS_INFLUENCER = [
+  { href: '/', label: 'Explorar' },
+  { href: '/campanas', label: 'Campañas' },
   { href: '/mensajes', label: 'Mensajes' },
   { href: '/favoritos', label: 'Guardados' },
 ]
@@ -41,6 +48,7 @@ export function Nav() {
   const [allCampanas, setAllCampanas] = useState<Campana[]>([])
   const [activeIdx, setActiveIdx] = useState(-1)
   const { user: authUser } = useAuth()
+  const navLinks = authUser?.tipo === 'marca' ? NAV_LINKS_MARCA : NAV_LINKS_INFLUENCER
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const userMenuRef = useRef<HTMLDivElement>(null)
@@ -131,7 +139,7 @@ export function Nav() {
   }
 
   const isLanding = pathname === '/landing'
-  const activeLinks = isLanding ? LANDING_NAV_LINKS : NAV_LINKS
+  const activeLinks = isLanding ? LANDING_NAV_LINKS : navLinks
 
   return (
     <>
