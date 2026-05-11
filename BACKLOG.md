@@ -20,16 +20,23 @@ y se espera que muchos se resuelvan naturalmente al ejecutar el punto 5
 - [ ] Click en influencer del bloque "Matches recientes" no permite
       contactar/contratar (depende de tablas invitaciones, matches y
       mensajes pendientes de construir)
-- [ ] **Nav incorrecto en perfiles públicos `/u/[id]` y `/m/[id]`.** 
-      Estando logueado como marca o influencer, al visitar un perfil 
-      público el Nav arriba muestra los items de landing pública 
-      ("Servicios, Cómo funciona, Casos de éxito, Precios, FAQ") y 
-      el botón "Plataforma →" que solo aparece para invitados. Debería 
-      mostrar el Nav role-aware que corresponde al usuario logueado. 
-      Bug del refactor 5a (cuando hicimos públicas estas rutas, algo 
-      en el componente que decide qué Nav mostrar quedó usando "es ruta 
-      pública" en lugar de "tiene sesión"). Detectado durante smoke 
-      test del 5d-i.
+- [ ]- [ ] **Nav incorrecto en perfiles públicos `/u/[id]` y `/m/[id]` 
+      + bug de sesión.** Estando logueado como marca o influencer, 
+      al visitar un perfil público el Nav arriba muestra los items 
+      de landing pública ("Servicios, Cómo funciona, Casos de éxito, 
+      Precios, FAQ") y el botón "Plataforma →" que solo aparece para 
+      invitados. Bug del refactor 5a (cuando hicimos públicas estas 
+      rutas, algo en el componente que decide qué Nav mostrar quedó 
+      usando "es ruta pública" en lugar de "tiene sesión"). 
+      
+      **Manifestación más grave detectada en 5d-ii:** si estando 
+      logueado entras a /u/[id] o /m/[id] por URL directa y luego 
+      haces "atrás" del navegador, te desloguea. El Nav incorrecto 
+      no es solo cosmético — algo está invalidando la sesión en esa 
+      ruta. Subir prioridad de este bug.
+      
+      Detectado originalmente en 5d-i (cosmético) y agravado en 
+      5d-ii (afecta sesión).
 
 - [ ] **Botón "Ver campañas" en sección Contacto del perfil de influencer 
       mal etiquetado/conectado.** En `/u/[id]`, la sección "Contacto" 
@@ -49,6 +56,56 @@ y se espera que muchos se resuelvan naturalmente al ejecutar el punto 5
       Implementar el botón "Mensaje directo" en los perfiles públicos 
       con la lógica de crear conversación + redirigir a `/[rol]/mensajes?with=<id>`. 
       Detectado durante smoke test del 5d-i.
+- [ ] **Falta mensaje de éxito visible al guardar cambios en /perfil.** 
+      Editas nombre, bio o ubicación, presionas "Guardar" y no hay 
+      feedback visual al usuario (toast, mensaje en línea, banner). 
+      Los datos sí se persisten en Supabase pero el usuario no sabe 
+      si la acción funcionó. Considerar toast component o mensaje 
+      inline tras handleSaveProfile. Detectado durante smoke test 
+      del 5d-ii.
+
+- [ ] **Dashboard de marca no tiene botón "Editar perfil".** El 
+      dashboard de influencer tiene una card de bienvenida con 
+      botón "Editar perfil" que lleva a /influencer/perfil. El 
+      dashboard de marca no tiene equivalente — para editar perfil 
+      hay que navegar al dropdown del avatar. Considerar añadir 
+      card o botón análogo en /marca/dashboard que vaya a 
+      /marca/perfil. Detectado durante smoke test del 5d-ii.
+
+- [ ] **Editar perfil idéntico para marca e influencer.** Hoy 
+      /marca/perfil y /influencer/perfil renderizan exactamente la 
+      misma UI (PerfilEditor compartido). Conceptualmente deberían 
+      diferir: marca necesita campos de empresa (rubro, descripción, 
+      tamaño, sitio web), influencer necesita redes sociales, 
+      categorías de contenido, portfolio. Relacionado con el 
+      "Frankenstein debt" registrado en Notas arquitectónicas — 
+      cuando llegue el momento, evaluar si extender PerfilEditor 
+      con props o explotarlo en 2 componentes distintos. Detectado 
+      durante smoke test del 5d-ii.
+
+- [ ] **Redes sociales en perfil de influencer no son clickeables.** 
+      Cuando un influencer añade su Instagram, TikTok, etc., el 
+      handle se muestra como texto plano. Debería ser un link que 
+      abra la red correspondiente (https://instagram.com/<handle>, 
+      etc.) en nueva pestaña. Aplica también en perfiles públicos 
+      /u/[id]. Detectado durante smoke test del 5d-ii.
+
+- [ ] **Portfolio solo permite referenciar posts externos por URL.** 
+      Hoy el "portafolio" del influencer es una lista de tarjetas 
+      con título + URL a un post de otra red (Instagram, YouTube, 
+      LinkedIn). No se pueden crear posts propios dentro de Reachly 
+      (con texto, imágenes subidas a Supabase Storage, etc.). 
+      Decidir si el roadmap incluye un editor de posts propio o si 
+      Reachly se mantiene como agregador de contenido externo. 
+      Detectado durante smoke test del 5d-ii.
+
+- [ ] **Bug: Buscar influencer desde cuenta de marca no funciona.** 
+      Desde /marca/dashboard u otra área de marca, intento buscar 
+      mi propia cuenta de influencer (que sé que existe) y no 
+      aparece en los resultados. Tampoco hay opción de "seguir" 
+      un influencer desde su perfil público. Verificar la query de 
+      búsqueda en Supabase y la integración del componente de 
+      búsqueda en Nav.tsx. Detectado durante smoke test del 5d-ii.
 
 ## Bugs del flujo de onboarding (detectados durante smoke test del punto 3-4)
 
@@ -162,6 +219,15 @@ Pagos.
   futuro que cambie el rol del usuario DEBE escribir las dos.** Si la
   lista de fuentes crece o aparece un tercer escritor, considerar
   centralizar en un helper `setUserRole(userId, tipo)` en lib/api.ts.
+
+- **Frankenstein debt en componentes compartidos (post 5d-i y 5d-ii):**
+  Componentes compartidos MessagesView y PerfilEditor (creados en 5d-i
+  y 5d-ii) asumen UI similar entre roles. Cuando se construya el diseño
+  mobile-first de Sofía y/o desktop-first de Carla y la divergencia
+  visual sea grande, evaluar si conviene explotar el componente
+  compartido y permitir duplicación intencional en cada wrapper. Hoy
+  compartir es eficiente; en el futuro puede volverse un Frankenstein
+  con props condicionales.
 
 ## Resuelto
 
