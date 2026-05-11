@@ -62,7 +62,7 @@ export default async function DashboardInfluencerPage() {
           <p className="text-white/60 text-sm">{profile?.ubicacion ? `${profile.ubicacion} · ` : ''}Explora las campañas disponibles para ti.</p>
         </div>
         <div className="flex gap-3">
-          <Link href="/perfil" className="bg-white/15 text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-white/25 transition-colors">
+          <Link href="/influencer/perfil" className="bg-white/15 text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-white/25 transition-colors">
             Editar perfil
           </Link>
           <Link href="/campanas" className="bg-brand-400 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-brand-500 transition-colors">

@@ -36,7 +36,7 @@ interface PortfolioItem {
 
 type Tab = 'perfil' | 'blog'
 
-export default function PerfilPage() {
+export function PerfilEditor() {
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)

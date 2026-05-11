@@ -275,7 +275,7 @@ export function Nav() {
                   </div>
                   <div className="p-1.5">
                     <Link
-                      href="/perfil"
+                      href={authUser.tipo === 'marca' ? '/marca/perfil' : '/influencer/perfil'}
                       onClick={() => setUserMenuOpen(false)}
                       className="flex items-center gap-2.5 px-3 py-2 text-sm text-foreground rounded-lg hover:bg-accent transition-colors"
                     >
@@ -390,7 +390,7 @@ export function Nav() {
             {authUser ? (
               <>
                 <Link
-                  href="/perfil"
+                  href={authUser.tipo === 'marca' ? '/marca/perfil' : '/influencer/perfil'}
                   onClick={() => setMenuOpen(false)}
                   className="text-base py-2 px-3 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors"
                 >
