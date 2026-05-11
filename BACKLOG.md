@@ -113,6 +113,15 @@ Pagos.
       app/onboarding/page.tsx:21. Detectado durante el punto 4, no
       relacionado con el refactor. Remover en una pasada de cleanup.
 
+## Notas de infraestructura
+
+- **Ubicación del repo local:** el proyecto vive en
+  `/Users/Mati/Projects/reachly-next`. Se movió desde
+  `~/Desktop/reachly-next` (2026-05) porque esa ruta estaba sincronizada
+  con iCloud Drive y la sincronización corrompió el `.git` del original.
+  La copia en Desktop quedó deprecada y puede borrarse — no usar nunca
+  más esa ruta como working directory.
+
 ## Notas arquitectónicas
 
 - **Fuente de verdad de `tipo` (post punto 4):** distribuida en dos
