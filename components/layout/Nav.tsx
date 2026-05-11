@@ -21,14 +21,14 @@ const NAV_LINKS_MARCA = [
   { href: '/campanas', label: 'Campañas' },
   { href: '/marca/tendencias', label: 'Tendencias' },
   { href: '/marca/comparador', label: 'Comparador' },
-  { href: '/mensajes', label: 'Mensajes' },
+  { href: '/marca/mensajes', label: 'Mensajes' },
   { href: '/favoritos', label: 'Guardados' },
 ]
 
 const NAV_LINKS_INFLUENCER = [
   { href: '/', label: 'Explorar' },
   { href: '/campanas', label: 'Campañas' },
-  { href: '/mensajes', label: 'Mensajes' },
+  { href: '/influencer/mensajes', label: 'Mensajes' },
   { href: '/favoritos', label: 'Guardados' },
 ]
 
