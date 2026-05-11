@@ -20,6 +20,35 @@ y se espera que muchos se resuelvan naturalmente al ejecutar el punto 5
 - [ ] Click en influencer del bloque "Matches recientes" no permite
       contactar/contratar (depende de tablas invitaciones, matches y
       mensajes pendientes de construir)
+- [ ] **Nav incorrecto en perfiles públicos `/u/[id]` y `/m/[id]`.** 
+      Estando logueado como marca o influencer, al visitar un perfil 
+      público el Nav arriba muestra los items de landing pública 
+      ("Servicios, Cómo funciona, Casos de éxito, Precios, FAQ") y 
+      el botón "Plataforma →" que solo aparece para invitados. Debería 
+      mostrar el Nav role-aware que corresponde al usuario logueado. 
+      Bug del refactor 5a (cuando hicimos públicas estas rutas, algo 
+      en el componente que decide qué Nav mostrar quedó usando "es ruta 
+      pública" en lugar de "tiene sesión"). Detectado durante smoke 
+      test del 5d-i.
+
+- [ ] **Botón "Ver campañas" en sección Contacto del perfil de influencer 
+      mal etiquetado/conectado.** En `/u/[id]`, la sección "Contacto" 
+      muestra un botón grande "Ver campañas" que sugiere ser la forma 
+      de contactar al influencer, pero al hacer click te lleva al 
+      listado general de campañas (`/campanas`). O el copy es incorrecto 
+      (debería decir "Mensaje directo") o el destino es incorrecto 
+      (debería iniciar conversación). Detectado durante smoke test del 
+      5d-i.
+
+- [ ] **Falta botón "Mensaje directo" en perfiles `/u/[id]` y `/m/[id]`.** 
+      La página `/marca/mensajes` muestra explícitamente el mensaje 
+      "Visitá el perfil de un influencer y hacé click en 'Mensaje 
+      directo' para iniciar", pero ese botón no existe en los perfiles. 
+      El query param `?with=<id>` en `/marca/mensajes` o `/influencer/mensajes` 
+      probablemente solo abre conversaciones existentes, no crea nuevas. 
+      Implementar el botón "Mensaje directo" en los perfiles públicos 
+      con la lógica de crear conversación + redirigir a `/[rol]/mensajes?with=<id>`. 
+      Detectado durante smoke test del 5d-i.
 
 ## Bugs del flujo de onboarding (detectados durante smoke test del punto 3-4)
 
