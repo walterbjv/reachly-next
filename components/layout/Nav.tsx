@@ -22,14 +22,13 @@ const NAV_LINKS_MARCA = [
   { href: '/marca/tendencias', label: 'Tendencias' },
   { href: '/marca/comparador', label: 'Comparador' },
   { href: '/marca/mensajes', label: 'Mensajes' },
-  { href: '/favoritos', label: 'Guardados' },
+  { href: '/marca/favoritos', label: 'Guardados' },
 ]
 
 const NAV_LINKS_INFLUENCER = [
   { href: '/', label: 'Explorar' },
   { href: '/campanas', label: 'Campañas' },
   { href: '/influencer/mensajes', label: 'Mensajes' },
-  { href: '/favoritos', label: 'Guardados' },
 ]
 
 export function Nav() {

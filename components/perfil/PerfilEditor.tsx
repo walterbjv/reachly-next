@@ -1,9 +1,14 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
 import { Edit2, Camera, Plus, X, ExternalLink, Save, Loader2, MapPin, Grid3x3, User } from 'lucide-react'
+import { CampanaCard } from '@/components/campanas/CampanaCard'
+import { useFavoritosStore } from '@/store/useFavoritosStore'
+import { fetchCampanas } from '@/lib/api'
+import type { Campana } from '@/types/campana'
 
 const REDES_CONFIG = [
   { id: 'instagram', label: 'Instagram', prefix: '@', icon: <span className="text-xs font-black">IG</span>, color: 'text-pink-500', bg: 'bg-pink-50 dark:bg-pink-900/20' },
@@ -34,7 +39,7 @@ interface PortfolioItem {
   platform: string
 }
 
-type Tab = 'perfil' | 'blog'
+type Tab = 'perfil' | 'blog' | 'guardadas'
 
 export function PerfilEditor() {
   const router = useRouter()
@@ -52,6 +57,13 @@ export function PerfilEditor() {
   const [categorias, setCategorias] = useState<string[]>([])
   const [newPost, setNewPost] = useState({ url: '', caption: '', platform: 'instagram' })
   const [followStats, setFollowStats] = useState({ followers: 0, following: 0 })
+  const { campanas: favCampIds } = useFavoritosStore()
+  const [allCamp, setAllCamp] = useState<Campana[]>([])
+
+  useEffect(() => {
+    if (profile?.tipo !== 'influencer') return
+    fetchCampanas().then(setAllCamp)
+  }, [profile?.tipo])
 
   useEffect(() => {
     async function load() {
@@ -248,7 +260,10 @@ export function PerfilEditor() {
 
         {/* Tabs */}
         <div className="flex gap-1 bg-muted p-1 rounded-xl w-fit mb-6">
-          {(['perfil', 'blog'] as Tab[]).map(t => (
+          {(profile.tipo === 'influencer'
+            ? (['perfil', 'blog', 'guardadas'] as Tab[])
+            : (['perfil', 'blog'] as Tab[])
+          ).map(t => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -257,7 +272,7 @@ export function PerfilEditor() {
                 tab === t ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
               )}
             >
-              {t === 'blog' ? 'Portfolio / Blog' : 'Perfil'}
+              {t === 'blog' ? 'Portfolio / Blog' : t === 'guardadas' ? 'Campañas guardadas' : 'Perfil'}
             </button>
           ))}
         </div>
@@ -454,6 +469,46 @@ export function PerfilEditor() {
                 })}
               </div>
             )}
+          </div>
+        )}
+
+        {/* Tab: Campañas guardadas (solo influencer) */}
+        {tab === 'guardadas' && profile.tipo === 'influencer' && (
+          <div className="pb-12">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-lg font-bold text-foreground">Campañas guardadas</h2>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {favCampIds.length} {favCampIds.length === 1 ? 'campaña' : 'campañas'} en tu lista
+                </p>
+              </div>
+            </div>
+
+            {(() => {
+              const favCamps = allCamp.filter(c => favCampIds.includes(c.id))
+              if (favCamps.length === 0) {
+                return (
+                  <div className="bg-card border border-border rounded-2xl p-16 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-muted flex items-center justify-center mx-auto mb-4">
+                      <ExternalLink className="w-7 h-7 text-muted-foreground" />
+                    </div>
+                    <h3 className="text-base font-semibold text-foreground mb-1">Sin campañas guardadas</h3>
+                    <p className="text-sm text-muted-foreground mb-5 max-w-sm mx-auto">Explora campañas y guarda las que más te interesen para revisarlas después.</p>
+                    <Link
+                      href="/campanas"
+                      className="inline-block bg-brand-600 text-white text-sm font-semibold px-6 py-2.5 rounded-xl hover:bg-brand-500 transition-colors"
+                    >
+                      Ver campañas
+                    </Link>
+                  </div>
+                )
+              }
+              return (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {favCamps.map((c, i) => <CampanaCard key={c.id} campana={c} index={i} />)}
+                </div>
+              )
+            })()}
           </div>
         )}
       </div>
