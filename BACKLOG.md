@@ -106,6 +106,51 @@ y se espera que muchos se resuelvan naturalmente al ejecutar el punto 5
       un influencer desde su perfil público. Verificar la query de 
       búsqueda en Supabase y la integración del componente de 
       búsqueda en Nav.tsx. Detectado durante smoke test del 5d-ii.
+- [ ] **`/campanas` no segregado por rol — feed conceptualmente solo 
+      de influencer.** Hoy `/campanas` muestra "Campañas disponibles" 
+      con CTA "Postularme a esta campaña" — es el feed donde Sofía 
+      ve ofertas para postular. Pero Carla (marca) también ve esta 
+      ruta desde su Nav, lo cual es conceptualmente incorrecto: ella 
+      crea sus campañas, no las ve listadas como ofertas. Falta 
+      segregar igual que hicimos con mensajes/perfil/favoritos: 
+      `/marca/campanas` (sus campañas creadas) y `/influencer/campanas` 
+      (feed de ofertas). Probablemente requiere extraer un componente 
+      compartido o duplicar según divergencia. Candidato a 5e/5f del 
+      refactor estructural. Detectado durante smoke test del 5d-iii.
+
+- [ ] **Falta corazón en detalle de campaña `/campanas/[id]`.** 
+      En el listado `/campanas` cada tarjeta tiene corazón para 
+      favoritar, pero al entrar al detalle de una campaña específica 
+      no hay forma de favoritar/desfavoritar desde ahí. Inconsistente 
+      con el detalle de influencer que tampoco lo tiene 
+      (bug ya registrado del Nav). Detectado durante smoke test del 
+      5d-iii.
+
+- [ ] **Conteo de favoritos vs items renderizados desalineado.** 
+      En `/marca/favoritos` y en el tab "Campañas guardadas" de 
+      `/influencer/perfil`, el conteo dice "N en tu lista" pero N 
+      cuenta los IDs en localStorage, no los items realmente 
+      renderizables. Cuando hay IDs huérfanos (favoritos guardados 
+      que apuntan a influencers/campañas que ya no existen en DB), 
+      el conteo confunde: dice "2" pero solo se ve 1. Considerar 
+      filtrar los IDs válidos antes de mostrar el conteo, o 
+      implementar limpieza automática de huérfanos al cargar 
+      (descartar IDs que no matcheen ningún item del fetch). 
+      Detectado durante smoke test del 5d-iii.
+
+- [ ] **Caso real del bug "Fuente de verdad de tipo" descubierto 
+      en cuenta de test.** Durante el smoke test del 5d-iii la 
+      cuenta de Matix en `auth.user_metadata.tipo === 'influencer'` 
+      pero `profiles.tipo === NULL`. Esto causó que `PerfilEditor` 
+      no mostrara el tab "Campañas guardadas" porque lee desde 
+      `profile.tipo` y el filtro `=== 'influencer'` no matcheaba. 
+      El refactor del punto 4 escribe ambas fuentes, pero cuentas 
+      creadas antes de ese fix quedaron con `profiles.tipo` en NULL. 
+      Subraya la urgencia del item ya registrado "Fuente de verdad 
+      de tipo" en Notas arquitectónicas — vale la pena un script de 
+      migración o reparación que rellene los `profiles.tipo` NULL 
+      desde `auth.user_metadata.tipo`. Detectado durante smoke test 
+      del 5d-iii.
 
 ## Bugs del flujo de onboarding (detectados durante smoke test del punto 3-4)
 
@@ -169,6 +214,14 @@ Pagos.
 - [ ] Reemplazar items de Nav.tsx para Carla según lo acordado
 - [ ] Verificar también la barra de Sofía: debe ser Inicio,
       Notificaciones, Mensajes, Mis postulaciones, Mi perfil
+
+**Avance parcial (5d-iii, 2026-05):** Sofía perdió "Guardados" del
+Nav raíz — las campañas guardadas ahora viven como tab dentro de
+`/influencer/perfil`, alineado con la visión del README ("Mi perfil"
+rico unificado). Carla mantiene "Guardados" en su barra apuntando
+ahora a `/marca/favoritos`. Los items restantes acordados para
+ambas barras (Dashboard, Notificaciones, Pagos, Mis postulaciones,
+etc.) siguen pendientes — se reemplazan cuando esas páginas existan.
 
 ## Optimización pendiente (no urgente)
 
