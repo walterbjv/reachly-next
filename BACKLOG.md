@@ -151,6 +151,16 @@ y se espera que muchos se resuelvan naturalmente al ejecutar el punto 5
       migración o reparación que rellene los `profiles.tipo` NULL 
       desde `auth.user_metadata.tipo`. Detectado durante smoke test 
       del 5d-iii.
+      
+ - [ ]Usuarios reales no se encuentran ni interactúan entre sí. Hoy
+      las cuentas existentes (influencers founders + marca founder) no
+      aparecen al buscarse, no se pueden seguir, mensajear ni participar
+      en campañas. Es la manifestación visible de que el core social de
+      Reachly aún no está construido. NOTA: el detalle completo y el
+      desglose de sub-features (búsqueda, seguir, postular, match,
+      mensajería real) vive en ROADMAP.md → "Core social funcional".
+      Este item del BACKLOG queda como puntero: cuando alguien lo lea
+      aquí, debe ir al ROADMAP.
 
 ## Bugs del flujo de onboarding (detectados durante smoke test del punto 3-4)
 
@@ -251,6 +261,12 @@ etc.) siguen pendientes — se reemplazan cuando esas páginas existan.
 - [ ] Hint TypeScript pre-existente: `router` declarado y no usado en
       app/onboarding/page.tsx:21. Detectado durante el punto 4, no
       relacionado con el refactor. Remover en una pasada de cleanup.
+- [ ] Protección contra sobrecarga / límite de recargas de la página.
+      Poner un tope a las recargas o mecanismo equivalente para evitar
+      sobrecargar la app. Definir el mecanismo concreto al priorizar.
+      No urgente hoy (solo 3 usuarios founders), pero conviene antes
+      del lanzamiento público. Ver también ROADMAP.md → "Pre-lanzamiento".
+ 
 
 ## Notas de infraestructura
 
@@ -281,6 +297,13 @@ etc.) siguen pendientes — se reemplazan cuando esas páginas existan.
   compartido y permitir duplicación intencional en cada wrapper. Hoy
   compartir es eficiente; en el futuro puede volverse un Frankenstein
   con props condicionales.
+
+- **Relación BACKLOG.md ↔ ROADMAP.md:** este archivo (BACKLOG) registra
+  bugs conocidos y deuda técnica — "cosas rotas que arreglar". El roadmap
+  de producto (épicas grandes, identidad visual, features por construir,
+  trabajo pre-lanzamiento) vive en ROADMAP.md — "cosas nuevas que
+  construir". Al registrar algo, decidir en cuál de los dos va. Varios
+  items de los dos archivos se referencian mutuamente.
 
 ## Resuelto
 
