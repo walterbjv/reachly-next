@@ -8,7 +8,7 @@ Este archivo le da contexto completo a Claude Code sobre el estado, la visión y
 
 ## Qué es Reachly
 
-Plataforma CHILENA de matching algorítmico entre marcas e influencers de LATAM. "Tinder profesional" donde el match lo decide la data, no un humano con sesgos. Sin agencias intermediarias.
+Plataforma CHILENA (nunca escribir en argentino) de matching algorítmico entre marcas e influencers de LATAM. "Tinder profesional" donde el match lo decide la data, no un humano con sesgos. Sin agencias intermediarias.
 
 **Modelo de negocio:** comisión por campaña cerrada + suscripción para marcas + freemium. Influencers usan gratis.
 
@@ -31,7 +31,7 @@ Reachly NO es una sola app con dos vistas. Son dos productos visualmente y funci
 
 ## Estructura objetivo de rutas
 
-La estructura actual `/dashboard/[rol]/*` debe migrar a `/[rol]/*`. Ningún rol es el "default" — ambos son áreas hermanas simétricas.
+La estructura de rutas ya fue migrada de `/dashboard/[rol]/*` a `/[rol]/*` (refactor estructural completado). Ningún rol es el "default" — ambos son áreas hermanas simétricas. El árbol siguiente es la estructura vigente (las rutas marcadas POR CONSTRUIR aún no existen).
 
 ```
 app/
@@ -105,13 +105,29 @@ app/
 
 ## Trabajo pendiente prioritario
 
-### Refactor estructural (HACER ANTES DE FEATURES NUEVAS)
+### Refactor estructural — ✅ COMPLETADO (en producción)
 
-1. **Crear `lib/routes.ts`** como única fuente de verdad para rutas públicas, auth y privadas. Hoy esa lista está duplicada en `middleware.ts`, `Header.tsx` y `nav-links.ts`.
-2. **Unificar lógica de auth en `useAuth.ts`.** El `Nav.tsx` duplica la consulta de usuario que ya hace el hook. Eliminar el bloque duplicado en `Nav.tsx` líneas 60-80.
-3. **Simetrizar protección por rol en `middleware.ts`.** Hoy `/dashboard/marca` está protegido contra influencers, pero `/dashboard/influencer` no está protegido contra marcas. Ambos deben tener protección equivalente.
-4. **Eliminar el "rol por defecto"** en `middleware.ts` línea 66 (`?? 'influencer'`). Si el rol no está definido, redirigir a una pantalla de "completar perfil", no asumir influencer.
-5. **Migrar rutas** de `/dashboard/[rol]/*` a `/[rol]/*`. Renombrar `/influencer/[id]` → `/u/[id]` y `/marca/[id]` → `/m/[id]` para evitar conflicto. Auditar los 4 archivos que linkean a dashboard: `middleware.ts`, `Nav.tsx`, `auth/callback/route.ts`, `login/page.tsx`.
+El refactor estructural está terminado y desplegado. Las features nuevas
+ya están desbloqueadas. Lo ejecutado:
+
+1. ✅ **`lib/routes.ts`** creado como única fuente de verdad para rutas
+   públicas, auth y privadas.
+2. ✅ **Auth unificada en `useAuth.ts`.** Eliminado el bloque duplicado
+   de consulta de usuario en `Nav.tsx`.
+3. ✅ **Protección por rol simetrizada en `middleware.ts`** vía
+   `enforceRoleArea`. Ambas áreas de rol tienen gating equivalente.
+4. ✅ **Eliminado el "rol por defecto"** (`?? 'influencer'`). El tipo se
+   persiste a `user_metadata` y `profiles` en el onboarding.
+5. ✅ **Rutas migradas** de `/dashboard/[rol]/*` a `/[rol]/*`. Perfiles
+   públicos renombrados a `/u/[id]` y `/m/[id]`. Las rutas con conflicto
+   de roles (`/mensajes`, `/perfil`, `/favoritos`) segregadas por área
+   en el sub-refactor 5d: `/marca/*` e `/influencer/*` con componentes
+   compartidos (`MessagesView`, `PerfilEditor`) más wrappers thin.
+   Favoritos quedó asimétrico — `/marca/favoritos` es ruta propia,
+   las campañas guardadas de Sofía viven como tab en `/influencer/perfil`.
+
+Ver `BACKLOG.md` para deuda técnica conocida y bugs pendientes
+detectados durante los smoke tests del refactor.
 
 ### Páginas por construir (en orden de prioridad)
 
@@ -165,7 +181,7 @@ Como dice `AGENTS.md`: **esta no es la versión de Next.js que conoces de memori
 Para subir cambios al fork de Walter (https://github.com/walterbjv/reachly-next) y que se vean en https://reachly-next.vercel.app, usar siempre:
 
 ```
-git push walter main
+git push origin main
 ```
 
 Vercel despliega automáticamente al recibir el push. **No hacer push hasta que el usuario lo pida explícitamente.**
