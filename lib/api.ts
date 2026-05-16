@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import type { Influencer } from '@/types/influencer'
 import type { Campana } from '@/types/campana'
 import type { Marca } from '@/types/marca'
+import type { InfluencerProfile } from '@/types/influencer-profile'
 import { CATEGORIAS, CATEGORIA_COLORS } from '@/types/influencer'
 import { MOCK_INFLUENCERS, MOCK_CAMPANAS, MOCK_MARCAS } from '@/lib/mocks'
 
@@ -199,6 +200,51 @@ export async function fetchMarca(id: number): Promise<Marca | null> {
     .single()
 
   return mapMarca(data, profile)
+}
+
+export interface SearchInfluencerProfilesParams {
+  query?: string
+  categoria?: string
+  ubicacion?: string
+}
+
+function mapInfluencerProfile(row: any): InfluencerProfile {
+  return {
+    id: row.id,
+    nombre: row.nombre ?? 'Sin nombre',
+    categorias: row.categorias ?? [],
+    ubicacion: row.ubicacion ?? undefined,
+    avatar_url: row.avatar_url ?? undefined,
+    redes: row.redes ?? undefined,
+  }
+}
+
+export async function searchInfluencerProfiles(
+  params: SearchInfluencerProfilesParams = {}
+): Promise<InfluencerProfile[]> {
+  let q = supabase
+    .from('profiles')
+    .select('id, nombre, categorias, ubicacion, redes, avatar_url')
+    .eq('tipo', 'influencer')
+
+  if (params.query) {
+    q = q.ilike('nombre', `%${params.query}%`)
+  }
+  if (params.categoria) {
+    q = q.contains('categorias', [params.categoria])
+  }
+  if (params.ubicacion) {
+    q = q.ilike('ubicacion', `%${params.ubicacion}%`)
+  }
+
+  const { data, error } = await q.order('nombre', { ascending: true })
+
+  if (error) {
+    console.error('[searchInfluencerProfiles] supabase error:', error)
+    throw new Error(`Búsqueda de influencers falló: ${error.message}`)
+  }
+
+  return (data ?? []).map(mapInfluencerProfile)
 }
 
 export { CATEGORIA_COLORS }
