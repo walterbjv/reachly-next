@@ -8,9 +8,14 @@ const KNOWN_ROLES: readonly Role[] = ['marca', 'influencer']
 // Subpaths bajo /marca/* e /influencer/* que pertenecen a las áreas
 // privadas. Los segmentos que NO estén aquí se tratan como IDs de
 // perfiles públicos legacy y se redirigen a /m/ o /u/.
+//
+// ⚠️ REGLA OPERATIVA: cada vez que se cree una ruta nueva bajo
+// /marca/<X> o /influencer/<X>, hay que añadir 'X' a este Set.
+// Si no, el middleware tratará 'X' como ID de perfil y redirigirá
+// silenciosamente al stub público — la ruta nueva quedará inalcanzable.
 const RESERVED_SUBPATHS = new Set([
   'dashboard', 'swipe', 'postulaciones', 'mensajes',
-  'perfil', 'campanas', 'comparador', 'tendencias', 'pagos', 'favoritos',
+  'perfil', 'campanas', 'comparador', 'tendencias', 'pagos', 'favoritos', 'buscar-influencers',
 ])
 
 function isKnownRole(t: unknown): t is Role {

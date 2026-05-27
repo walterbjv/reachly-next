@@ -221,7 +221,7 @@ function mapInfluencerProfile(row: any): InfluencerProfile {
 
 export async function searchInfluencerProfiles(
   params: SearchInfluencerProfilesParams = {}
-): Promise<InfluencerProfile[]> {
+): Promise<InfluencerProfile[]> { 
   let q = supabase
     .from('profiles')
     .select('id, nombre, categorias, ubicacion, redes, avatar_url')

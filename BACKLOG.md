@@ -211,7 +211,15 @@ refactor estructural (migración a /[rol]/*).
       Patrón estándar de SaaS (Stripe, Notion, GitHub lo hacen así). 
       Detectado tras el cierre del refactor 5b mientras navegando 
       como marca.
-
+- [ ] ProfileSearchCard muestra solo la PRIMERA categoría del array
+      profiles.categorias, aunque el creador tenga varias. Ejemplo
+      detectado: Matix tiene ["Moda","Tech","Gastronomía","Gaming"]
+      pero la card solo muestra "Moda" — representa mal al creador.
+      Opciones a evaluar: mostrar todas como chips, o mostrar las
+      primeras 2-3 con badge "+N más" (patrón LinkedIn). Recomendación
+      previa: NO ir hacia "categoría principal + secundarias" (añade
+      complejidad al onboarding sin beneficio claro). Detectado en
+      smoke del commit 2 de búsqueda real.
 ## Inconsistencia entre nav actual y nav acordado
 
 La barra de Carla actualmente muestra: Explorar, Campañas, Tendencias,
