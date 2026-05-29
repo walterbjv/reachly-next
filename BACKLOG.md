@@ -106,6 +106,11 @@ y se espera que muchos se resuelvan naturalmente al ejecutar el punto 5
       un influencer desde su perfil público. Verificar la query de 
       búsqueda en Supabase y la integración del componente de 
       búsqueda en Nav.tsx. Detectado durante smoke test del 5d-ii.
+      **Reconfirmado en smoke test del commit 3:** el input "Buscar ⌘K"
+en el header del nav de marca (a la derecha del toggle de
+darkmode) no abre el command palette ni devuelve resultados al
+interactuar. Debería resolverse al implementar commit 4
+(activar Cmd+K real).
 - [ ] **`/campanas` no segregado por rol — feed conceptualmente solo 
       de influencer.** Hoy `/campanas` muestra "Campañas disponibles" 
       con CTA "Postularme a esta campaña" — es el feed donde Sofía 
@@ -312,6 +317,25 @@ etc.) siguen pendientes — se reemplazan cuando esas páginas existan.
   trabajo pre-lanzamiento) vive en ROADMAP.md — "cosas nuevas que
   construir". Al registrar algo, decidir en cuál de los dos va. Varios
   items de los dos archivos se referencian mutuamente.
+  - **Política de RLS en `profiles` (decisión del commit 2 de búsqueda real):**
+  los perfiles son de **lectura pública** (política `select_all_profiles`
+  con `USING (true)`). Cualquiera, autenticado o no, puede leer cualquier
+  fila de `profiles`. La escritura sigue restringida al dueño
+  (`update_own_profile` con `auth.uid() = id`).
+
+  Razón: Reachly es plataforma de descubrimiento (patrón LinkedIn,
+  Twitter), donde los perfiles públicos son SEO-able y compartibles.
+  Consistente con la decisión del refactor 5a de poner `/u/[id]` y
+  `/m/[id]` en `PUBLIC_ROUTES`.
+
+  ⚠️ Esta política se reemplazó manualmente desde Supabase SQL Editor
+  (no hay migration versionada). Si en el futuro se reseta la base o
+  se crea un entorno nuevo, hay que volver a aplicar:
+
+```sql
+  DROP POLICY IF EXISTS select_own_profile ON profiles;
+  CREATE POLICY select_all_profiles ON profiles FOR SELECT USING (true);
+```qu
 
 ## Resuelto
 

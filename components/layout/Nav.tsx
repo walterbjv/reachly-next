@@ -17,7 +17,7 @@ import { useAuth } from '@/hooks/useAuth'
 const EASE = [0.23, 1, 0.32, 1] as const
 
 const NAV_LINKS_MARCA = [
-  { href: '/', label: 'Explorar' },
+  { href: '/marca/buscar-influencers', label: 'Buscar influencers' },
   { href: '/campanas', label: 'Campañas' },
   { href: '/marca/tendencias', label: 'Tendencias' },
   { href: '/marca/comparador', label: 'Comparador' },

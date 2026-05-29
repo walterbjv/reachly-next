@@ -63,7 +63,7 @@ export default async function DashboardMarcaPage() {
           <Link href="/campanas" className="bg-white/15 text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-white/25 transition-colors">
             Ver campañas
           </Link>
-          <Link href="/" className="bg-brand-400 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-brand-500 transition-colors">
+          <Link href="/marca/buscar-influencers" className="bg-brand-400 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-brand-500 transition-colors">
             Buscar influencers
           </Link>
         </div>
@@ -137,7 +137,7 @@ export default async function DashboardMarcaPage() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base font-bold text-foreground">Influencers disponibles para tu campaña</h2>
-          <Link href="/" className="text-sm text-brand-400 hover:text-brand-600 transition-colors">Ver todos →</Link>
+          <Link href="/marca/buscar-influencers" className="text-sm text-brand-400 hover:text-brand-600 transition-colors">Buscar influencers →</Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {matches.map((inf, i) => <InfluencerCard key={inf.id} influencer={inf} index={i} />)}
