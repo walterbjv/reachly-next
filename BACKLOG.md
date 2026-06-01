@@ -225,6 +225,26 @@ refactor estructural (migración a /[rol]/*).
       previa: NO ir hacia "categoría principal + secundarias" (añade
       complejidad al onboarding sin beneficio claro). Detectado en
       smoke del commit 2 de búsqueda real.
+- [ ] **Rediseñar /marca/tendencias como discovery surface real,
+      no shortcut al buscador.** Hoy las cards de categorías
+      (Moda, Tech, Fitness, Gastronomía, Viajes, Gaming) en
+      /marca/tendencias apuntan a `/` (orphan registrado durante
+      commit 3). Durante el commit 5 se evaluó reapuntarlas a
+      /marca/buscar-influencers?categoria=<nombre>, pero ese
+      parche convierte tendencias en un menú decorado: si todo
+      lleva al buscador, ¿para qué existe la página? La visión
+      correcta es que tendencias sea una superficie de
+      descubrimiento en sí misma — click en "Moda" debería
+      mostrar los influencers de Moda (con su ranking de trending)
+      dentro de tendencias, sin sacar a Carla de la página.
+      Requiere decisión de UX (¿se reemplaza la grilla, se expande
+      un drawer, se hace scroll a una sección?), lógica de filtrado
+      interno por categoría, y mantener un ranking propio de
+      "trending" distinto al ordenamiento del buscador. **Estado
+      actual del orphan:** TendenciasClient.tsx:150 sigue con
+      href="/" a propósito hasta que este redesign se aborde.
+      Detectado durante smoke test del commit 3, ratificado durante
+      planificación del commit 5.
 ## Inconsistencia entre nav actual y nav acordado
 
 La barra de Carla actualmente muestra: Explorar, Campañas, Tendencias,

@@ -147,7 +147,7 @@ export function TendenciasClient({ influencers }: { influencers: Influencer[] })
               return (
                 <Link
                   key={cat}
-                  href="/"
+                  href={`/marca/buscar-influencers?categoria=${encodeURIComponent(cat)}`}
                   className="bg-card border border-border rounded-2xl p-5 hover:border-brand-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 animate-fade-up"
                   style={{ animationDelay: `${i * 0.07}s` }}
                 >
