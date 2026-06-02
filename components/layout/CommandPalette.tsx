@@ -22,8 +22,9 @@ import {
   CommandGroup,
   CommandItem,
 } from '@/components/ui/command'
-import { searchInfluencerProfiles } from '@/lib/api'
+import { searchInfluencerProfiles, searchCampanasByOwner } from '@/lib/api'
 import type { InfluencerProfile } from '@/types/influencer-profile'
+import type { Campana } from '@/types/campana'
 
 type Role = 'marca' | 'influencer'
 
@@ -51,13 +52,20 @@ interface Props {
   open: boolean
   onOpenChange: (open: boolean) => void
   role?: Role | null
+  userId?: string | null
 }
 
-export function CommandPalette({ open, onOpenChange, role }: Props) {
+function estadoLabel(e?: Campana['estado']) {
+  return e === 'cerrada' ? 'Cerrada' : e === 'borrador' ? 'Borrador' : 'Activa'
+}
+
+export function CommandPalette({ open, onOpenChange, role, userId }: Props) {
   const router = useRouter()
   const [query, setQuery] = useState('')
   const [influencers, setInfluencers] = useState<InfluencerProfile[]>([])
   const [loading, setLoading] = useState(false)
+  const [campanas, setCampanas] = useState<Campana[]>([])
+  const [loadingCampanas, setLoadingCampanas] = useState(false)
 
   const shortcuts = role === 'marca' ? SHORTCUTS_MARCA : SHORTCUTS_INFLUENCER
 
@@ -79,6 +87,8 @@ export function CommandPalette({ open, onOpenChange, role }: Props) {
       setQuery('')
       setInfluencers([])
       setLoading(false)
+      setCampanas([])
+      setLoadingCampanas(false)
     }
   }, [open])
 
@@ -111,6 +121,35 @@ export function CommandPalette({ open, onOpenChange, role }: Props) {
     }
   }, [query])
 
+  // Búsqueda en vivo de campañas propias de la marca (debounce ~300ms)
+  useEffect(() => {
+    const term = query.trim()
+    if (!userId || term.length < 2) {
+      setCampanas([])
+      setLoadingCampanas(false)
+      return
+    }
+
+    setLoadingCampanas(true)
+    let cancelled = false
+    const timeout = setTimeout(async () => {
+      try {
+        const results = await searchCampanasByOwner(term, userId)
+        if (!cancelled) setCampanas(results)
+      } catch (err) {
+        console.error('[CommandPalette] searchCampanasByOwner:', err)
+        if (!cancelled) setCampanas([])
+      } finally {
+        if (!cancelled) setLoadingCampanas(false)
+      }
+    }, 300)
+
+    return () => {
+      cancelled = true
+      clearTimeout(timeout)
+    }
+  }, [query, userId])
+
   const lower = query.trim().toLowerCase()
   const filteredShortcuts = lower
     ? shortcuts.filter(s => s.label.toLowerCase().includes(lower))
@@ -126,6 +165,11 @@ export function CommandPalette({ open, onOpenChange, role }: Props) {
     router.push(`/marca/buscar-influencers?q=${encodeURIComponent(nombre)}`)
   }
 
+  function goCampana(id: number) {
+    onOpenChange(false)
+    router.push(`/campanas/${id}`)
+  }
+
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
       <Command shouldFilter={false}>
@@ -135,7 +179,8 @@ export function CommandPalette({ open, onOpenChange, role }: Props) {
           onValueChange={setQuery}
         />
         <CommandList>
-        {filteredShortcuts.length === 0 && influencers.length === 0 && !loading && (
+        {filteredShortcuts.length === 0 && influencers.length === 0 && !loading &&
+          campanas.length === 0 && !loadingCampanas && !(userId && lower.length >= 2) && (
           <CommandEmpty>Sin resultados.</CommandEmpty>
         )}
 
@@ -173,6 +218,32 @@ export function CommandPalette({ open, onOpenChange, role }: Props) {
                 </div>
               </CommandItem>
             ))}
+          </CommandGroup>
+        )}
+
+        {userId && lower.length >= 2 && (
+          <CommandGroup heading="Mis campañas">
+            {campanas.length > 0 ? (
+              campanas.map(c => (
+                <CommandItem
+                  key={c.id}
+                  value={`campana:${c.id}`}
+                  onSelect={() => goCampana(c.id)}
+                >
+                  <Megaphone className="text-muted-foreground" />
+                  <div className="flex min-w-0 flex-1 flex-col">
+                    <span className="truncate">{c.titulo}</span>
+                    <span className="truncate text-xs text-muted-foreground">{estadoLabel(c.estado)}</span>
+                  </div>
+                </CommandItem>
+              ))
+            ) : (
+              !loadingCampanas && (
+                <div className="px-2 py-1.5 text-xs text-muted-foreground">
+                  No hay campañas creadas todavía
+                </div>
+              )
+            )}
           </CommandGroup>
         )}
         </CommandList>

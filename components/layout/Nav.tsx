@@ -343,7 +343,7 @@ export function Nav() {
 
       {/* Command palette — sólo marca por ahora (palette de influencer pendiente) */}
       {authUser?.tipo === 'marca' && (
-        <CommandPalette open={searchOpen} onOpenChange={setSearchOpen} role="marca" />
+        <CommandPalette open={searchOpen} onOpenChange={setSearchOpen} role="marca" userId={authUser?.id ?? null} />
       )}
     </>
   )

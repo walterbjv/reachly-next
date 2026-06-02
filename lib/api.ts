@@ -247,4 +247,27 @@ export async function searchInfluencerProfiles(
   return (data ?? []).map(mapInfluencerProfile)
 }
 
+export async function searchCampanasByOwner(
+  query: string,
+  ownerId: string,
+): Promise<Campana[]> {
+  const { data, error } = await supabase
+    .from('campaigns')
+    .select(`
+      id, title, description, budget_range, status, min_followers,
+      brands!inner(id, company_name, profile_id, profiles(nombre)),
+      campaign_categories(name)
+    `)
+    .eq('brands.profile_id', ownerId)
+    .ilike('title', `%${query}%`)
+    .order('created_at', { ascending: false })
+    .limit(6)
+
+  if (error) {
+    console.error('[searchCampanasByOwner] supabase error:', error)
+    return []
+  }
+  return (data ?? []).map(mapCampana)
+}
+
 export { CATEGORIA_COLORS }

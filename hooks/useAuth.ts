@@ -7,6 +7,7 @@ import { useUserStore } from '@/store/useUserStore'
 type Role = 'influencer' | 'marca'
 
 export interface AuthUser {
+  id: string | null
   nombre: string
   iniciales: string
   avatar_url: string | null
@@ -39,6 +40,7 @@ export function useAuth(): UseAuthResult {
   const [user, setUser] = useState<AuthUser | null>(() =>
     storeUser
       ? {
+          id: null,
           nombre: storeUser.nombre,
           iniciales: storeUser.iniciales ?? toIniciales(storeUser.nombre),
           avatar_url: null,
@@ -65,6 +67,7 @@ export function useAuth(): UseAuthResult {
       const iniciales = toIniciales(nombre)
 
       const authUser: AuthUser = {
+        id: session.user.id,
         nombre,
         iniciales,
         avatar_url: profile?.avatar_url ?? null,
