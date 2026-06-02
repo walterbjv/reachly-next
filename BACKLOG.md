@@ -111,6 +111,11 @@ en el header del nav de marca (a la derecha del toggle de
 darkmode) no abre el command palette ni devuelve resultados al
 interactuar. Debería resolverse al implementar commit 4
 (activar Cmd+K real).
+      **Resuelto en commit 4a:** el palette ahora usa cmdk
+(`components/layout/CommandPalette.tsx`), se abre con Cmd/Ctrl+K y
+con el trigger, y hace búsqueda en vivo de influencers vía
+`searchInfluencerProfiles`. Sólo activo para marca (gating temporal
+hasta construir el palette de influencer).
 - [ ] **`/campanas` no segregado por rol — feed conceptualmente solo 
       de influencer.** Hoy `/campanas` muestra "Campañas disponibles" 
       con CTA "Postularme a esta campaña" — es el feed donde Sofía 
@@ -245,6 +250,31 @@ refactor estructural (migración a /[rol]/*).
       href="/" a propósito hasta que este redesign se aborde.
       Detectado durante smoke test del commit 3, ratificado durante
       planificación del commit 5.
+## Command palette (Cmd+K) — pendientes post commit 4a
+
+- [ ] **Commit 4b: capa de campañas propias en el palette.** El palette
+      de marca (`CommandPalette.tsx`) hoy tiene dos capas: atajos de
+      páginas + búsqueda en vivo de influencers. Falta la tercera capa:
+      buscar las campañas creadas por la marca actual. Se difirió porque
+      el palette es client component y la resolución de marca hoy se hace
+      server-side (`createSupabaseServer` → `auth.getUser()` → `brands` por
+      `profile_id` → filtrar `campaigns`, ver `app/marca/dashboard/page.tsx`).
+      Requiere una API de campañas scopeada al dueño (o resolución de marca
+      en cliente). Manejar graceful empty ("No hay campañas creadas todavía")
+      y navegar a `/campanas/[id]`.
+- [ ] **Navegación de influencers del palette → perfil directo.** Hoy un
+      resultado de influencer navega a `/marca/buscar-influencers?q=<nombre>`
+      porque `searchInfluencerProfiles` devuelve `profiles.id` (UUID) y
+      `/u/[id]` espera id numérico de `influencers` (`fetchInfluencer(Number(id))`).
+      Cuando se arregle `/u/[id]` para resolver UUIDs de `profiles`,
+      actualizar `CommandPalette.tsx` (`goInfluencer`) para navegar directo
+      a `/u/[id]`.
+- [ ] **Palette propio para influencer (Sofía).** Hoy el trigger "Buscar ⌘K"
+      y `<CommandPalette>` sólo se renderizan para marca (gating temporal en
+      `Nav.tsx`). La arquitectura ya soporta el rol influencer (`role` prop +
+      `SHORTCUTS_INFLUENCER` placeholder vacío). Construir sus capas: búsqueda
+      de campañas, marcas, y atajos propios de Sofía.
+
 ## Inconsistencia entre nav actual y nav acordado
 
 La barra de Carla actualmente muestra: Explorar, Campañas, Tendencias,

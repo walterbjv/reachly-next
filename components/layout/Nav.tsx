@@ -4,15 +4,12 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useThemeStore } from '@/store/useThemeStore'
-import { fetchInfluencers, fetchCampanas } from '@/lib/api'
-import type { Influencer } from '@/types/influencer'
-import type { Campana } from '@/types/campana'
-import { InfluencerAvatar } from '@/components/ui/InfluencerAvatar'
 import { cn } from '@/lib/utils'
 import { Search, Moon, Sun, Menu, X, LogOut, User, LayoutDashboard } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { LANDING_NAV_LINKS } from '@/components/layout/nav-links'
 import { useAuth } from '@/hooks/useAuth'
+import { CommandPalette } from '@/components/layout/CommandPalette'
 
 const EASE = [0.23, 1, 0.32, 1] as const
 
@@ -38,18 +35,9 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
-  const [query, setQuery] = useState('')
-  const [results, setResults] = useState<{ influencers: Influencer[]; campanas: Campana[] }>({
-    influencers: [],
-    campanas: [],
-  })
-  const [allInfluencers, setAllInfluencers] = useState<Influencer[]>([])
-  const [allCampanas, setAllCampanas] = useState<Campana[]>([])
-  const [activeIdx, setActiveIdx] = useState(-1)
   const { user: authUser } = useAuth()
   const navLinks = authUser?.tipo === 'marca' ? NAV_LINKS_MARCA : NAV_LINKS_INFLUENCER
   const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
   const userMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -68,68 +56,6 @@ export function Nav() {
     document.addEventListener('mousedown', handleClick)
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
-
-  // Preload data when search opens
-  useEffect(() => {
-    if (searchOpen && allInfluencers.length === 0) {
-      Promise.all([fetchInfluencers(), fetchCampanas()]).then(([infs, camps]) => {
-        setAllInfluencers(infs)
-        setAllCampanas(camps)
-      })
-      setTimeout(() => inputRef.current?.focus(), 50)
-    }
-  }, [searchOpen, allInfluencers.length])
-
-  // Keyboard shortcut Cmd/Ctrl+K
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault()
-        setSearchOpen(true)
-      }
-      if (e.key === 'Escape') setSearchOpen(false)
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [])
-
-  function handleSearch(q: string) {
-    setQuery(q)
-    setActiveIdx(-1)
-    if (!q || q.length < 2) {
-      setResults({ influencers: [], campanas: [] })
-      return
-    }
-    const lower = q.toLowerCase()
-    setResults({
-      influencers: allInfluencers
-        .filter(i => i.nombre.toLowerCase().includes(lower) || i.categoria.toLowerCase().includes(lower))
-        .slice(0, 5),
-      campanas: allCampanas
-        .filter(c => c.titulo.toLowerCase().includes(lower) || c.marca.toLowerCase().includes(lower))
-        .slice(0, 4),
-    })
-  }
-
-  const allResults = [
-    ...results.influencers.map(i => ({ type: 'influencer' as const, id: i.id, name: i.nombre, sub: i.categoria, iniciales: i.iniciales, categoria: i.categoria })),
-    ...results.campanas.map(c => ({ type: 'campana' as const, id: c.id, name: c.titulo, sub: c.marca, iniciales: c.iniciales, categoria: c.categoria })),
-  ]
-
-  function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.key === 'ArrowDown') { e.preventDefault(); setActiveIdx(i => Math.min(i + 1, allResults.length - 1)) }
-    if (e.key === 'ArrowUp') { e.preventDefault(); setActiveIdx(i => Math.max(i - 1, 0)) }
-    if (e.key === 'Enter' && activeIdx >= 0) {
-      const r = allResults[activeIdx]
-      if (r) navigate(r)
-    }
-  }
-
-  function navigate(r: typeof allResults[number]) {
-    setSearchOpen(false)
-    setQuery('')
-    router.push(r.type === 'influencer' ? `/u/${r.id}` : `/campanas/${r.id}`)
-  }
 
   async function handleLogout() {
     setUserMenuOpen(false)
@@ -157,7 +83,7 @@ export function Nav() {
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-7">
-          {isLanding && (
+          {isLanding && authUser?.tipo === 'marca' && (
             <button
               onClick={() => setSearchOpen(true)}
               className="text-white/70 hover:text-white transition-colors"
@@ -202,8 +128,8 @@ export function Nav() {
 
         {/* Right actions */}
         <div className="flex items-center gap-2">
-          {/* Search trigger — only on non-landing */}
-          {!isLanding && (
+          {/* Search trigger — sólo marca, fuera de landing (palette de influencer pendiente) */}
+          {!isLanding && authUser?.tipo === 'marca' && (
             <>
               <button
                 onClick={() => setSearchOpen(true)}
@@ -415,90 +341,10 @@ export function Nav() {
         </div>
       )}
 
-      {/* Search modal */}
-      {searchOpen && (
-        <div
-          className="fixed inset-0 z-[100] flex justify-center pt-[min(20vh,140px)] bg-brand-950/60 backdrop-blur-sm"
-          onClick={e => { if (e.target === e.currentTarget) setSearchOpen(false) }}
-        >
-          <div className="w-[90%] max-w-[560px] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden max-h-[70vh] flex flex-col animate-scale-in">
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
-              <Search className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-              <input
-                ref={inputRef}
-                type="text"
-                value={query}
-                onChange={e => handleSearch(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Buscar influencers, campañas..."
-                className="flex-1 bg-transparent text-[15px] text-foreground placeholder:text-muted-foreground outline-none"
-              />
-              <kbd className="text-[10px] border border-border text-muted-foreground px-1.5 py-0.5 rounded">ESC</kbd>
-            </div>
-
-            <div className="overflow-y-auto p-2">
-              {query.length < 2 ? (
-                <p className="text-center text-muted-foreground text-sm py-8">Escribe para buscar en toda la plataforma</p>
-              ) : allResults.length === 0 ? (
-                <p className="text-center text-muted-foreground text-sm py-8">Sin resultados para &ldquo;{query}&rdquo;</p>
-              ) : (
-                <>
-                  {results.influencers.length > 0 && (
-                    <>
-                      <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Influencers</p>
-                      {results.influencers.map((inf, idx) => (
-                        <button
-                          key={inf.id}
-                          onClick={() => navigate({ type: 'influencer', id: inf.id, name: inf.nombre, sub: inf.categoria, iniciales: inf.iniciales, categoria: inf.categoria })}
-                          className={cn(
-                            'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors',
-                            activeIdx === idx ? 'bg-accent' : 'hover:bg-accent/50'
-                          )}
-                        >
-                          <InfluencerAvatar iniciales={inf.iniciales} categoria={inf.categoria} size="sm" />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-foreground truncate">{inf.nombre}</p>
-                            <p className="text-xs text-muted-foreground">{inf.categoria} · {inf.seguidores.toLocaleString()} seg.</p>
-                          </div>
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-brand-50 text-brand-600">Influencer</span>
-                        </button>
-                      ))}
-                    </>
-                  )}
-                  {results.campanas.length > 0 && (
-                      <>
-                        <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mt-1">Campañas</p>
-                        {results.campanas.map((c, idx) => {
-                          const globalIdx = results.influencers.length + idx
-                          return (
-                            <button
-                              key={c.id}
-                              onClick={() => navigate({ type: 'campana', id: c.id, name: c.titulo, sub: c.marca, iniciales: c.iniciales, categoria: c.categoria })}
-                              className={cn(
-                                'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left min-h-[48px]',
-                                activeIdx === globalIdx ? 'bg-accent' : 'hover:bg-accent/50'
-                              )}
-                              style={{ transition: 'background-color 100ms ease' }}
-                            >
-                              <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-sm font-bold text-blue-800 dark:text-blue-300 flex-shrink-0">
-                                {c.iniciales}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold text-foreground truncate">{c.titulo}</p>
-                                <p className="text-xs text-muted-foreground">{c.marca} · {c.categoria}</p>
-                              </div>
-                              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">Campaña</span>
-                            </button>
-                          )
-                        })}
-                      </>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
+      {/* Command palette — sólo marca por ahora (palette de influencer pendiente) */}
+      {authUser?.tipo === 'marca' && (
+        <CommandPalette open={searchOpen} onOpenChange={setSearchOpen} role="marca" />
+      )}
     </>
   )
 }
