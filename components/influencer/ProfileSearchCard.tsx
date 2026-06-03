@@ -11,17 +11,15 @@ function getIniciales(nombre: string): string {
 }
 
 export function ProfileSearchCard({ profile }: Props) {
-  const categoria = profile.categorias[0]
-  const colors = categoria
-    ? CATEGORIA_COLORS[categoria] ?? { bg: 'var(--color-brand-50)', text: 'var(--color-brand-600)' }
-    : null
+  const categoriasVisibles = profile.categorias.slice(0, 2)
+  const excedente = profile.categorias.length - 2
 
   return (
     <div className="bg-card border border-border rounded-[18px] p-[22px]">
       <div className="flex items-start gap-3 mb-3">
         <InfluencerAvatar
           iniciales={getIniciales(profile.nombre)}
-          categoria={categoria}
+          categoria={profile.categorias[0]}
           size="md"
         />
         <div className="min-w-0 flex-1">
@@ -36,14 +34,25 @@ export function ProfileSearchCard({ profile }: Props) {
         </div>
       </div>
 
-      {categoria && colors && (
-        <div className="mb-3">
-          <span
-            className="inline-flex text-[11px] font-semibold px-2.5 py-0.5 rounded-full"
-            style={{ background: colors.bg, color: colors.text }}
-          >
-            {categoria}
-          </span>
+      {categoriasVisibles.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {categoriasVisibles.map((cat) => {
+            const c = CATEGORIA_COLORS[cat] ?? { bg: 'var(--color-brand-50)', text: 'var(--color-brand-600)' }
+            return (
+              <span
+                key={cat}
+                className="inline-flex text-[11px] font-semibold px-2.5 py-0.5 rounded-full"
+                style={{ background: c.bg, color: c.text }}
+              >
+                {cat}
+              </span>
+            )
+          })}
+          {excedente > 0 && (
+            <span className="inline-flex items-center text-[11px] font-medium text-muted-foreground bg-accent px-2.5 py-0.5 rounded-full">
+              +{excedente} más
+            </span>
+          )}
         </div>
       )}
 
